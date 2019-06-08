@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">CabWay</string>
+
+
+
+    <string name="error_fail_connection">Check your internet connection and try again.</string>
+</resources>
