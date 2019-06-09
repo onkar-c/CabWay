@@ -2,7 +2,6 @@ package com.example.cabway.ui.activities;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -13,7 +12,7 @@ import com.facebook.stetho.Stetho;
 
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends BaseActivity{
 
     MainActivityViewModel mainActivityViewModel;
     TextView textView;
@@ -23,15 +22,20 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         Stetho.initializeWithDefaults(this);
         setContentView(R.layout.activity_main);
+        initBaseViews();
         textView = findViewById(R.id.textView);
         hit = findViewById(R.id.hitButton);
 
-        hit.setOnClickListener(view -> mainActivityViewModel.makeCall(MainActivity.this));
+        hit.setOnClickListener(view -> {
+            showLoadingDialogue();
+            mainActivityViewModel.makeCall(MainActivity.this);
+        });
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
         mainActivityViewModel.init();
 
         mainActivityViewModel.getResponse().observe(this, s -> {
             textView.setText("");
+            dismissLoadingDialogue();
             for (Hero hero : Objects.requireNonNull(s)){
                 textView.append("\n" +hero.getData());
             }

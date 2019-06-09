@@ -1,12 +1,11 @@
 package com.example.cabway.ui.activities;
 
 import android.content.Intent;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
 
 import com.example.cabway.R;
+import com.example.core.Utills.CoreSharedHelper;
 
 public class SplashScreenActivity extends BaseActivity {
 
@@ -16,7 +15,9 @@ public class SplashScreenActivity extends BaseActivity {
         setContentView(R.layout.activity_splash_screen);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//        startDashboardActivity();
+        new CoreSharedHelper(this);
+        initBaseViews();
+        startDashboardActivity();
 
     }
 
