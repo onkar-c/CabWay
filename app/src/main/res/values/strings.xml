@@ -4,4 +4,19 @@
 
 
     <string name="error_fail_connection">Check your internet connection and try again.</string>
+
+
+    //Ui text
+    <string name="login_phone_email">Phone Number/Email</string>
+    <string name="password">Password</string>
+    <string name="ui_login">LOGIN</string>
+    <string name="forgot_password">Forgot password ?</string>
+    <string name="need_an_account"><u>Don\'t have an account? Sign Up</u></string>
+    <string name="agency">Agency</string>
+    <string name="driver">Driver</string>
+
+    // Screen Labels
+    <string name="login">Login</string>
+
+
 </resources>
