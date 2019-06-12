@@ -14,7 +14,7 @@ import com.example.cabway.Utils.ConnectivityUtils;
 public class BaseActivity extends AppCompatActivity {
 
     private LinearLayout loadingProgressBar;
-    private ActionBar actionBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +87,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected void setUpActionBar(){
-        actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_back_arrow);

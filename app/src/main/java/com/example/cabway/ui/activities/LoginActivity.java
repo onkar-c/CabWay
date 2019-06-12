@@ -1,5 +1,6 @@
 package com.example.cabway.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -40,12 +41,13 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick(R.id.login)
     void verifyCredentials() {
+        if(checkNetworkAvailableWithError())
         Toast.makeText(this, "" + etUserName.getText() + " " + etPassword.getText() + " " + userLoginType, Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.forgot_password)
     void startForgetPasswordActivity() {
-        Toast.makeText(this, "ForgotPassword clicked", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, ForgotPasswordActivity.class));
     }
 
     @OnClick(R.id.sign_up)

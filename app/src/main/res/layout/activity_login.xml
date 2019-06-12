@@ -46,7 +46,8 @@
             android:hint="@string/login_phone_email"
             android:inputType="phone|textEmailAddress"
             android:maxLines="1"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            tools:ignore="Autofill" />
 
         <EditText
             android:id="@+id/password"
@@ -56,12 +57,13 @@
             android:hint="@string/password"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            tools:ignore="Autofill" />
 
         <Button
             android:id="@+id/login"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:background="@android:color/black"
             android:text="@string/ui_login"
@@ -74,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
-            android:text="@string/forgot_password"
+            android:text="@string/ui_forgot_password"
             android:textSize="14sp" />
 
         <TextView
