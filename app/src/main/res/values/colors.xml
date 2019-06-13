@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#FFD129</color>
     <color name="colorAccent">#FF757575</color>
     <color name="white">#FFFFFF</color>
+    <color name="white_smoke">#F0F0F0</color>
 </resources>

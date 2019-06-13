@@ -22,12 +22,11 @@ public class MainActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         Stetho.initializeWithDefaults(this);
         setContentView(R.layout.activity_main);
-        initBaseViews();
         textView = findViewById(R.id.textView);
         hit = findViewById(R.id.hitButton);
 
         hit.setOnClickListener(view -> {
-            showLoadingDialogue();
+            showProgressDialog(this, "Please Wait", false);
             mainActivityViewModel.makeCall(MainActivity.this);
         });
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
@@ -35,7 +34,7 @@ public class MainActivity extends BaseActivity{
 
         mainActivityViewModel.getResponse().observe(this, s -> {
             textView.setText("");
-            dismissLoadingDialogue();
+            removeProgressDialog();
             for (Hero hero : Objects.requireNonNull(s)){
                 textView.append("\n" +hero.getData());
             }

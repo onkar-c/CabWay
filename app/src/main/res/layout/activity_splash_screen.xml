@@ -5,9 +5,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/splash_screen_image"
     tools:context=".ui.activities.SplashScreenActivity">
-
-    <include layout="@layout/progress_bar"/>
-
 </RelativeLayout>
 
 

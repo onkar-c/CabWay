@@ -16,7 +16,6 @@ public class SplashScreenActivity extends BaseActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         new CoreSharedHelper(this);
-        initBaseViews();
         startDashboardActivity();
 
     }

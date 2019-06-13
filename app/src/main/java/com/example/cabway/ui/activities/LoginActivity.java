@@ -27,7 +27,6 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        initBaseViews();
         setUpActionBar();
         ButterKnife.bind(this);
     }
@@ -52,6 +51,6 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick(R.id.sign_up)
     void startSignUpActivity() {
-        Toast.makeText(this, "Signup clicked", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, OTPActivity.class));
     }
 }

@@ -1,11 +1,13 @@
 package com.example.cabway.ui.activities;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.LinearLayout;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.example.cabway.R;
@@ -13,31 +15,11 @@ import com.example.cabway.Utils.ConnectivityUtils;
 
 public class BaseActivity extends AppCompatActivity {
 
-    private LinearLayout loadingProgressBar;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-
-    protected void initBaseViews(){
-        loadingProgressBar = findViewById(R.id.lloadingProgressBar);
-    }
-
-    protected void showLoadingDialogue(){
-        if(loadingProgressBar != null) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-            loadingProgressBar.setVisibility(View.VISIBLE);
-        }
-    }
-
-    protected void dismissLoadingDialogue(){
-        if(loadingProgressBar != null) {
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-            loadingProgressBar.setVisibility(View.GONE);
-        }
     }
 
     @Override
@@ -93,4 +75,43 @@ public class BaseActivity extends AppCompatActivity {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_back_arrow);
         }
     }
+
+
+    public void showProgressDialog(Context context,String bodyText, final boolean isRequestCancelable) {
+        try {
+            if (mProgressDialog == null) {
+                mProgressDialog = new ProgressDialog(context);
+                mProgressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                mProgressDialog.setCancelable(isRequestCancelable);
+                mProgressDialog.setOnKeyListener((dialog, keyCode, event) -> {
+                    if (keyCode == KeyEvent.KEYCODE_CAMERA || keyCode == KeyEvent.KEYCODE_SEARCH) {
+                        return true; //
+                    } else if (keyCode == KeyEvent.KEYCODE_BACK && isRequestCancelable) {
+                        Log.e("Ondailogback", "cancel dailog");
+//                        RequestManager.cancelRequest();
+                        dialog.dismiss();
+                        return true;
+                    }
+                    return false;
+                });
+            }
+            mProgressDialog.setMessage(bodyText);
+
+            if (!mProgressDialog.isShowing()) {
+                mProgressDialog.show();
+            }
+        } catch (Exception ignored) {
+        }
+    }
+
+    public void removeProgressDialog() {
+        try {
+            if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
+        } catch (Exception ignored) {
+
+        }
+    }
+
 }

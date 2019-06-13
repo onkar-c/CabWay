@@ -16,7 +16,13 @@
     <string name="agency">Agency</string>
     <string name="driver">Driver</string>
     <string name="forgot_password_message">Don\'t worry! Just enter your phone number and we will send you the password reset instruction </string>
-
+    <string name="otp_text">Please enter the One Time Password (OTP) sent to your mobile number. *</string>
+    <string name="waiting_for_code">Waiting for OTP.</string>
+    <string name="not_received_your_code">Not received your OTP?</string>
+    <string name="submit">Submit</string>
+    <string name="resend_code">Resend OTP</string>
+    <string name="otp">OTP</string>
+    <string name="timer">30</string>
     // Screen Labels
     <string name="login">Login</string>
     <string name="forgot_password">Forgot Password</string>
