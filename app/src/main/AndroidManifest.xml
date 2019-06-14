@@ -37,7 +37,8 @@
             android:label="@string/forgot_password"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activities.OTPActivity"
+            android:name=".ui.activities.RegistrationActivity"
+            android:label="@string/registration"
             android:screenOrientation="portrait" />
     </application>
 

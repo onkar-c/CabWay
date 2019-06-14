@@ -36,12 +36,13 @@
         </RadioGroup>
 
         <EditText
-            android:id="@+id/phone_or_email"
+            android:id="@+id/phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="@string/login_phone_email"
-            android:inputType="phone|textEmailAddress"
+            android:hint="@string/login_phone"
+            android:inputType="phone|number"
+            android:digits="0123456789"
             android:maxLines="1"
             android:textSize="16sp"
             tools:ignore="Autofill" />

@@ -12,7 +12,7 @@ import butterknife.OnClick;
 
 public class ForgotPasswordActivity extends BaseActivity {
 
-    @BindView(R.id.phone_or_email)
+    @BindView(R.id.phone)
     EditText etUserName;
 
     @Override

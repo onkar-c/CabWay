@@ -15,8 +15,8 @@ import butterknife.OnClick;
 
 public class LoginActivity extends BaseActivity {
 
-    @BindView(R.id.phone_or_email)
-    EditText etUserName;
+    @BindView(R.id.phone)
+    EditText etPhoneNumber;
     @BindView(R.id.password)
     EditText etPassword;
 
@@ -41,7 +41,7 @@ public class LoginActivity extends BaseActivity {
     @OnClick(R.id.login)
     void verifyCredentials() {
         if(checkNetworkAvailableWithError())
-        Toast.makeText(this, "" + etUserName.getText() + " " + etPassword.getText() + " " + userLoginType, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "" + etPhoneNumber.getText() + " " + etPassword.getText() + " " + userLoginType, Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.forgot_password)
@@ -51,6 +51,6 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick(R.id.sign_up)
     void startSignUpActivity() {
-        startActivity(new Intent(this, OTPActivity.class));
+        startActivity(new Intent(this, RegistrationActivity.class));
     }
 }

@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.cabway.R;
 import com.example.cabway.Utils.ConnectivityUtils;
+import com.example.cabway.Utils.DialogUtils;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -55,7 +56,11 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+
+        if(isTaskRoot())
+            DialogUtils.showExitDialog(this);
+        else
+            super.onBackPressed();
     }
 
     @Override

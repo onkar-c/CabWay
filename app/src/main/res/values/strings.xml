@@ -7,8 +7,9 @@
 
 
     //Ui text
-    <string name="login_phone_email">Phone Number/Email</string>
+    <string name="login_phone">Phone Number</string>
     <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
     <string name="ui_login">LOGIN</string>
     <string name="reset_password">RESET PASSWORD</string>
     <string name="ui_forgot_password">Forgot password ?</string>
@@ -17,15 +18,27 @@
     <string name="driver">Driver</string>
     <string name="forgot_password_message">Don\'t worry! Just enter your phone number and we will send you the password reset instruction </string>
     <string name="otp_text">Please enter the One Time Password (OTP) sent to your mobile number. *</string>
-    <string name="waiting_for_code">Waiting for OTP.</string>
     <string name="not_received_your_code">Not received your OTP?</string>
     <string name="submit">Submit</string>
     <string name="resend_code">Resend OTP</string>
+    <string name="generate_otp">Generate OTP</string>
     <string name="otp">OTP</string>
-    <string name="timer">30</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email">Email</string>
+    <string name="otp_sent">OTP sent to your mobile number.</string>
+    <string name="otp_length_message">Please enter 4 digit OTP.</string>
+    <string name="otp_verification_success_message">OTP verified successfully.</string>
+    <string name="otp_verification_failed_message">Please Enter Valid OTP</string>
+    <string name="mobile_length_message">Please enter valid 10 digit mobile number.</string>
+    <string name="password_mismatch_message">Both password should match.</string>
+    <string name="mandatory_messages">Please Enter %1$s.</string>
+    <string name="registration_success">User Registered Successfully.</string>
+
     // Screen Labels
     <string name="login">Login</string>
     <string name="forgot_password">Forgot Password</string>
+    <string name="registration">Registration</string>
 
 
 </resources>
