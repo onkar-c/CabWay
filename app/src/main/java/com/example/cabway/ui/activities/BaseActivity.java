@@ -40,7 +40,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
-    public boolean checkNetworkAvailableWithError() {
+    public boolean checkNetworkAvailableWithoutError() {
         if (!isNetworkAvailable()) {
             Toast.makeText(this, R.string.error_fail_connection, Toast.LENGTH_SHORT).show();
             return false;

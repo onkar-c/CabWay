@@ -71,9 +71,10 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
 
     @OnClick(R.id.submit)
     void submitInfo() {
-        if(validateAllFields())
-            Toast.makeText(this,""+mMobileNumber +" " +userType,Toast.LENGTH_SHORT).show();
+        if(validateAllFields()) {
+            Toast.makeText(this, "" + mMobileNumber + " " + userType, Toast.LENGTH_SHORT).show();
             onBackPressed();
+        }
     }
 
     @Override

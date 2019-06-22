@@ -29,19 +29,22 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
         setUpActionBar();
         ButterKnife.bind(this);
+        userLoginType = getString(R.string.driver);
     }
 
 
     @OnCheckedChanged({R.id.agency, R.id.driver})
     void onLoginTypeSelected(RadioButton button, boolean checked) {
-        if(checked)
-        userLoginType = button.getText().toString();
+        if (checked)
+            userLoginType = button.getText().toString();
     }
 
     @OnClick(R.id.login)
     void verifyCredentials() {
-        if(checkNetworkAvailableWithError())
-        Toast.makeText(this, "" + etPhoneNumber.getText() + " " + etPassword.getText() + " " + userLoginType, Toast.LENGTH_SHORT).show();
+        if (checkNetworkAvailableWithoutError()) {
+            Toast.makeText(this, "" + etPhoneNumber.getText() + " " + etPassword.getText() + " " + userLoginType, Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, DashBoardActivity.class));
+        }
     }
 
     @OnClick(R.id.forgot_password)

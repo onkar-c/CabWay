@@ -56,8 +56,10 @@ public class DialogOtp {
     }
 
     public void showCustomDialogVerifyMobile(final String mobileNo) {
-            String mobText = "******" + mobileNo.substring(6, 10);
-            mTvHeader.setText(mTvHeader.getText().toString().replace("*", mobText));
+
+            String mobText = mContext.getString(R.string.otp_text);
+
+            mTvHeader.setText(mobText.replace("*","******" + mobileNo.substring(6, 10)));
             dialog.show();
     }
 

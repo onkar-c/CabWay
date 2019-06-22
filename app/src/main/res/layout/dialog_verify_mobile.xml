@@ -29,7 +29,7 @@
             android:text="@string/otp_text"
             android:textAlignment="center"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textSize="@dimen/medium_text" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,13 +54,12 @@
                 android:padding="12dp"
                 android:textColor="@android:color/black"
                 android:textColorHint="@color/colorPrimary"
-                android:textSize="18sp"
+                android:textSize="@dimen/medium_text"
                 tools:ignore="UnusedAttribute" />
 
 
         </LinearLayout>
-
-        <TextView
+        <Button
             android:id="@+id/verifyBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -71,12 +70,14 @@
             android:padding="14dp"
             android:text="@string/submit"
             android:textColor="@android:color/white"
-            android:textSize="22sp" />
+            android:textSize="@dimen/button_text" />
+
+
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20sp"
+            android:layout_marginTop="20dp"
             android:gravity="center">
 
             <TextView
@@ -88,7 +89,7 @@
                 android:gravity="center_horizontal"
                 android:text="@string/not_received_your_code"
                 android:textColor="@android:color/black"
-                android:textSize="14sp"
+                android:textSize="@dimen/small_text"
                 android:visibility="visible" />
 
             <TextView
@@ -101,7 +102,7 @@
                 android:gravity="center_horizontal"
                 android:text="@string/resend_code"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="@dimen/small_text"
                 android:textStyle="bold" />
 
         </RelativeLayout>
