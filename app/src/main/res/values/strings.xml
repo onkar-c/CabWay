@@ -34,11 +34,30 @@
     <string name="password_mismatch_message">Both password should match.</string>
     <string name="mandatory_messages">Please Enter %1$s.</string>
     <string name="registration_success">User Registered Successfully.</string>
+    <string name="step">Step</string>
+    <string name="currency_text">INR</string>
+    <string name="km_text">km</string>
+    <string name="enter_start_location">Enter Start Location</string>
+    <string name="enter_end_location">Enter End Location</string>
+    <string name="find_a_route">FIND A ROUTE</string>
+
+
+    //dummy text
+    <string name="dummy_document_type_text">Step 1 : Document Type</string>
+    <string name="dummy_agency_name_text">Neeta Travel Agency</string>
+    <string name="dummy_amount_text">2500</string>
+    <string name="dummy_date_text">12–06–2019</string>
+    <string name="dummy_time_text">12:50 pm</string>
+    <string name="dummy_city_text">Pune</string>
+    <string name="dummy_city_2_text">Mumbai</string>
+    <string name="dummy_km_text">100</string>
+
 
     // Screen Labels
     <string name="login">Login</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="registration">Registration</string>
+    <string name="upload_documents">Upload Documents</string>
     <string name="title_activity_dash_board">DashBoardActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -61,5 +80,12 @@
     <string name="about">About</string>
     <string name="help">Help</string>
     <string name="logout">Logout</string>
+
+
+    <!--Document types-->
+    <string name="driver_license">Driver License</string>
+    <string name="vehicle_insurance">Vehicle Insurance</string>
+    <string name="vehicle_permit">Vehicle Permit</string>
+    <string name="vehicle_registration">Vehicle Registration</string>
 
 </resources>

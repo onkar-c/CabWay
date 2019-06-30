@@ -1,5 +1,6 @@
 package com.example.cabway.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -73,7 +74,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     void submitInfo() {
         if(validateAllFields()) {
             Toast.makeText(this, "" + mMobileNumber + " " + userType, Toast.LENGTH_SHORT).show();
-            onBackPressed();
+            startActivity(new Intent(this, DocumentListActivity.class));
         }
     }
 

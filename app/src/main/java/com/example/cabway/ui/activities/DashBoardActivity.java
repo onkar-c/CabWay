@@ -1,5 +1,6 @@
 package com.example.cabway.ui.activities;
 
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,7 +17,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.cabway.R;
-import com.example.cabway.ui.Interfaces.MenuItemClickListener;
+import com.example.cabway.ui.Interfaces.RecyclerViewItemClickListener;
+import com.example.cabway.ui.adapter.AvailableRidesListAdapter;
 import com.example.cabway.ui.adapter.ProfileMenuAdapter;
 
 import java.util.Arrays;
@@ -40,7 +42,11 @@ public class DashBoardActivity extends BaseActivity
     @BindView(R.id.profile_menu)
     RecyclerView mProfileMenu;
 
+    @BindView(R.id.availableRidesList)
+    RecyclerView availableRidesList;
+
     ProfileMenuAdapter profileMenuAdapter;
+    AvailableRidesListAdapter availableRidesListAdapter;
     private List<String> menu_items;
     private TypedArray menu_items_icon;
 
@@ -52,12 +58,21 @@ public class DashBoardActivity extends BaseActivity
         setSupportActionBar(toolbar);
         inItData();
         setNavigationDrawerLayout();
+        setRidesList();
+    }
+
+
+    private void setRidesList(){
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        availableRidesList.setLayoutManager(layoutManager);
+        availableRidesListAdapter = new AvailableRidesListAdapter(this, ridesViewItemClickListener);
+        availableRidesList.setAdapter(availableRidesListAdapter);
     }
 
     private void setNavigationDrawerLayout() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mProfileMenu.setLayoutManager(layoutManager);
-        profileMenuAdapter = new ProfileMenuAdapter(this, menu_items, menu_items_icon, menuItemClickListener);
+        profileMenuAdapter = new ProfileMenuAdapter(this, menu_items, menu_items_icon, recyclerViewItemClickListener);
         mProfileMenu.setAdapter(profileMenuAdapter);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -94,12 +109,10 @@ public class DashBoardActivity extends BaseActivity
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    MenuItemClickListener menuItemClickListener = new MenuItemClickListener() {
+    RecyclerViewItemClickListener recyclerViewItemClickListener = new RecyclerViewItemClickListener() {
         @Override
         public void onItemClick(View v, int position) {
             String menuItem = menu_items.get(position);
@@ -107,8 +120,13 @@ public class DashBoardActivity extends BaseActivity
         }
     };
 
+    RecyclerViewItemClickListener ridesViewItemClickListener = (v, position) -> {
+    };
+
     void startMenuActivities(String menuItem){
         Toast.makeText(this, menuItem,Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, DocumentListActivity.class));
+        drawer.closeDrawer(GravityCompat.START);
     }
 
 }

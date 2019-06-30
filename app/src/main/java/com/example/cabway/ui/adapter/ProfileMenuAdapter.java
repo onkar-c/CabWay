@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.cabway.R;
-import com.example.cabway.ui.Interfaces.MenuItemClickListener;
+import com.example.cabway.ui.Interfaces.RecyclerViewItemClickListener;
 
 import java.util.List;
 
@@ -22,13 +22,13 @@ public class ProfileMenuAdapter extends RecyclerView.Adapter<ProfileMenuAdapter.
     private Context context;
     private List<String> mMenuItems;
     private TypedArray  mMenuItemsIcons;
-    private MenuItemClickListener menuItemClickListener;
+    private RecyclerViewItemClickListener recyclerViewItemClickListener;
 
-    public ProfileMenuAdapter(Context context, List<String> menuItems, TypedArray menuItemsIcon,MenuItemClickListener menuItemClickListener) {
+    public ProfileMenuAdapter(Context context, List<String> menuItems, TypedArray menuItemsIcon, RecyclerViewItemClickListener recyclerViewItemClickListener) {
         this.context = context;
         this.mMenuItems = menuItems;
         this.mMenuItemsIcons = menuItemsIcon;
-        this.menuItemClickListener = menuItemClickListener;
+        this.recyclerViewItemClickListener = recyclerViewItemClickListener;
     }
 
     @NonNull
@@ -48,6 +48,7 @@ public class ProfileMenuAdapter extends RecyclerView.Adapter<ProfileMenuAdapter.
     public int getItemCount() {
         return mMenuItems.size();
     }
+
     class ProfileMenuViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.menu_title)
         TextView menuTitle;
@@ -60,7 +61,7 @@ public class ProfileMenuAdapter extends RecyclerView.Adapter<ProfileMenuAdapter.
 
         @OnClick(R.id.profileMenuItem)
         void onMenuItemClick(View view){
-            menuItemClickListener.onItemClick(view,this.getAdapterPosition());
+            recyclerViewItemClickListener.onItemClick(view,this.getAdapterPosition());
         }
     }
 }

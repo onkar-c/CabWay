@@ -9,6 +9,14 @@
         <item>@string/logout</item>
     </string-array>
 
+
+    <string-array name="document_list">
+        <item>@string/driver_license</item>
+        <item>@string/vehicle_insurance</item>
+        <item>@string/vehicle_permit</item>
+        <item>@string/vehicle_registration</item>
+    </string-array>
+
     <array name="profile_menu_icons">
         <item>@drawable/ic_menu_manage</item>
         <item>@drawable/ic_menu_gallery</item>

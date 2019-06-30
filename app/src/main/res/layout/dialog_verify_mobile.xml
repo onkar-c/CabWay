@@ -29,7 +29,7 @@
             android:text="@string/otp_text"
             android:textAlignment="center"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/medium_text" />
+            android:textSize="@dimen/small_text" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,7 +54,7 @@
                 android:padding="12dp"
                 android:textColor="@android:color/black"
                 android:textColorHint="@color/colorPrimary"
-                android:textSize="@dimen/medium_text"
+                android:textSize="@dimen/small_text"
                 tools:ignore="UnusedAttribute" />
 
 
@@ -89,7 +89,7 @@
                 android:gravity="center_horizontal"
                 android:text="@string/not_received_your_code"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/small_text"
+                android:textSize="@dimen/extra_small_text"
                 android:visibility="visible" />
 
             <TextView
@@ -102,7 +102,7 @@
                 android:gravity="center_horizontal"
                 android:text="@string/resend_code"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/small_text"
+                android:textSize="@dimen/extra_small_text"
                 android:textStyle="bold" />
 
         </RelativeLayout>
