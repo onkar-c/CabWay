@@ -2,7 +2,6 @@
     <string name="app_name">CabWay</string>
 
 
-
     <string name="error_fail_connection">Check your internet connection and try again.</string>
 
 
@@ -40,7 +39,13 @@
     <string name="enter_start_location">Enter Start Location</string>
     <string name="enter_end_location">Enter End Location</string>
     <string name="find_a_route">FIND A ROUTE</string>
-
+    <string name="take_a_photo">Take A Photo</string>
+    <string name="pan_card_number">Pan Card Number</string>
+    <string name="pan_card_name">Name On Pan Card</string>
+    <string name="continue_bt">Continue</string>
+    <string name="expiry_date">Expiry Date :</string>
+    <string name="issued_on">Issued Date :</string>
+    <string name="date_format">DD/MM/YYYY</string>
 
     //dummy text
     <string name="dummy_document_type_text">Step 1 : Document Type</string>
@@ -65,6 +70,7 @@
     <string name="nav_header_subtitle">Some Description</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="document_upload">Document Upload</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
@@ -87,5 +93,6 @@
     <string name="vehicle_insurance">Vehicle Insurance</string>
     <string name="vehicle_permit">Vehicle Permit</string>
     <string name="vehicle_registration">Vehicle Registration</string>
+    <string name="pan_card">Pan Card</string>
 
 </resources>

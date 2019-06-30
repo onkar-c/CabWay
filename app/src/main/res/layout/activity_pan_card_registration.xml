@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp">
+
+        <LinearLayout
+            android:id="@+id/ll_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_banner"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:contentDescription="@string/take_a_photo"
+                android:src="@drawable/id_image" />
+
+
+        </LinearLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/il_pan_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_top"
+            android:layout_marginTop="20dp"
+            android:textColorHint="@android:color/darker_gray">
+
+            <EditText
+                android:id="@+id/et_pan_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/pan_card_number"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/small_text"
+                tools:ignore="Autofill,TextFields" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/il_pan_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/il_pan_number"
+            android:layout_marginTop="10dp"
+            android:textColorHint="@android:color/darker_gray">
+
+            <EditText
+                android:id="@+id/et_pan_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/pan_card_name"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/small_text"
+                tools:ignore="Autofill" />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <LinearLayout
+            android:id="@+id/issued_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/il_pan_name"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                android:id="@+id/et_issued_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:focusable="false"
+                android:hint="@string/issued_on"
+                android:maxLines="1"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/small_text"
+                tools:ignore="Autofill" />
+
+
+            <TextView
+                android:id="@+id/issued_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:clickable="false"
+                android:focusable="false"
+                android:hint="@string/date_format"
+                android:maxLines="1"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/small_text"
+                tools:ignore="Autofill" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/expired_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/issued_layout"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+
+            <TextView
+                android:id="@+id/et_expired_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:focusable="false"
+                android:hint="@string/expiry_date"
+                android:maxLines="1"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/small_text"
+                tools:ignore="Autofill" />
+
+            <TextView
+                android:id="@+id/expired_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:clickable="false"
+                android:focusable="false"
+                android:hint="@string/date_format"
+                android:maxLines="1"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/small_text"
+                tools:ignore="Autofill" />
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/btn_continue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/expired_layout"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
+            android:background="@android:color/black"
+            android:text="@string/continue_bt"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/small_text" />
+    </RelativeLayout>
+</ScrollView>

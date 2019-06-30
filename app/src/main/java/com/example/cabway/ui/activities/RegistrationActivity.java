@@ -20,6 +20,8 @@ import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
+import static com.example.cabway.Utils.TextValidationUtils.showMandatoryError;
+
 
 public class RegistrationActivity extends BaseActivity implements RegistrationInterface {
 
@@ -42,7 +44,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     Button bGenerateOtp;
 
     @BindView(R.id.submit)
-    Button  bSubmit;
+    Button bSubmit;
 
     @BindView(R.id.type)
     RadioGroup type;
@@ -62,9 +64,10 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
 
     @OnCheckedChanged({R.id.agency, R.id.driver})
     void onLoginTypeSelected(RadioButton button, boolean checked) {
-        if(checked)
+        if (checked)
             userType = button.getText().toString();
     }
+
     @OnClick(R.id.generate_otp)
     void generateOtp() {
         requestOtp();
@@ -72,7 +75,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
 
     @OnClick(R.id.submit)
     void submitInfo() {
-        if(validateAllFields()) {
+        if (validateAllFields()) {
             Toast.makeText(this, "" + mMobileNumber + " " + userType, Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, DocumentListActivity.class));
         }
@@ -80,7 +83,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
 
     @Override
     public void verifyOtp(String enteredOtp) {
-        if(enteredOtp.equals("1234")) {
+        if (enteredOtp.equals("1234")) {
             dialogOtp.otpVerificationSuccess();
             setUiForOtpSuccess();
         } else
@@ -90,18 +93,17 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     @Override
     public void requestOtp() {
         mMobileNumber = etPhone.getText().toString().trim();
-        if(TextValidationUtils.validateMobileNumber(mMobileNumber)){
-            Toast.makeText(this,R.string.otp_sent,Toast.LENGTH_SHORT).show();
-            if(!dialogOtp.isShowing())
-            dialogOtp.showCustomDialogVerifyMobile(mMobileNumber);
-        }else
-        Toast.makeText(this,R.string.mobile_length_message,Toast.LENGTH_SHORT).show();
+        if (TextValidationUtils.validateMobileNumber(mMobileNumber)) {
+            Toast.makeText(this, R.string.otp_sent, Toast.LENGTH_SHORT).show();
+            if (!dialogOtp.isShowing())
+                dialogOtp.showCustomDialogVerifyMobile(mMobileNumber);
+        } else
+            Toast.makeText(this, R.string.mobile_length_message, Toast.LENGTH_SHORT).show();
 
     }
 
 
-
-    private void setUiForOtpSuccess(){
+    private void setUiForOtpSuccess() {
         etFirstName.setVisibility(View.VISIBLE);
         etLastName.setVisibility(View.VISIBLE);
         etPassword.setVisibility(View.VISIBLE);
@@ -113,28 +115,25 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         bGenerateOtp.setVisibility(View.GONE);
     }
 
-    private boolean validateAllFields(){
-        if(TextValidationUtils.isEmpty(etFirstName.getText().toString())){
-            showMandatoryError(R.string.first_name);
+    private boolean validateAllFields() {
+        if (TextValidationUtils.isEmpty(etFirstName.getText().toString())) {
+            showMandatoryError(R.string.first_name, this);
             return false;
-        }else if(TextValidationUtils.isEmpty(etLastName.getText().toString())){
-            showMandatoryError(R.string.last_name);
+        } else if (TextValidationUtils.isEmpty(etLastName.getText().toString())) {
+            showMandatoryError(R.string.last_name, this);
             return false;
-        }else if(TextValidationUtils.isEmpty(etPassword.getText().toString())){
-            showMandatoryError(R.string.password);
+        } else if (TextValidationUtils.isEmpty(etPassword.getText().toString())) {
+            showMandatoryError(R.string.password, this);
             return false;
-        }else if(TextValidationUtils.isEmpty(etConfirmPassword.getText().toString())){
-            showMandatoryError(R.string.confirm_password);
+        } else if (TextValidationUtils.isEmpty(etConfirmPassword.getText().toString())) {
+            showMandatoryError(R.string.confirm_password, this);
             return false;
-        } else if(!etPassword.getText().toString().equals(etConfirmPassword.getText().toString())){
-            Toast.makeText(this,R.string.password_mismatch_message,Toast.LENGTH_SHORT).show();
+        } else if (!etPassword.getText().toString().equals(etConfirmPassword.getText().toString())) {
+            Toast.makeText(this, R.string.password_mismatch_message, Toast.LENGTH_SHORT).show();
             return false;
         } else
             return true;
     }
 
-    private void showMandatoryError(int field){
-        String message = String.format(getResources().getString(R.string.mandatory_messages), getResources().getString(field));
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-    }
+
 }

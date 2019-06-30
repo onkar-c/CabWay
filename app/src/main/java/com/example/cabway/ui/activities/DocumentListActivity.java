@@ -1,8 +1,10 @@
 package com.example.cabway.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.example.cabway.R;
 import com.example.cabway.ui.Interfaces.RecyclerViewItemClickListener;
@@ -20,10 +22,20 @@ public class DocumentListActivity extends BaseActivity {
     RecyclerView DocumentList;
 
     DocumentListAdapter documentListAdapter;
-    RecyclerViewItemClickListener recyclerViewItemClickListener = (v, position) -> {
-//            String menuItem = documentList.get(position);
-    };
     private List<String> documentList;
+    RecyclerViewItemClickListener recyclerViewItemClickListener = new RecyclerViewItemClickListener() {
+        @Override
+        public void onItemClick(View v, int position) {
+            Intent intent = null;
+            String menuItem = documentList.get(position);
+
+            if (menuItem.equals(getString(R.string.driver_license)))
+                intent = new Intent(DocumentListActivity.this, PanCardRegistrationActivity.class);
+
+            if (intent != null)
+                startActivity(intent);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
