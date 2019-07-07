@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
 
-import com.example.core.Utills.CoreSharedHelper;
+import com.example.core.Utills.AppPreferences;
 
 public class SplashScreenActivity extends BaseActivity {
 
@@ -14,7 +14,7 @@ public class SplashScreenActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        new CoreSharedHelper(this);
+        new AppPreferences(this);
         new Handler().postDelayed(SplashScreenActivity.this::startDashboardActivity,1000);
     }
 

@@ -11,8 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cabway.R;
-import com.example.cabway.Utils.AppConstants;
 import com.example.cabway.ui.Interfaces.RegistrationInterface;
+import com.example.database.Utills.AppConstants;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,17 +57,17 @@ public class DialogOtp {
 
     public void showCustomDialogVerifyMobile(final String mobileNo) {
 
-            String mobText = mContext.getString(R.string.otp_text);
+        String mobText = mContext.getString(R.string.otp_text);
 
-            mTvHeader.setText(mobText.replace("*","******" + mobileNo.substring(6, 10)));
-            dialog.show();
+        mTvHeader.setText(mobText.replace("*", "******" + mobileNo.substring(6, 10)));
+        dialog.show();
     }
 
     @OnClick(R.id.verifyBtn)
     void verifyOtp() {
         String otp = mEdtOtp.getText().toString();
-        if(otp.length() < AppConstants.OTP_LENGTH)
-            Toast.makeText(mContext,R.string.otp_length_message,Toast.LENGTH_SHORT).show();
+        if (otp.length() < AppConstants.OTP_LENGTH)
+            Toast.makeText(mContext, R.string.otp_length_message, Toast.LENGTH_SHORT).show();
         else
             registrationInterface.verifyOtp(otp);
     }
@@ -88,16 +88,16 @@ public class DialogOtp {
         }
     }
 
-    public void otpVerificationFailed(){
-        Toast.makeText(mContext,R.string.otp_verification_failed_message,Toast.LENGTH_SHORT).show();
+    public void otpVerificationFailed() {
+        Toast.makeText(mContext, R.string.otp_verification_failed_message, Toast.LENGTH_SHORT).show();
     }
 
-    public void otpVerificationSuccess(){
-        Toast.makeText(mContext,R.string.otp_verification_success_message,Toast.LENGTH_SHORT).show();
+    public void otpVerificationSuccess() {
+        Toast.makeText(mContext, R.string.otp_verification_success_message, Toast.LENGTH_SHORT).show();
         removeOtpDialog();
     }
 
-    public boolean isShowing(){
+    public boolean isShowing() {
         return dialog.isShowing();
     }
 }

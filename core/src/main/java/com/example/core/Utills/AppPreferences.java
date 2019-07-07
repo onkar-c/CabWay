@@ -9,30 +9,30 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 
-public class CoreSharedHelper {
-    private static CoreSharedHelper instance;
+public class AppPreferences {
+    private static AppPreferences instance;
     private final SharedPreferences sharedPreferences;
 
-    public CoreSharedHelper(Context context) {
+    public AppPreferences(Context context) {
         instance = this;
         sharedPreferences = context.getSharedPreferences(Constants.NAME, Context.MODE_PRIVATE);
     }
 
-    public static CoreSharedHelper getInstance() {
+    public static AppPreferences getInstance() {
         if (instance == null) {
-            throw new NullPointerException("CoreSharedHelper was not initialized!");
+            throw new NullPointerException("AppPreferences was not initialized!");
         }
         return instance;
     }
 
-    protected void delete(String key) {
+    private void delete(String key) {
         SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
         if (sharedPreferences.contains(key)) {
             sharedPreferencesEditor.remove(key).apply();
         }
     }
 
-    protected void savePref(String key, Object value) {
+    private void savePref(String key, Object value) {
         SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
 
         if (value instanceof Boolean) {
@@ -64,24 +64,26 @@ public class CoreSharedHelper {
 //        sharedPreferencesEditor.clear();
 //    }
 
-    public void saveUserUuId(String id) {
-        savePref(Constants.USER_UUID, id);
+    public void saveLoginType(String type) {
+        savePref(Constants.LOGIN_TYPE, type);
     }
 
+    public String getLoginType() {
+        return getPref(Constants.LOGIN_TYPE, "");
+    }
 
-    public void setNewUpadatesIds( ArrayList<String> noteIdsList){
-        if(noteIdsList != null && noteIdsList.size() > 0)
+    public ArrayList<String> getNewUpadatesIds() {
+        return new Gson().fromJson(getPref(Constants.NEW_UPDATES_IDS, ""), new TypeToken<ArrayList<String>>() {
+        }.getType());
+    }
+
+    public void setNewUpadatesIds(ArrayList<String> noteIdsList) {
+        if (noteIdsList != null && noteIdsList.size() > 0)
             savePref(Constants.NEW_UPDATES_IDS, new Gson().toJson(noteIdsList));
         else
             savePref(Constants.NEW_UPDATES_IDS, "");
 
     }
-
-    public ArrayList<String> getNewUpadatesIds() {
-       return new Gson().fromJson(getPref(Constants.NEW_UPDATES_IDS, ""), new TypeToken<ArrayList<String>>() {
-        }.getType());
-    }
-
 
     public void clearUserData() {
         Log.e("Clearing user Data====", "Clearing user Data====");
@@ -94,5 +96,7 @@ public class CoreSharedHelper {
         private static final String USER_UUID = "user_uuid";
         private static final String UNSYNCED_WORKSPACE_INVITES_LIST = "unsynced_workspace_invites_list";
         private static final String NEW_UPDATES_IDS = "new_updates_ids";
+        private static final String LOGIN_TYPE = "login_type";
+
     }
 }

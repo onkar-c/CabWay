@@ -55,10 +55,19 @@
             android:label="@string/upload_documents"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
-            android:name=".ui.activities.PanCardRegistrationActivity"
-            android:label="@string/document_upload"
+            android:name=".ui.activities.IdRegistrationActivity"
+            android:label="@string/driver_license"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ui.activities.VehicleRegistrationActivity"
+            android:label="@string/vehicle_registration"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ui.activities.ShopRegistrationActivity"
+            android:label="@string/shop_act_registration"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
     </application>

@@ -40,8 +40,15 @@
     <string name="enter_end_location">Enter End Location</string>
     <string name="find_a_route">FIND A ROUTE</string>
     <string name="take_a_photo">Take A Photo</string>
-    <string name="pan_card_number">Pan Card Number</string>
-    <string name="pan_card_name">Name On Pan Card</string>
+    <string name="document_number">Document Registration Number</string>
+    <string name="registration_number">Registration Number</string>
+    <string name="shop_act_number">Shop Act Number</string>
+    <string name="vehicle_type">Vehicle Type</string>
+    <string name="vehicle_name">Vehicle Name</string>
+    <string name="name_on_document">Name On Document</string>
+    <string name="name_of_shop">Name Of Shop</string>
+    <string name="state_name">State Name</string>
+    <string name="gst_number">GST Number</string>
     <string name="continue_bt">Continue</string>
     <string name="expiry_date">Expiry Date :</string>
     <string name="issued_on">Issued Date :</string>
@@ -71,6 +78,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="document_upload">Document Upload</string>
+    <string name="shop_act_registration">Shop Act Details</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
@@ -94,5 +102,9 @@
     <string name="vehicle_permit">Vehicle Permit</string>
     <string name="vehicle_registration">Vehicle Registration</string>
     <string name="pan_card">Pan Card</string>
+    <string name="aadhar_card">Aadhar Card</string>
+    <string name="shop_act">Shop Act</string>
+    <string name="gst">GST</string>
+
 
 </resources>

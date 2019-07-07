@@ -7,8 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.example.cabway.R;
+import com.example.cabway.Utils.IntentConstants;
 import com.example.cabway.ui.Interfaces.RecyclerViewItemClickListener;
 import com.example.cabway.ui.adapter.DocumentListAdapter;
+import com.example.database.Utills.AppConstants;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +32,23 @@ public class DocumentListActivity extends BaseActivity {
             String menuItem = documentList.get(position);
 
             if (menuItem.equals(getString(R.string.driver_license)))
-                intent = new Intent(DocumentListActivity.this, PanCardRegistrationActivity.class);
+                intent = new Intent(DocumentListActivity.this, IdRegistrationActivity.class);
+            else if (menuItem.equals(getString(R.string.aadhar_card))) {
+                intent = new Intent(DocumentListActivity.this, IdRegistrationActivity.class);
+                intent.putExtra(IntentConstants.AADHAR_CART_EXTRA, true);
+            } else if (menuItem.equals(getString(R.string.vehicle_registration))) {
+                intent = new Intent(DocumentListActivity.this, VehicleRegistrationActivity.class);
+                intent.putExtra(IntentConstants.DOC_TYPE_EXTRA, getString(R.string.vehicle_registration));
+            } else if (menuItem.equals(getString(R.string.vehicle_insurance))) {
+                intent = new Intent(DocumentListActivity.this, VehicleRegistrationActivity.class);
+                intent.putExtra(IntentConstants.DOC_TYPE_EXTRA, getString(R.string.vehicle_insurance));
+            } else if (menuItem.equals(getString(R.string.vehicle_permit))) {
+                intent = new Intent(DocumentListActivity.this, VehicleRegistrationActivity.class);
+                intent.putExtra(IntentConstants.DOC_TYPE_EXTRA, getString(R.string.vehicle_permit));
+            } else if (menuItem.equals(getString(R.string.shop_act))) {
+                intent = new Intent(DocumentListActivity.this, ShopRegistrationActivity.class);
+            }
+
 
             if (intent != null)
                 startActivity(intent);
@@ -55,6 +73,6 @@ public class DocumentListActivity extends BaseActivity {
     }
 
     private void initData() {
-        documentList = Arrays.asList(getResources().getStringArray(R.array.document_list));
+        documentList = Arrays.asList(getResources().getStringArray((appPreferences.getLoginType().equals(AppConstants.DRIVER)) ? R.array.driver_document_list : R.array.agency_document_list));
     }
 }

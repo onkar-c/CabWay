@@ -11,6 +11,7 @@
     tools:context=".ui.activities.LoginActivity">
 
     <RadioGroup
+        android:id="@+id/type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

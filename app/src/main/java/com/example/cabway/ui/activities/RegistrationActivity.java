@@ -6,7 +6,6 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -14,10 +13,10 @@ import com.example.cabway.R;
 import com.example.cabway.Utils.TextValidationUtils;
 import com.example.cabway.ui.Interfaces.RegistrationInterface;
 import com.example.cabway.ui.dialogs.DialogOtp;
+import com.example.database.Utills.AppConstants;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 import static com.example.cabway.Utils.TextValidationUtils.showMandatoryError;
@@ -51,7 +50,6 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
 
     private DialogOtp dialogOtp;
     private String mMobileNumber;
-    private String userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,11 +60,6 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         dialogOtp = new DialogOtp(this);
     }
 
-    @OnCheckedChanged({R.id.agency, R.id.driver})
-    void onLoginTypeSelected(RadioButton button, boolean checked) {
-        if (checked)
-            userType = button.getText().toString();
-    }
 
     @OnClick(R.id.generate_otp)
     void generateOtp() {
@@ -76,9 +69,14 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     @OnClick(R.id.submit)
     void submitInfo() {
         if (validateAllFields()) {
-            Toast.makeText(this, "" + mMobileNumber + " " + userType, Toast.LENGTH_SHORT).show();
+            setUserType(type.getCheckedRadioButtonId());
+            Toast.makeText(this, "" + mMobileNumber + " ", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, DocumentListActivity.class));
         }
+    }
+
+    private void setUserType(int id) {
+        appPreferences.saveLoginType((id == R.id.agency) ? AppConstants.AGENCY : AppConstants.DRIVER);
     }
 
     @Override

@@ -13,14 +13,18 @@ import android.widget.Toast;
 import com.example.cabway.R;
 import com.example.cabway.Utils.ConnectivityUtils;
 import com.example.cabway.Utils.DialogUtils;
+import com.example.core.Utills.AppPreferences;
 
 public class BaseActivity extends AppCompatActivity {
 
     private ProgressDialog mProgressDialog;
+    AppPreferences appPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        appPreferences = AppPreferences.getInstance();
     }
 
     @Override
