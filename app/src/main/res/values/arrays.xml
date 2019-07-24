@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="profile_menu">
-        <item>@string/waybill</item>
+        <item>@string/history</item>
         <item>@string/documents</item>
-        <item>@string/settings</item>
+        <item>@string/profile</item>
         <item>@string/about</item>
         <item>@string/help</item>
         <item>@string/logout</item>
     </string-array>
+
+    <array name="profile_menu_icons">
+        <item>@drawable/ic_history</item>
+        <item>@drawable/ic_doc</item>
+        <item>@drawable/ic_profile</item>
+        <item>@drawable/ic_about_us</item>
+        <item>@drawable/ic_help</item>
+        <item>@drawable/ic_logout</item>
+    </array>
 
 
     <string-array name="driver_document_list">
@@ -23,12 +32,5 @@
         <item>@string/aadhar_card</item>
     </string-array>
 
-    <array name="profile_menu_icons">
-        <item>@drawable/ic_menu_manage</item>
-        <item>@drawable/ic_menu_gallery</item>
-        <item>@drawable/ic_menu_camera</item>
-        <item>@drawable/ic_menu_share</item>
-        <item>@drawable/ic_menu_slideshow</item>
-        <item>@drawable/ic_menu_send</item>
-    </array>
+
 </resources>

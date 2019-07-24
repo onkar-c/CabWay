@@ -17,14 +17,15 @@ import com.example.core.Utills.AppPreferences;
 
 public class BaseActivity extends AppCompatActivity {
 
-    private ProgressDialog mProgressDialog;
     AppPreferences appPreferences;
-
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         appPreferences = AppPreferences.getInstance();
+        if (appPreferences == null)
+            appPreferences = new AppPreferences(this);
     }
 
     @Override
@@ -61,7 +62,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        if(isTaskRoot())
+        if (isTaskRoot())
             DialogUtils.showExitDialog(this);
         else
             super.onBackPressed();
@@ -77,7 +78,7 @@ public class BaseActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    protected void setUpActionBar(){
+    protected void setUpActionBar() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -86,7 +87,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
-    public void showProgressDialog(Context context,String bodyText, final boolean isRequestCancelable) {
+    public void showProgressDialog(Context context, String bodyText, final boolean isRequestCancelable) {
         try {
             if (mProgressDialog == null) {
                 mProgressDialog = new ProgressDialog(context);

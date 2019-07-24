@@ -19,9 +19,6 @@ public class AppPreferences {
     }
 
     public static AppPreferences getInstance() {
-        if (instance == null) {
-            throw new NullPointerException("AppPreferences was not initialized!");
-        }
         return instance;
     }
 

@@ -47,7 +47,15 @@ public class DashBoardActivity extends BaseActivity
 
     ProfileMenuAdapter profileMenuAdapter;
     AvailableRidesListAdapter availableRidesListAdapter;
+    RecyclerViewItemClickListener ridesViewItemClickListener = (v, position) -> startActivity(new Intent(DashBoardActivity.this, DriverRideDetailPage.class));
     private List<String> menu_items;
+    RecyclerViewItemClickListener recyclerViewItemClickListener = new RecyclerViewItemClickListener() {
+        @Override
+        public void onItemClick(View v, int position) {
+            String menuItem = menu_items.get(position);
+            startMenuActivities(menuItem);
+        }
+    };
     private TypedArray menu_items_icon;
 
     @Override
@@ -61,8 +69,7 @@ public class DashBoardActivity extends BaseActivity
         setRidesList();
     }
 
-
-    private void setRidesList(){
+    private void setRidesList() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         availableRidesList.setLayoutManager(layoutManager);
         availableRidesListAdapter = new AvailableRidesListAdapter(this, ridesViewItemClickListener);
@@ -112,21 +119,17 @@ public class DashBoardActivity extends BaseActivity
         return true;
     }
 
-    RecyclerViewItemClickListener recyclerViewItemClickListener = new RecyclerViewItemClickListener() {
-        @Override
-        public void onItemClick(View v, int position) {
-            String menuItem = menu_items.get(position);
-            startMenuActivities(menuItem);
-        }
-    };
-
-    RecyclerViewItemClickListener ridesViewItemClickListener = (v, position) -> {
-    };
-
-    void startMenuActivities(String menuItem){
-        Toast.makeText(this, menuItem,Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(this, DocumentListActivity.class));
+    void startMenuActivities(String menuItem) {
+        Toast.makeText(this, menuItem, Toast.LENGTH_SHORT).show();
         drawer.closeDrawer(GravityCompat.START);
+        Intent nextActivity = null;
+        if (menuItem.equals(getString(R.string.help)))
+            nextActivity = new Intent(this, HelpActivity.class);
+        else if (menuItem.equals(getString(R.string.documents)))
+            nextActivity = new Intent(this, DocumentListActivity.class);
+
+        if (nextActivity != null)
+            startActivity(nextActivity);
     }
 
 }

@@ -11,9 +11,9 @@
     <application
         android:allowBackup="true"
         android:fullBackupContent="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_cabway"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_round_cabway"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -68,6 +68,15 @@
         <activity
             android:name=".ui.activities.ShopRegistrationActivity"
             android:label="@string/shop_act_registration"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ui.activities.HelpActivity"
+            android:label="@string/help_activity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".ui.activities.DriverRideDetailPage"
+            android:label="@string/help_activity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
     </application>
