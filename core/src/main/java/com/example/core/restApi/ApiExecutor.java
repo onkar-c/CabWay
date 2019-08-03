@@ -15,7 +15,7 @@ import com.example.database.models.UserModel;
 
 import java.util.Objects;
 
-public class HeroesApiExecutor {
+public class ApiExecutor {
 
     public static void getUsersFromServer(final MutableLiveData<Boolean> response, final Context context) {
         MutableLiveData<JsonResponse> jsonResponseMutableLiveData = new MutableLiveData<>();
@@ -28,6 +28,11 @@ public class HeroesApiExecutor {
                     }
                 });
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        RequestExecutor.execute(apiInterface.getHeros(), jsonResponseMutableLiveData);
+        RequestExecutor.ExecuteApi(apiInterface.getHeros(), jsonResponseMutableLiveData);
+    }
+
+    public static void getOtpForRegistration(final MutableLiveData<JsonResponse> mltOtpResponse, String mobileNo) {
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        RequestExecutor.ExecuteApi(apiInterface.getOtpForRegistration(mobileNo), mltOtpResponse);
     }
 }

@@ -3,10 +3,13 @@ package com.example.cabway.ui.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cabway.R;
+import com.example.cabway.Utils.IntentConstants;
 import com.example.database.Utills.AppConstants;
 
 import butterknife.BindView;
@@ -35,6 +38,10 @@ public class DriverRideDetailPage extends BaseActivity {
     TextView tvDestinationLocation;
     @BindView(R.id.profile_image)
     ImageView ivProfileImage;
+    @BindView(R.id.call_agency)
+    Button btCall;
+
+    private boolean isFromHistory = false;
 
 
     @Override
@@ -43,6 +50,16 @@ public class DriverRideDetailPage extends BaseActivity {
         setContentView(R.layout.activity_driver_ride_detail_page);
         setUpActionBar();
         ButterKnife.bind(this);
+        getDataFromExtras();
+        setUi();
+    }
+
+    private void setUi() {
+        btCall.setVisibility((isFromHistory) ? View.GONE : View.VISIBLE);
+    }
+
+    private void getDataFromExtras() {
+        isFromHistory = getIntent().getBooleanExtra(IntentConstants.IS_FROM_HISTORY, false);
     }
 
     @OnClick(R.id.call_agency)

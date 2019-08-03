@@ -3,7 +3,7 @@ package com.example.cabway.repositories;
 import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 
-import com.example.core.restApi.HeroesApiExecutor;
+import com.example.core.restApi.ApiExecutor;
 import com.example.database.entities.Hero;
 import com.example.database.models.UserModel;
 
@@ -22,7 +22,7 @@ public class HeroesRepository {
     }
 
     public void getHeroesFromServer(MutableLiveData<Boolean> response, Context context) {
-        HeroesApiExecutor.getUsersFromServer(response, context);
+        ApiExecutor.getUsersFromServer(response, context);
     }
 
     public void getHeroesFromDb(Context context, MutableLiveData<List<Hero>> response) {

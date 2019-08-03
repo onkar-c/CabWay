@@ -7,6 +7,7 @@
 
     //Ui text
     <string name="login_phone">Phone Number</string>
+    <string name="new_password">Enter New Password</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="ui_login">Login</string>
@@ -88,6 +89,8 @@
     <string name="document_upload">Document Upload</string>
     <string name="shop_act_registration">Shop Act Details</string>
     <string name="help_activity">Help</string>
+    <string name="about_us">About Us</string>
+    <string name="rides_history">History</string>
     <string name="ride_details">Ride Details</string>
     <string name="call_us">CALL US</string>
     <string name="call_us_for_help">CALL US FOR HELP</string>

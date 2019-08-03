@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cabway.R;
@@ -21,7 +22,7 @@ import butterknife.OnClick;
 public class ProfileMenuAdapter extends RecyclerView.Adapter<ProfileMenuAdapter.ProfileMenuViewHolder> {
     private Context context;
     private List<String> mMenuItems;
-    private TypedArray  mMenuItemsIcons;
+    private TypedArray mMenuItemsIcons;
     private RecyclerViewItemClickListener recyclerViewItemClickListener;
 
     public ProfileMenuAdapter(Context context, List<String> menuItems, TypedArray menuItemsIcon, RecyclerViewItemClickListener recyclerViewItemClickListener) {
@@ -41,7 +42,7 @@ public class ProfileMenuAdapter extends RecyclerView.Adapter<ProfileMenuAdapter.
     @Override
     public void onBindViewHolder(@NonNull ProfileMenuAdapter.ProfileMenuViewHolder holder, int position) {
         holder.menuTitle.setText(mMenuItems.get(position));
-        holder.menuTitle.setCompoundDrawablesWithIntrinsicBounds(mMenuItemsIcons.getResourceId(position,0), 0, 0, 0);
+        holder.itemImage.setImageResource(mMenuItemsIcons.getResourceId(position, 0));
     }
 
     @Override
@@ -49,19 +50,20 @@ public class ProfileMenuAdapter extends RecyclerView.Adapter<ProfileMenuAdapter.
         return mMenuItems.size();
     }
 
-    class ProfileMenuViewHolder extends RecyclerView.ViewHolder{
+    class ProfileMenuViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.menu_title)
         TextView menuTitle;
+        @BindView(R.id.itemImage)
+        ImageView itemImage;
 
         ProfileMenuViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
         }
 
         @OnClick(R.id.profileMenuItem)
-        void onMenuItemClick(View view){
-            recyclerViewItemClickListener.onItemClick(view,this.getAdapterPosition());
+        void onMenuItemClick(View view) {
+            recyclerViewItemClickListener.onItemClick(view, this.getAdapterPosition());
         }
     }
 }

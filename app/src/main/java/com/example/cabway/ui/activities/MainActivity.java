@@ -5,18 +5,19 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.database.entities.Hero;
 import com.example.cabway.R;
 import com.example.cabway.viewModels.MainActivityViewModel;
+import com.example.database.entities.Hero;
 import com.facebook.stetho.Stetho;
 
 import java.util.Objects;
 
-public class MainActivity extends BaseActivity{
+public class MainActivity extends BaseActivity {
 
     MainActivityViewModel mainActivityViewModel;
     TextView textView;
     Button hit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +36,8 @@ public class MainActivity extends BaseActivity{
         mainActivityViewModel.getResponse().observe(this, s -> {
             textView.setText("");
             removeProgressDialog();
-            for (Hero hero : Objects.requireNonNull(s)){
-                textView.append("\n" +hero.getData());
+            for (Hero hero : Objects.requireNonNull(s)) {
+                textView.append("\n" + hero.getData());
             }
         });
 

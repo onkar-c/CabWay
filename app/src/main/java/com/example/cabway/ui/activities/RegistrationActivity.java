@@ -1,5 +1,6 @@
 package com.example.cabway.ui.activities;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
@@ -13,7 +14,10 @@ import com.example.cabway.R;
 import com.example.cabway.Utils.TextValidationUtils;
 import com.example.cabway.ui.Interfaces.RegistrationInterface;
 import com.example.cabway.ui.dialogs.DialogOtp;
+import com.example.cabway.viewModels.RegistrationViewModel;
 import com.example.database.Utills.AppConstants;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,13 +55,29 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     private DialogOtp dialogOtp;
     private String mMobileNumber;
 
+    private RegistrationViewModel registrationViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         setUpActionBar();
         ButterKnife.bind(this);
+        registrationViewModel = ViewModelProviders.of(this).get(RegistrationViewModel.class);
+        registrationViewModel.init();
         dialogOtp = new DialogOtp(this);
+    }
+
+    private void setOtpObserver() {
+        registrationViewModel.getOtpResponseMld().observe(this, otpResponse -> {
+            if (Objects.requireNonNull(otpResponse).getStatus().equals(AppConstants.SUCCESS)) {
+                Toast.makeText(RegistrationActivity.this, R.string.otp_sent, Toast.LENGTH_SHORT).show();
+                if (!dialogOtp.isShowing())
+                    dialogOtp.showCustomDialogVerifyMobile(mMobileNumber);
+            } else {
+                Toast.makeText(RegistrationActivity.this, otpResponse.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
@@ -92,9 +112,10 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     public void requestOtp() {
         mMobileNumber = etPhone.getText().toString().trim();
         if (TextValidationUtils.validateMobileNumber(mMobileNumber)) {
-            Toast.makeText(this, R.string.otp_sent, Toast.LENGTH_SHORT).show();
-            if (!dialogOtp.isShowing())
-                dialogOtp.showCustomDialogVerifyMobile(mMobileNumber);
+            if (checkNetworkAvailableWithoutError()) {
+                setOtpObserver();
+                registrationViewModel.getRegistrationRepository().getOtp(registrationViewModel.getOtpResponseMld(), mMobileNumber);
+            }
         } else
             Toast.makeText(this, R.string.mobile_length_message, Toast.LENGTH_SHORT).show();
 
@@ -132,6 +153,4 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         } else
             return true;
     }
-
-
 }

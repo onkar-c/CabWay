@@ -1,19 +1,40 @@
 package com.example.core;
 
 import android.arch.lifecycle.MutableLiveData;
-import android.util.Log;
+import android.support.annotation.NonNull;
 
 import com.example.core.responseModel.JsonResponse;
+import com.example.database.Utills.AppConstants;
 
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RequestExecutor {
 
-    public static void execute(Observable<JsonResponse> call, final MutableLiveData<JsonResponse> response) {
+
+    public static void ExecuteApi(Call<JsonResponse> apiToBeCalled, final MutableLiveData<JsonResponse> mutableResponse) {
+
+        apiToBeCalled.enqueue(new Callback<JsonResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonResponse> call,
+                                   @NonNull Response<JsonResponse> response) {
+                if (response.isSuccessful()) {
+                    mutableResponse.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonResponse> call, @NonNull Throwable t) {
+                JsonResponse jsonResponse = new JsonResponse();
+                jsonResponse.setStatus(AppConstants.ERROR);
+                jsonResponse.setMessage(t.getMessage());
+                mutableResponse.setValue(jsonResponse);
+            }
+        });
+    }
+
+   /* public static void execute(Observable<JsonResponse> call, final MutableLiveData<JsonResponse> response) {
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<JsonResponse>() {
@@ -39,5 +60,5 @@ public class RequestExecutor {
 
                     }
                 });
-    }
+    }*/
 }
