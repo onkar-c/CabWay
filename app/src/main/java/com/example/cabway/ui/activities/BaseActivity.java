@@ -5,8 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Window;
 import android.widget.Toast;
 
@@ -26,6 +24,7 @@ public class BaseActivity extends AppCompatActivity {
         appPreferences = AppPreferences.getInstance();
         if (appPreferences == null)
             appPreferences = new AppPreferences(this);
+        setProgressDialog(this);
     }
 
     @Override
@@ -86,31 +85,22 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-
-    public void showProgressDialog(Context context, String bodyText, final boolean isRequestCancelable) {
+    public void setProgressDialog(Context context) {
         try {
             if (mProgressDialog == null) {
                 mProgressDialog = new ProgressDialog(context);
                 mProgressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                mProgressDialog.setCancelable(isRequestCancelable);
-                mProgressDialog.setOnKeyListener((dialog, keyCode, event) -> {
-                    if (keyCode == KeyEvent.KEYCODE_CAMERA || keyCode == KeyEvent.KEYCODE_SEARCH) {
-                        return true; //
-                    } else if (keyCode == KeyEvent.KEYCODE_BACK && isRequestCancelable) {
-                        Log.e("Ondailogback", "cancel dailog");
-//                        RequestManager.cancelRequest();
-                        dialog.dismiss();
-                        return true;
-                    }
-                    return false;
-                });
-            }
-            mProgressDialog.setMessage(bodyText);
-
-            if (!mProgressDialog.isShowing()) {
-                mProgressDialog.show();
             }
         } catch (Exception ignored) {
+        }
+    }
+
+
+    public void showProgressDialog(String bodyText, final boolean isRequestCancelable) {
+        mProgressDialog.setCancelable(isRequestCancelable);
+        mProgressDialog.setMessage(bodyText);
+        if (!mProgressDialog.isShowing()) {
+            mProgressDialog.show();
         }
     }
 

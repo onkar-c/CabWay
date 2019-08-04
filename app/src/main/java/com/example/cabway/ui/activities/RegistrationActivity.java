@@ -70,6 +70,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
 
     private void setOtpObserver() {
         registrationViewModel.getOtpResponseMld().observe(this, otpResponse -> {
+            removeProgressDialog();
             if (Objects.requireNonNull(otpResponse).getStatus().equals(AppConstants.SUCCESS)) {
                 Toast.makeText(RegistrationActivity.this, R.string.otp_sent, Toast.LENGTH_SHORT).show();
                 if (!dialogOtp.isShowing())
@@ -83,6 +84,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
 
     @OnClick(R.id.generate_otp)
     void generateOtp() {
+        showProgressDialog(AppConstants.PLEASE_WAIT, false);
         requestOtp();
     }
 

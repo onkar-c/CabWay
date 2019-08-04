@@ -9,4 +9,5 @@ public class AppConstants {
     public static final String DUMMY_AGENCY_number = "9384959560";
     public static final String SUCCESS = "success";
     public static final String ERROR = "error";
+    public static final String PLEASE_WAIT = "Please Wait...";
 }

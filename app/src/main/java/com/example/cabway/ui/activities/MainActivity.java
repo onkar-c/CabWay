@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.example.cabway.R;
 import com.example.cabway.viewModels.MainActivityViewModel;
+import com.example.database.Utills.AppConstants;
 import com.example.database.entities.Hero;
 import com.facebook.stetho.Stetho;
 
@@ -27,7 +28,7 @@ public class MainActivity extends BaseActivity {
         hit = findViewById(R.id.hitButton);
 
         hit.setOnClickListener(view -> {
-            showProgressDialog(this, "Please Wait", false);
+            showProgressDialog(AppConstants.PLEASE_WAIT, false);
             mainActivityViewModel.makeCall(MainActivity.this);
         });
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
