@@ -47,7 +47,7 @@ public class DashBoardActivity extends BaseActivity
 
     ProfileMenuAdapter profileMenuAdapter;
     AvailableRidesListAdapter availableRidesListAdapter;
-    RecyclerViewItemClickListener ridesViewItemClickListener = (v, position) -> startActivity(new Intent(DashBoardActivity.this, DriverRideDetailPage.class));
+    RecyclerViewItemClickListener ridesViewItemClickListener = (v, position) -> startActivity(new Intent(DashBoardActivity.this, BookRideActivity.class));
     private List<String> menu_items;
     RecyclerViewItemClickListener recyclerViewItemClickListener = new RecyclerViewItemClickListener() {
         @Override

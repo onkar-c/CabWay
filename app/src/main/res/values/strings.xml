@@ -37,8 +37,8 @@
     <string name="step">Step</string>
     <string name="currency_text">INR</string>
     <string name="km_text">km</string>
-    <string name="enter_start_location">Enter Start Location</string>
-    <string name="enter_end_location">Enter End Location</string>
+    <string name="from_location">From Location</string>
+    <string name="to_location">To Location</string>
     <string name="find_a_route">FIND A ROUTE</string>
     <string name="take_a_photo">Take A Photo</string>
     <string name="document_number">Document Registration Number</string>
@@ -60,6 +60,13 @@
     <string name="trip_mode">TRIP MODE :</string>
     <string name="agency_number">AGENCY NUMBER :</string>
     <string name="call_agency">CALL AGENCY</string>
+    <string name="car_type_hint">CAR TYPE</string>
+    <string name="date_of_journey_hint">DATE OF JOURNEY</string>
+    <string name="time_of_journey_hint">TIME OF JOURNEY</string>
+    <string name="agency_number_hint">AGENCY MOBILE NO</string>
+    <string name="trip_mode_hint">TRIP MODE</string>
+    <string name="cost_of_trip_hint">COST OF TRIP</string>
+    <string name="book_a_ride">BOOK RIDE</string>
 
     //dummy text
     <string name="dummy_document_type_text">Step 1 : Document Type</string>
@@ -123,6 +130,7 @@
     <string name="aadhar_card">Aadhar Card</string>
     <string name="shop_act">Shop Act</string>
     <string name="gst">GST</string>
+    <string name="book_ride">Book Ride</string>
 
 
 </resources>
