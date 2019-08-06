@@ -13,9 +13,8 @@ public class DatePickerUtils {
         Calendar calendar = Calendar.getInstance();
         new DatePickerDialog(context,
                 (datePicker, arg1, arg2, arg3) -> {
-                    String selectedDate = arg3 + "/" + arg2 + 1 + "/" + arg1;
+                    String selectedDate = arg3 + "/" + (arg2 + 1 )+ "/" + arg1;
                     datePickerCallBackInterface.setDateFromDatePicker(selectedDate);
-                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH)).show();
-
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 }
