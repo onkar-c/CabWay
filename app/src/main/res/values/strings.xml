@@ -35,7 +35,7 @@
     <string name="mandatory_messages">Please Enter %1$s.</string>
     <string name="registration_success">User Registered Successfully.</string>
     <string name="step">Step</string>
-    <string name="currency_text">INR</string>
+    <string name="currency_text">₹</string>
     <string name="km_text">km</string>
     <string name="from_location">From Location</string>
     <string name="to_location">To Location</string>
@@ -67,6 +67,14 @@
     <string name="trip_mode_hint">TRIP MODE</string>
     <string name="cost_of_trip_hint">COST OF TRIP</string>
     <string name="book_a_ride">BOOK RIDE</string>
+    <string name="distance_hint">DISTANCE</string>
+    <string name="book_ride">Book Ride</string>
+    <string name="address">Address</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="pincode">PinCode</string>
+    <string name="invalid_email">Please Enter Valid Email.</string>
+
 
     //dummy text
     <string name="dummy_document_type_text">Step 1 : Document Type</string>
@@ -130,7 +138,6 @@
     <string name="aadhar_card">Aadhar Card</string>
     <string name="shop_act">Shop Act</string>
     <string name="gst">GST</string>
-    <string name="book_ride">Book Ride</string>
 
 
 </resources>

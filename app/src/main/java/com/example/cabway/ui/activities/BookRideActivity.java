@@ -53,7 +53,11 @@ public class BookRideActivity extends BaseActivity implements DatePickerCallBack
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_ride);
+        setUpActionBar();
+        setUpUi();
+    }
 
+    private void setUpUi(){
         dateOfJourneyET=findViewById(R.id.et_date_of_journey);
         dateOfJourneyET.setOnClickListener(v -> DatePickerUtils.startDatePicker(BookRideActivity.this, BookRideActivity.this));
 
