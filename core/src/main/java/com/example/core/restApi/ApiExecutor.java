@@ -10,6 +10,7 @@ import com.example.core.ApiClient;
 import com.example.core.ApiInterface;
 import com.example.core.RequestExecutor;
 import com.example.core.Utills.HeroUtils;
+import com.example.core.requestModels.LoginRequestModel;
 import com.example.core.requestModels.VerifyOtpRequestModel;
 import com.example.core.responseModel.JsonResponse;
 import com.example.database.models.UserModel;
@@ -45,5 +46,10 @@ public class ApiExecutor {
     public static void registerUser(final MutableLiveData<JsonResponse> mltRegisterUserResponse, com.example.core.CommonModels.UserModel userModel) {
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         RequestExecutor.ExecuteApi(apiInterface.registerUser(userModel), mltRegisterUserResponse);
+    }
+
+    public static void validateLogin(final MutableLiveData<JsonResponse> mltLoginResponse, LoginRequestModel loginRequestModel) {
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        RequestExecutor.ExecuteApi(apiInterface.validateLogin(loginRequestModel), mltLoginResponse);
     }
 }

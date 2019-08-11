@@ -2,6 +2,7 @@ package com.example.core;
 
 
 import com.example.core.CommonModels.UserModel;
+import com.example.core.requestModels.LoginRequestModel;
 import com.example.core.requestModels.VerifyOtpRequestModel;
 import com.example.core.responseModel.JsonResponse;
 
@@ -24,4 +25,7 @@ public interface ApiInterface {
 
     @POST("users")
     Call<JsonResponse> registerUser(@Body UserModel userModel);
+
+    @POST("users/Login")
+    Call<JsonResponse> validateLogin(@Body LoginRequestModel loginRequestModel);
 }
