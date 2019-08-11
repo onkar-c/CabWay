@@ -17,7 +17,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    private static final String BASE_URL = "http://192.168.43.36:9090/cabsystem/";
+    private static final String IP = "192.168.43.36:9090";
+    private static final String BASE_URL = "http://" + IP +"/cabsystem/";
 //    private static final String DUMMY_BASE_URL = "https://my-json-server.typicode.com/onkar-c/DummyApi/";
     private static Retrofit retrofit = null;
 

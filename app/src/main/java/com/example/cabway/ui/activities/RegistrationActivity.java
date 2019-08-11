@@ -1,7 +1,6 @@
 package com.example.cabway.ui.activities;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -15,6 +14,7 @@ import com.example.cabway.Utils.TextValidationUtils;
 import com.example.cabway.ui.Interfaces.RegistrationInterface;
 import com.example.cabway.ui.dialogs.DialogOtp;
 import com.example.cabway.viewModels.RegistrationViewModel;
+import com.example.core.CommonModels.UserModel;
 import com.example.database.Utills.AppConstants;
 
 import java.util.Objects;
@@ -66,6 +66,13 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         registrationViewModel = ViewModelProviders.of(this).get(RegistrationViewModel.class);
         registrationViewModel.init();
         dialogOtp = new DialogOtp(this);
+        setObservers();
+    }
+
+    private void setObservers() {
+        setOtpObserver();
+        setVerifyOtpObserver();
+        setRegisterUserObserver();
     }
 
     private void setOtpObserver() {
@@ -81,6 +88,30 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         });
     }
 
+    private void setVerifyOtpObserver() {
+        registrationViewModel.getVerifyOtpResponseMld().observe(this, verifyOtpResponse -> {
+            removeProgressDialog();
+            if (Objects.requireNonNull(verifyOtpResponse).getStatus().equals(AppConstants.SUCCESS)) {
+                dialogOtp.otpVerificationSuccess();
+                setUiForOtpSuccess();
+            } else
+                dialogOtp.otpVerificationFailed();
+        });
+    }
+
+
+    private void setRegisterUserObserver() {
+        registrationViewModel.getUserRegistrationResponseMld().observe(this, userRegistrationResponse -> {
+            removeProgressDialog();
+            if (Objects.requireNonNull(userRegistrationResponse).getStatus().equals(AppConstants.SUCCESS)) {
+                Toast.makeText(RegistrationActivity.this, userRegistrationResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                onBackPressed();
+            } else {
+                Toast.makeText(RegistrationActivity.this, userRegistrationResponse.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     @OnClick(R.id.generate_otp)
     void generateOtp() {
@@ -90,24 +121,30 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
 
     @OnClick(R.id.submit)
     void submitInfo() {
-        if (validateAllFields()) {
-            setUserType(type.getCheckedRadioButtonId());
-            Toast.makeText(this, "" + mMobileNumber + " ", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, DocumentListActivity.class));
+        if (checkNetworkAvailableWithoutError()) {
+            if (validateAllFields()) {
+                showProgressDialog(AppConstants.PLEASE_WAIT, false);
+                UserModel userModel = createUserModel();
+                registrationViewModel.getRegistrationRepository().registerUser(registrationViewModel.getUserRegistrationResponseMld(), userModel);
+            }
         }
     }
 
-    private void setUserType(int id) {
-        appPreferences.saveLoginType((id == R.id.agency) ? AppConstants.AGENCY : AppConstants.DRIVER);
+    private UserModel createUserModel() {
+        UserModel userModel = new UserModel();
+        userModel.setFirstName(etFirstName.getText().toString());
+        userModel.setLastName(etLastName.getText().toString());
+        userModel.setPassword(etPassword.getText().toString());
+        userModel.setRole((type.getCheckedRadioButtonId() == R.id.agency) ? AppConstants.AGENCY : AppConstants.DRIVER);
+        return userModel;
     }
 
     @Override
     public void verifyOtp(String enteredOtp) {
-        if (enteredOtp.equals("1234")) {
-            dialogOtp.otpVerificationSuccess();
-            setUiForOtpSuccess();
-        } else
-            dialogOtp.otpVerificationFailed();
+        if (checkNetworkAvailableWithoutError()) {
+            showProgressDialog(AppConstants.PLEASE_WAIT, false);
+            registrationViewModel.getRegistrationRepository().verifyOtp(registrationViewModel.getVerifyOtpResponseMld(), mMobileNumber, Integer.parseInt(enteredOtp));
+        }
     }
 
     @Override
@@ -115,7 +152,6 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         mMobileNumber = etPhone.getText().toString().trim();
         if (TextValidationUtils.validateMobileNumber(mMobileNumber)) {
             if (checkNetworkAvailableWithoutError()) {
-                setOtpObserver();
                 registrationViewModel.getRegistrationRepository().getOtp(registrationViewModel.getOtpResponseMld(), mMobileNumber);
             }
         } else
