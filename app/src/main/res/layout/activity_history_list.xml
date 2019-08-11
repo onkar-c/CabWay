@@ -3,11 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.HistoryListActivity">
+    tools:context=".ui.activities.HistoryListActivity"
+    android:paddingBottom="5dp">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/ridesHistoryList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:clipToPadding="false"/>
 
 </RelativeLayout>

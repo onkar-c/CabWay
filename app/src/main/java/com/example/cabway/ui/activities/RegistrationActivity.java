@@ -37,6 +37,21 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     @BindView(R.id.phone)
     EditText etPhone;
 
+    @BindView(R.id.et_email)
+    EditText etEmail;
+
+    @BindView(R.id.et_address)
+    EditText etAddress;
+
+    @BindView(R.id.et_city)
+    EditText etCity;
+
+    @BindView(R.id.et_state)
+    EditText etState;
+
+    @BindView(R.id.et_pincode)
+    EditText etPincode;
+
     @BindView(R.id.password)
     EditText etPassword;
 
@@ -115,7 +130,6 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
 
     @OnClick(R.id.generate_otp)
     void generateOtp() {
-        showProgressDialog(AppConstants.PLEASE_WAIT, false);
         requestOtp();
     }
 
@@ -152,6 +166,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         mMobileNumber = etPhone.getText().toString().trim();
         if (TextValidationUtils.validateMobileNumber(mMobileNumber)) {
             if (checkNetworkAvailableWithoutError()) {
+                showProgressDialog(AppConstants.PLEASE_WAIT, false);
                 registrationViewModel.getRegistrationRepository().getOtp(registrationViewModel.getOtpResponseMld(), mMobileNumber);
             }
         } else
@@ -165,6 +180,11 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         etLastName.setVisibility(View.VISIBLE);
         etPassword.setVisibility(View.VISIBLE);
         etConfirmPassword.setVisibility(View.VISIBLE);
+        etEmail.setVisibility(View.VISIBLE);
+        etAddress.setVisibility(View.VISIBLE);
+        etCity.setVisibility(View.VISIBLE);
+        etState.setVisibility(View.VISIBLE);
+        etPincode.setVisibility(View.VISIBLE);
         bSubmit.setVisibility(View.VISIBLE);
         type.setVisibility(View.VISIBLE);
         etPhone.setInputType(InputType.TYPE_NULL);
@@ -178,6 +198,24 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
             return false;
         } else if (TextValidationUtils.isEmpty(etLastName.getText().toString())) {
             showMandatoryError(R.string.last_name, this);
+            return false;
+        }else if (TextValidationUtils.isEmpty(etEmail.getText().toString())) {
+            showMandatoryError(R.string.email, this);
+            return false;
+        }else if (!TextValidationUtils.isValidEmail(etEmail.getText().toString())) {
+            Toast.makeText(this, R.string.invalid_email, Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (TextValidationUtils.isEmpty(etAddress.getText().toString())) {
+            showMandatoryError(R.string.address, this);
+            return false;
+        }else if (TextValidationUtils.isEmpty(etCity.getText().toString())) {
+            showMandatoryError(R.string.city, this);
+            return false;
+        }else if (TextValidationUtils.isEmpty(etState.getText().toString())) {
+            showMandatoryError(R.string.state, this);
+            return false;
+        } else if (TextValidationUtils.isEmpty(etPincode.getText().toString())) {
+            showMandatoryError(R.string.pincode, this);
             return false;
         } else if (TextValidationUtils.isEmpty(etPassword.getText().toString())) {
             showMandatoryError(R.string.password, this);
