@@ -1,5 +1,6 @@
 package com.example.core.responseModel;
 
+import com.example.core.CommonModels.UserModel;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -13,14 +14,12 @@ public class JsonResponse implements Serializable {
     private String message;
     @SerializedName("heroes")
     private List<HeroesModel> heroesList;
+    @SerializedName("user")
+    private UserModel user;
 
     public List<HeroesModel> getHeroesList() {
         return heroesList;
     }
-
-//    public void setHeroesList(List<HeroesModel> heroesList) {
-//        this.heroesList = heroesList;
-//    }
 
     public String getStatus() {
         return status;
@@ -36,5 +35,9 @@ public class JsonResponse implements Serializable {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public UserModel getUser() {
+        return user;
     }
 }

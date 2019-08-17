@@ -14,12 +14,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cabway.R;
 import com.example.cabway.ui.Interfaces.RecyclerViewItemClickListener;
 import com.example.cabway.ui.adapter.AvailableRidesListAdapter;
 import com.example.cabway.ui.adapter.ProfileMenuAdapter;
+import com.example.core.CommonModels.UserModel;
 
 import java.util.Arrays;
 import java.util.List;
@@ -41,6 +43,12 @@ public class DashBoardActivity extends BaseActivity
 
     @BindView(R.id.profile_menu)
     RecyclerView mProfileMenu;
+
+    @BindView(R.id.tv_user_name)
+    TextView tvUserName;
+
+    @BindView(R.id.tv_role)
+    TextView tvRole;
 
     @BindView(R.id.availableRidesList)
     RecyclerView availableRidesList;
@@ -65,8 +73,15 @@ public class DashBoardActivity extends BaseActivity
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         inItData();
+        setData();
         setNavigationDrawerLayout();
         setRidesList();
+    }
+
+    private void setData() {
+        UserModel user = appPreferences.getUserDetails();
+        tvUserName.setText(String.format("%s %s", user.firstName, user.lastName));
+        tvRole.setText(user.role);
     }
 
     private void setRidesList() {
@@ -120,6 +135,7 @@ public class DashBoardActivity extends BaseActivity
     }
 
     void startMenuActivities(String menuItem) {
+        boolean isFinish = false;
         Toast.makeText(this, menuItem, Toast.LENGTH_SHORT).show();
         drawer.closeDrawer(GravityCompat.START);
         Intent nextActivity = null;
@@ -131,8 +147,15 @@ public class DashBoardActivity extends BaseActivity
             nextActivity = new Intent(this, HistoryListActivity.class);
         else if (menuItem.equals(getString(R.string.about)))
             nextActivity = new Intent(this, AboutUs.class);
-        if (nextActivity != null)
+        else if (menuItem.equals(getString(R.string.logout))) {
+            appPreferences.clearPreferencesForLogout();
+            nextActivity = new Intent(this, LoginActivity.class);
+            isFinish = true;
+        }
+        if (nextActivity != null) {
             startActivity(nextActivity);
+            if (isFinish) finish();
+        }
     }
 
 }

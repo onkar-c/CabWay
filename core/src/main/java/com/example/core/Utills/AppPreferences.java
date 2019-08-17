@@ -4,14 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.example.core.CommonModels.UserModel;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.util.ArrayList;
 
 public class AppPreferences {
     private static AppPreferences instance;
     private final SharedPreferences sharedPreferences;
+    private final String CLEARING_TAG = "Clearing Preference";
 
     public AppPreferences(Context context) {
         instance = this;
@@ -69,31 +68,47 @@ public class AppPreferences {
         return getPref(Constants.LOGIN_TYPE, "");
     }
 
-    public ArrayList<String> getNewUpadatesIds() {
-        return new Gson().fromJson(getPref(Constants.NEW_UPDATES_IDS, ""), new TypeToken<ArrayList<String>>() {
-        }.getType());
-    }
-
-    public void setNewUpadatesIds(ArrayList<String> noteIdsList) {
-        if (noteIdsList != null && noteIdsList.size() > 0)
-            savePref(Constants.NEW_UPDATES_IDS, new Gson().toJson(noteIdsList));
+    public UserModel getUserDetails() {
+        String userDetails = getPref(Constants.USER_DETAILS, "");
+        if (userDetails != null && userDetails.length() > 0)
+            return new Gson().fromJson(userDetails, UserModel.class);
         else
-            savePref(Constants.NEW_UPDATES_IDS, "");
-
+            return null;
     }
 
-    public void clearUserData() {
-        Log.e("Clearing user Data====", "Clearing user Data====");
-        delete(Constants.UNSYNCED_WORKSPACE_INVITES_LIST);
+    public void setUserDetails(UserModel userModel) {
+        savePref(Constants.USER_DETAILS, new Gson().toJson(userModel));
+    }
+
+    public String getAuthKey() {
+        return getPref(Constants.AUTH_KEY, "");
+    }
+
+    public void setAuthKey(String authKey) {
+        savePref(Constants.AUTH_KEY, authKey);
+    }
+
+    public void clearPreferencesForLogout(){
+        clearAuthKey();
+        clearUserDetails();
+    }
+
+    public void clearUserDetails() {
+        Log.e(CLEARING_TAG, "Clearing User Details====");
+        delete(Constants.USER_DETAILS);
+    }
+
+    public void clearAuthKey() {
+        Log.e(CLEARING_TAG, "Clearing Auth Key====");
+        delete(Constants.AUTH_KEY);
     }
 
 
     private class Constants {
         private static final String NAME = "CabWay";
-        private static final String USER_UUID = "user_uuid";
-        private static final String UNSYNCED_WORKSPACE_INVITES_LIST = "unsynced_workspace_invites_list";
-        private static final String NEW_UPDATES_IDS = "new_updates_ids";
+        private static final String USER_DETAILS = "user_details";
         private static final String LOGIN_TYPE = "login_type";
+        private static final String AUTH_KEY = "auth_key";
 
     }
 }

@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.example.cabway.R;
 import com.example.cabway.Utils.TextValidationUtils;
 import com.example.cabway.viewModels.LoginViewModel;
+import com.example.core.CommonModels.UserModel;
 import com.example.database.Utills.AppConstants;
 
 import java.util.Objects;
@@ -50,11 +51,18 @@ public class LoginActivity extends BaseActivity {
             LoginActivity.this.removeProgressDialog();
             if (Objects.requireNonNull(loginResponse).getStatus().equals(AppConstants.SUCCESS)) {
                 Toast.makeText(LoginActivity.this, loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                setUserData(loginResponse.getUser());
                 LoginActivity.this.startActivity(new Intent(LoginActivity.this, DashBoardActivity.class));
             } else {
                 Toast.makeText(LoginActivity.this, loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+
+    private void setUserData(UserModel user) {
+        appPreferences.setAuthKey(user.authKey);
+        appPreferences.setUserDetails(user);
     }
 
 

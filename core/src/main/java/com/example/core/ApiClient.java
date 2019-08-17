@@ -2,6 +2,7 @@ package com.example.core;
 
 import android.support.annotation.NonNull;
 
+import com.example.core.Utills.AppPreferences;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.io.IOException;
@@ -35,6 +36,9 @@ public class ApiClient {
                 public Response intercept(@NonNull Chain chain) throws IOException {
                     Request original = chain.request();
                     Request.Builder requestBuilder = original.newBuilder();
+                    String authKey = getAuthKey();
+                    if(authKey != null && authKey.length() > 0 )
+                        requestBuilder.header("authKey", authKey);
                     String webClientId = "ji";
                     requestBuilder.header("Client-Id", webClientId);
                     Request request = requestBuilder.method(original.method(), original.body())
@@ -53,5 +57,15 @@ public class ApiClient {
                     .build();
         }
         return retrofit;
+    }
+
+
+    private static String getAuthKey(){
+        String authKey = null;
+        AppPreferences appPreferences = AppPreferences.getInstance();
+        if(appPreferences != null){
+            authKey = appPreferences.getAuthKey();
+        }
+        return authKey;
     }
 }
