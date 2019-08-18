@@ -147,6 +147,8 @@ public class DashBoardActivity extends BaseActivity
             nextActivity = new Intent(this, HistoryListActivity.class);
         else if (menuItem.equals(getString(R.string.about)))
             nextActivity = new Intent(this, AboutUs.class);
+        else if (menuItem.equals(getString(R.string.profile)))
+            nextActivity = new Intent(this, ProfileActivity.class);
         else if (menuItem.equals(getString(R.string.logout))) {
             appPreferences.clearPreferencesForLogout();
             nextActivity = new Intent(this, LoginActivity.class);
