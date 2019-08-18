@@ -2,6 +2,7 @@ package com.example.cabway.ui.activities;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatSpinner;
 import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
@@ -12,11 +13,15 @@ import android.widget.Toast;
 import com.example.cabway.R;
 import com.example.cabway.Utils.TextValidationUtils;
 import com.example.cabway.ui.Interfaces.RegistrationInterface;
+import com.example.cabway.ui.adapter.CitySpinnerAdapter;
 import com.example.cabway.ui.dialogs.DialogOtp;
 import com.example.cabway.viewModels.RegistrationViewModel;
+import com.example.core.CommonModels.CityModel;
 import com.example.core.CommonModels.UserModel;
 import com.example.database.Utills.AppConstants;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -43,11 +48,11 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     @BindView(R.id.et_address)
     EditText etAddress;
 
-    @BindView(R.id.et_city)
-    EditText etCity;
+    @BindView(R.id.sp_city)
+    AppCompatSpinner spCity;
 
-    @BindView(R.id.et_state)
-    EditText etState;
+    @BindView(R.id.sp_state)
+    AppCompatSpinner spState;
 
     @BindView(R.id.et_pincode)
     EditText etPincode;
@@ -78,10 +83,19 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         setContentView(R.layout.activity_registration);
         setUpActionBar();
         ButterKnife.bind(this);
+        setUpUi();
         registrationViewModel = ViewModelProviders.of(this).get(RegistrationViewModel.class);
         registrationViewModel.init();
         dialogOtp = new DialogOtp(this);
         setObservers();
+    }
+
+    private void setUpUi(){
+        CitySpinnerAdapter citySpinnerAdapter=new CitySpinnerAdapter(this,getCities());
+        spCity.setAdapter(citySpinnerAdapter);
+
+        CitySpinnerAdapter stateSpinnerAdapter=new CitySpinnerAdapter(this,getStates());
+        spState.setAdapter(stateSpinnerAdapter);
     }
 
     private void setObservers() {
@@ -127,7 +141,6 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         });
     }
 
-
     @OnClick(R.id.generate_otp)
     void generateOtp() {
         requestOtp();
@@ -148,6 +161,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         UserModel userModel = new UserModel();
         userModel.setFirstName(etFirstName.getText().toString());
         userModel.setLastName(etLastName.getText().toString());
+        userModel.setMobileNo(etPhone.getText().toString());
         userModel.setPassword(etPassword.getText().toString());
         userModel.setRole((type.getCheckedRadioButtonId() == R.id.agency) ? AppConstants.AGENCY : AppConstants.DRIVER);
         return userModel;
@@ -182,8 +196,8 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         etConfirmPassword.setVisibility(View.VISIBLE);
         etEmail.setVisibility(View.VISIBLE);
         etAddress.setVisibility(View.VISIBLE);
-        etCity.setVisibility(View.VISIBLE);
-        etState.setVisibility(View.VISIBLE);
+        spCity.setVisibility(View.VISIBLE);
+        spState.setVisibility(View.VISIBLE);
         etPincode.setVisibility(View.VISIBLE);
         bSubmit.setVisibility(View.VISIBLE);
         type.setVisibility(View.VISIBLE);
@@ -208,10 +222,10 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         }else if (TextValidationUtils.isEmpty(etAddress.getText().toString())) {
             showMandatoryError(R.string.address, this);
             return false;
-        }else if (TextValidationUtils.isEmpty(etCity.getText().toString())) {
+        }else if (spCity.getSelectedItemPosition()==0) {
             showMandatoryError(R.string.city, this);
             return false;
-        }else if (TextValidationUtils.isEmpty(etState.getText().toString())) {
+        }else if (spState.getSelectedItemPosition()==0) {
             showMandatoryError(R.string.state, this);
             return false;
         } else if (TextValidationUtils.isEmpty(etPincode.getText().toString())) {
@@ -228,5 +242,39 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
             return false;
         } else
             return true;
+    }
+
+    public static List<CityModel> getCities(){
+        CityModel city0=new CityModel("0","Select City");
+        CityModel city1=new CityModel("1","Pune");
+        CityModel city2=new CityModel("2","Mumbai");
+        CityModel city3=new CityModel("3","Satara");
+        CityModel city4=new CityModel("4","Banglore");
+
+        List<CityModel> cityList=new ArrayList<>();
+        cityList.add(city0);
+        cityList.add(city1);
+        cityList.add(city2);
+        cityList.add(city3);
+        cityList.add(city4);
+
+        return cityList;
+    }
+
+    public static List<CityModel> getStates(){
+        CityModel city0=new CityModel("0","Select State");
+        CityModel city1=new CityModel("1","Maharashtra");
+        CityModel city2=new CityModel("2","Karnatak");
+        CityModel city3=new CityModel("3","Rajastan");
+        CityModel city4=new CityModel("4","Tamilnadu");
+
+        List<CityModel> cityList=new ArrayList<>();
+        cityList.add(city0);
+        cityList.add(city1);
+        cityList.add(city2);
+        cityList.add(city3);
+        cityList.add(city4);
+
+        return cityList;
     }
 }

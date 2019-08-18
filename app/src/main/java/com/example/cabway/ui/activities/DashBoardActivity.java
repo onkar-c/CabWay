@@ -131,6 +131,8 @@ public class DashBoardActivity extends BaseActivity
             nextActivity = new Intent(this, HistoryListActivity.class);
         else if (menuItem.equals(getString(R.string.about)))
             nextActivity = new Intent(this, AboutUs.class);
+        else if (menuItem.equals(getString(R.string.profile)))
+            nextActivity = new Intent(this, ProfileActivity.class);
         if (nextActivity != null)
             startActivity(nextActivity);
     }

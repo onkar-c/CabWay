@@ -74,7 +74,11 @@
     <string name="state">State</string>
     <string name="pincode">PinCode</string>
     <string name="invalid_email">Please Enter Valid Email.</string>
-
+    <string name="full_name">Full Name</string>
+    <string name="role">Role</string>
+    <string name="save">Save</string>
+    <string name="edit">Edit</string>
+    <string name="add_profile_image">Add Profile Image</string>
 
     //dummy text
     <string name="dummy_document_type_text">Step 1 : Document Type</string>

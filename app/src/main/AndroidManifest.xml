@@ -97,6 +97,10 @@
             android:label="@string/book_ride"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity android:name=".ui.activities.ProfileActivity"
+            android:label="@string/profile"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
     </application>
 
 </manifest>
