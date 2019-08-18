@@ -1,10 +1,16 @@
 package com.example.cabway.ui.activities;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Window;
 import android.widget.Toast;
 
@@ -12,6 +18,8 @@ import com.example.cabway.R;
 import com.example.cabway.Utils.ConnectivityUtils;
 import com.example.cabway.Utils.DialogUtils;
 import com.example.core.Utills.AppPreferences;
+
+import static android.support.constraint.Constraints.TAG;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -112,6 +120,66 @@ public class BaseActivity extends AppCompatActivity {
         } catch (Exception ignored) {
 
         }
+    }
+
+    public boolean isReadStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v(TAG, "Permission is granted1");
+                return true;
+            } else {
+                Log.v(TAG, "Permission is revoked1");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 3);
+                return false;
+            }
+        } else {
+            Log.v(TAG, "Permission is granted1");
+            return true;
+        }
+    }
+
+    public boolean isWriteStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v(TAG, "Permission is granted2");
+                return true;
+            } else {
+
+                Log.v(TAG, "Permission is revoked2");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+                return false;
+            }
+        } else { //permission is automatically granted on sdk<23 upon installation
+            Log.v(TAG, "Permission is granted2");
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 2:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.v(TAG, "Permission: " + permissions[0] + "was " + grantResults[0]);
+                    performActionAfterPermission();
+                }
+                break;
+
+            case 3:
+                Log.d(TAG, "External storage1");
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.v(TAG, "Permission: " + permissions[0] + "was " + grantResults[0]);
+                    performActionAfterPermission();
+                }
+                break;
+        }
+    }
+
+    public void performActionAfterPermission() {
+
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.cabway.ui.activities;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.InputType;
@@ -11,6 +12,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.cabway.R;
+import com.example.cabway.Utils.ImageUtils;
 import com.example.cabway.Utils.TextValidationUtils;
 import com.example.cabway.ui.Interfaces.RegistrationInterface;
 import com.example.cabway.ui.adapter.CitySpinnerAdapter;
@@ -159,11 +161,15 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
 
     private UserModel createUserModel() {
         UserModel userModel = new UserModel();
-        userModel.setFirstName(etFirstName.getText().toString());
-        userModel.setLastName(etLastName.getText().toString());
-        userModel.setMobileNo(etPhone.getText().toString());
-        userModel.setPassword(etPassword.getText().toString());
-        userModel.setRole((type.getCheckedRadioButtonId() == R.id.agency) ? AppConstants.AGENCY : AppConstants.DRIVER);
+        userModel.firstName = etFirstName.getText().toString();
+        userModel.lastName = etLastName.getText().toString();
+        userModel.password = etPassword.getText().toString();
+        userModel.mobileNo = etPhone.getText().toString();
+        userModel.address = etAddress.getText().toString();
+        userModel.cityCode = etCity.getText().toString();
+        userModel.email = etEmail.getText().toString();
+        userModel.pinCode = etPincode.getText().toString();
+        userModel.role = (type.getCheckedRadioButtonId() == R.id.agency) ? AppConstants.AGENCY : AppConstants.DRIVER;
         return userModel;
     }
 
@@ -244,6 +250,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
             return true;
     }
 
+
     public static List<CityModel> getCities(){
         CityModel city0=new CityModel("0","Select City");
         CityModel city1=new CityModel("1","Pune");
@@ -277,4 +284,25 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
 
         return cityList;
     }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ImageUtils.IMAGE_PICK) {
+            String fileName = "abc.png";
+            String filePath = ImageUtils.onImagePickResult(requestCode, resultCode, data, fileName, this);
+            if (!TextValidationUtils.isEmpty(filePath))
+                Toast.makeText(this, filePath, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void performActionAfterPermission() {
+        ImageUtils.pickImage(this);
+    }
+
+    // image picking code on image ui click
+//    if (isReadStoragePermissionGranted() && isWriteStoragePermissionGranted())
+//            ImageUtils.pickImage(this);
+
 }
