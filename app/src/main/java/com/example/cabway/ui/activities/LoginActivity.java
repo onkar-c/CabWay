@@ -40,6 +40,8 @@ public class LoginActivity extends BaseActivity {
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
         loginViewModel.init();
         setObservers();
+        isReadStoragePermissionGranted();
+        isWriteStoragePermissionGranted();
     }
 
     private void setObservers() {
