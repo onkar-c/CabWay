@@ -60,12 +60,12 @@ public class AppPreferences {
 //        sharedPreferencesEditor.clear();
 //    }
 
-    public void saveLoginType(String type) {
-        savePref(Constants.LOGIN_TYPE, type);
+    public void setIsLogin(boolean isLogin) {
+        savePref(Constants.IS_LOGIN, isLogin);
     }
 
-    public String getLoginType() {
-        return getPref(Constants.LOGIN_TYPE, "");
+    public boolean isLogin() {
+        return getPref(Constants.IS_LOGIN, false);
     }
 
     public UserModel getUserDetails() {
@@ -88,17 +88,18 @@ public class AppPreferences {
         savePref(Constants.AUTH_KEY, authKey);
     }
 
-    public void clearPreferencesForLogout(){
+    public void clearPreferencesForLogout() {
+        setIsLogin(false);
         clearAuthKey();
         clearUserDetails();
     }
 
-    public void clearUserDetails() {
+    private void clearUserDetails() {
         Log.e(CLEARING_TAG, "Clearing User Details====");
         delete(Constants.USER_DETAILS);
     }
 
-    public void clearAuthKey() {
+    private void clearAuthKey() {
         Log.e(CLEARING_TAG, "Clearing Auth Key====");
         delete(Constants.AUTH_KEY);
     }
@@ -107,7 +108,7 @@ public class AppPreferences {
     private class Constants {
         private static final String NAME = "CabWay";
         private static final String USER_DETAILS = "user_details";
-        private static final String LOGIN_TYPE = "login_type";
+        private static final String IS_LOGIN = "is_login";
         private static final String AUTH_KEY = "auth_key";
 
     }

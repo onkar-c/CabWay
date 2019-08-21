@@ -1,15 +1,16 @@
 package com.example.cabway.Utils;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
 public class DialogUtils {
 
-    public static void showExitDialog(Activity context){
+    public static void showMessageDialog(Activity context, String message, DialogInterface.OnClickListener onClickListener){
         new AlertDialog.Builder(context)
-                .setMessage("Are you sure you want to exit?")
+                .setMessage(message)
                 .setCancelable(false)
-                .setPositiveButton("Yes", (dialog, id) -> context.finish())
+                .setPositiveButton("Yes", onClickListener)
                 .setNegativeButton("No", (dialog, id) -> dialog.dismiss())
                 .show();
     }

@@ -21,17 +21,23 @@ public class RequestExecutor {
                                    @NonNull Response<JsonResponse> response) {
                 if (response.isSuccessful()) {
                     mutableResponse.setValue(response.body());
-                }
+                } else
+                    setErrorResponse(mutableResponse, "Server not responding");
             }
 
             @Override
             public void onFailure(@NonNull Call<JsonResponse> call, @NonNull Throwable t) {
-                JsonResponse jsonResponse = new JsonResponse();
-                jsonResponse.setStatus(AppConstants.ERROR);
-                jsonResponse.setMessage(t.getMessage());
-                mutableResponse.setValue(jsonResponse);
+                setErrorResponse(mutableResponse, t.getMessage());
             }
         });
+    }
+
+    private static void setErrorResponse(MutableLiveData<JsonResponse> mutableResponse, String message){
+        JsonResponse jsonResponse = new JsonResponse();
+        jsonResponse.setStatus(AppConstants.ERROR);
+        jsonResponse.setMessage(message);
+        mutableResponse.setValue(jsonResponse);
+
     }
 
    /* public static void execute(Observable<JsonResponse> call, final MutableLiveData<JsonResponse> response) {

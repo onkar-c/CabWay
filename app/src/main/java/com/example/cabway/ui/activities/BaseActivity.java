@@ -3,6 +3,7 @@ package com.example.cabway.ui.activities;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -70,10 +71,12 @@ public class BaseActivity extends AppCompatActivity {
     public void onBackPressed() {
 
         if (isTaskRoot())
-            DialogUtils.showExitDialog(this);
+            DialogUtils.showMessageDialog(this, getString(R.string.exit_message), onExit);
         else
             super.onBackPressed();
     }
+
+    DialogInterface.OnClickListener onExit = (dialog, id) -> finish();
 
     @Override
     protected void onResume() {

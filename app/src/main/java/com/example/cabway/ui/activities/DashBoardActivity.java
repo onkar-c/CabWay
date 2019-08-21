@@ -1,5 +1,6 @@
 package com.example.cabway.ui.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -15,9 +16,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.cabway.R;
+import com.example.cabway.Utils.DialogUtils;
 import com.example.cabway.ui.Interfaces.RecyclerViewItemClickListener;
 import com.example.cabway.ui.adapter.AvailableRidesListAdapter;
 import com.example.cabway.ui.adapter.ProfileMenuAdapter;
@@ -55,8 +56,16 @@ public class DashBoardActivity extends BaseActivity
 
     ProfileMenuAdapter profileMenuAdapter;
     AvailableRidesListAdapter availableRidesListAdapter;
+
+
     RecyclerViewItemClickListener ridesViewItemClickListener = (v, position) -> startActivity(new Intent(DashBoardActivity.this, BookRideActivity.class));
-    private List<String> menu_items;
+
+    DialogInterface.OnClickListener onLogoutListener = (dialog, id) -> {
+        appPreferences.clearPreferencesForLogout();
+        startActivity(new Intent(DashBoardActivity.this, LoginActivity.class));
+        DashBoardActivity.this.finish();
+    };
+
     RecyclerViewItemClickListener recyclerViewItemClickListener = new RecyclerViewItemClickListener() {
         @Override
         public void onItemClick(View v, int position) {
@@ -64,6 +73,8 @@ public class DashBoardActivity extends BaseActivity
             startMenuActivities(menuItem);
         }
     };
+
+    private List<String> menu_items;
     private TypedArray menu_items_icon;
 
     @Override
@@ -135,8 +146,6 @@ public class DashBoardActivity extends BaseActivity
     }
 
     void startMenuActivities(String menuItem) {
-        boolean isFinish = false;
-        Toast.makeText(this, menuItem, Toast.LENGTH_SHORT).show();
         drawer.closeDrawer(GravityCompat.START);
         Intent nextActivity = null;
         if (menuItem.equals(getString(R.string.help)))
@@ -150,13 +159,10 @@ public class DashBoardActivity extends BaseActivity
         else if (menuItem.equals(getString(R.string.profile)))
             nextActivity = new Intent(this, ProfileActivity.class);
         else if (menuItem.equals(getString(R.string.logout))) {
-            appPreferences.clearPreferencesForLogout();
-            nextActivity = new Intent(this, LoginActivity.class);
-            isFinish = true;
+            DialogUtils.showMessageDialog(this, getString(R.string.logout_message), onLogoutListener);
         }
         if (nextActivity != null) {
             startActivity(nextActivity);
-            if (isFinish) finish();
         }
     }
 
