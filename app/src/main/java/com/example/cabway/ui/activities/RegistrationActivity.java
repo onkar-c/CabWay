@@ -8,6 +8,7 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -74,10 +75,46 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     @BindView(R.id.type)
     RadioGroup type;
 
+    @BindView(R.id.uploadImageLayout)
+    LinearLayout uploadImageLayout;
+    String mFilePath = "";
     private DialogOtp dialogOtp;
     private String mMobileNumber;
-
     private RegistrationViewModel registrationViewModel;
+
+    public static List<CityModel> getCities() {
+        CityModel city0 = new CityModel("0", "Select City");
+        CityModel city1 = new CityModel("1", "Pune");
+        CityModel city2 = new CityModel("2", "Mumbai");
+        CityModel city3 = new CityModel("3", "Satara");
+        CityModel city4 = new CityModel("4", "Banglore");
+
+        List<CityModel> cityList = new ArrayList<>();
+        cityList.add(city0);
+        cityList.add(city1);
+        cityList.add(city2);
+        cityList.add(city3);
+        cityList.add(city4);
+
+        return cityList;
+    }
+
+    public static List<CityModel> getStates() {
+        CityModel city0 = new CityModel("0", "Select State");
+        CityModel city1 = new CityModel("1", "Maharashtra");
+        CityModel city2 = new CityModel("2", "Karnatak");
+        CityModel city3 = new CityModel("3", "Rajastan");
+        CityModel city4 = new CityModel("4", "Tamilnadu");
+
+        List<CityModel> cityList = new ArrayList<>();
+        cityList.add(city0);
+        cityList.add(city1);
+        cityList.add(city2);
+        cityList.add(city3);
+        cityList.add(city4);
+
+        return cityList;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,11 +129,11 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         setObservers();
     }
 
-    private void setUpUi(){
-        CitySpinnerAdapter citySpinnerAdapter=new CitySpinnerAdapter(this,getCities());
+    private void setUpUi() {
+        CitySpinnerAdapter citySpinnerAdapter = new CitySpinnerAdapter(this, getCities());
         spCity.setAdapter(citySpinnerAdapter);
 
-        CitySpinnerAdapter stateSpinnerAdapter=new CitySpinnerAdapter(this,getStates());
+        CitySpinnerAdapter stateSpinnerAdapter = new CitySpinnerAdapter(this, getStates());
         spState.setAdapter(stateSpinnerAdapter);
     }
 
@@ -130,7 +167,6 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         });
     }
 
-
     private void setRegisterUserObserver() {
         registrationViewModel.getUserRegistrationResponseMld().observe(this, userRegistrationResponse -> {
             removeProgressDialog();
@@ -154,9 +190,15 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
             if (validateAllFields()) {
                 showProgressDialog(AppConstants.PLEASE_WAIT, false);
                 UserModel userModel = createUserModel();
-                registrationViewModel.getRegistrationRepository().registerUser(registrationViewModel.getUserRegistrationResponseMld(), userModel);
+                registrationViewModel.getRegistrationRepository().registerUser(registrationViewModel.getUserRegistrationResponseMld(), userModel, mFilePath);
             }
         }
+    }
+
+    @OnClick(R.id.uploadImage)
+    void selectImage() {
+        if (isReadStoragePermissionGranted() && isWriteStoragePermissionGranted())
+            ImageUtils.pickImage(this);
     }
 
     private UserModel createUserModel() {
@@ -166,8 +208,8 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         userModel.password = etPassword.getText().toString();
         userModel.mobileNo = etPhone.getText().toString();
         userModel.address = etAddress.getText().toString();
-        userModel.cityCode = etCity.getText().toString();
         userModel.email = etEmail.getText().toString();
+        userModel.cityCode = getCities().get(spCity.getSelectedItemPosition()).getName();
         userModel.pinCode = etPincode.getText().toString();
         userModel.role = (type.getCheckedRadioButtonId() == R.id.agency) ? AppConstants.AGENCY : AppConstants.DRIVER;
         return userModel;
@@ -194,7 +236,6 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
 
     }
 
-
     private void setUiForOtpSuccess() {
         etFirstName.setVisibility(View.VISIBLE);
         etLastName.setVisibility(View.VISIBLE);
@@ -208,6 +249,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         bSubmit.setVisibility(View.VISIBLE);
         type.setVisibility(View.VISIBLE);
         etPhone.setInputType(InputType.TYPE_NULL);
+        uploadImageLayout.setVisibility(View.VISIBLE);
         etPhone.setKeyListener(null);
         bGenerateOtp.setVisibility(View.GONE);
     }
@@ -219,19 +261,19 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         } else if (TextValidationUtils.isEmpty(etLastName.getText().toString())) {
             showMandatoryError(R.string.last_name, this);
             return false;
-        }else if (TextValidationUtils.isEmpty(etEmail.getText().toString())) {
+        } else if (TextValidationUtils.isEmpty(etEmail.getText().toString())) {
             showMandatoryError(R.string.email, this);
             return false;
-        }else if (!TextValidationUtils.isValidEmail(etEmail.getText().toString())) {
+        } else if (!TextValidationUtils.isValidEmail(etEmail.getText().toString())) {
             Toast.makeText(this, R.string.invalid_email, Toast.LENGTH_SHORT).show();
             return false;
-        }else if (TextValidationUtils.isEmpty(etAddress.getText().toString())) {
+        } else if (TextValidationUtils.isEmpty(etAddress.getText().toString())) {
             showMandatoryError(R.string.address, this);
             return false;
-        }else if (spCity.getSelectedItemPosition()==0) {
+        } else if (spCity.getSelectedItemPosition() == 0) {
             showMandatoryError(R.string.city, this);
             return false;
-        }else if (spState.getSelectedItemPosition()==0) {
+        } else if (spState.getSelectedItemPosition() == 0) {
             showMandatoryError(R.string.state, this);
             return false;
         } else if (TextValidationUtils.isEmpty(etPincode.getText().toString())) {
@@ -250,49 +292,15 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
             return true;
     }
 
-
-    public static List<CityModel> getCities(){
-        CityModel city0=new CityModel("0","Select City");
-        CityModel city1=new CityModel("1","Pune");
-        CityModel city2=new CityModel("2","Mumbai");
-        CityModel city3=new CityModel("3","Satara");
-        CityModel city4=new CityModel("4","Banglore");
-
-        List<CityModel> cityList=new ArrayList<>();
-        cityList.add(city0);
-        cityList.add(city1);
-        cityList.add(city2);
-        cityList.add(city3);
-        cityList.add(city4);
-
-        return cityList;
-    }
-
-    public static List<CityModel> getStates(){
-        CityModel city0=new CityModel("0","Select State");
-        CityModel city1=new CityModel("1","Maharashtra");
-        CityModel city2=new CityModel("2","Karnatak");
-        CityModel city3=new CityModel("3","Rajastan");
-        CityModel city4=new CityModel("4","Tamilnadu");
-
-        List<CityModel> cityList=new ArrayList<>();
-        cityList.add(city0);
-        cityList.add(city1);
-        cityList.add(city2);
-        cityList.add(city3);
-        cityList.add(city4);
-
-        return cityList;
-    }
-
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == ImageUtils.IMAGE_PICK) {
             String fileName = "abc.png";
             String filePath = ImageUtils.onImagePickResult(requestCode, resultCode, data, fileName, this);
-            if (!TextValidationUtils.isEmpty(filePath))
+            if (!TextValidationUtils.isEmpty(filePath)) {
+                mFilePath = filePath;
                 Toast.makeText(this, filePath, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -301,8 +309,5 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         ImageUtils.pickImage(this);
     }
 
-    // image picking code on image ui click
-//    if (isReadStoragePermissionGranted() && isWriteStoragePermissionGranted())
-//            ImageUtils.pickImage(this);
 
 }

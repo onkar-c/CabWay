@@ -1,6 +1,8 @@
 package com.example.core.CommonModels;
 
-public class UserModel {
+import java.io.Serializable;
+
+public class UserModel implements Serializable {
     public int uuId = 0;
     public String firstName;
     public String lastName;
