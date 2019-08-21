@@ -73,6 +73,6 @@ public class DocumentListActivity extends BaseActivity {
     }
 
     private void initData() {
-        documentList = Arrays.asList(getResources().getStringArray((appPreferences.getLoginType().equals(AppConstants.DRIVER)) ? R.array.driver_document_list : R.array.agency_document_list));
+        documentList = Arrays.asList(getResources().getStringArray((appPreferences.getUserDetails().role.equals(AppConstants.DRIVER)) ? R.array.driver_document_list : R.array.agency_document_list));
     }
 }

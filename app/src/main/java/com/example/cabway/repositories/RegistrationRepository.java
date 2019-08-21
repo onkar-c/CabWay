@@ -31,7 +31,7 @@ public class RegistrationRepository {
         ApiExecutor.verifyOTP(response, verifyOtpRequestModel);
     }
 
-    public void registerUser(MutableLiveData<JsonResponse> registerUserResponse, UserModel userModel) {
-        ApiExecutor.registerUser(registerUserResponse, userModel);
+    public void registerUser(MutableLiveData<JsonResponse> registerUserResponse, UserModel userModel, String filePath) {
+        ApiExecutor.registerUser(registerUserResponse, userModel, filePath);
     }
 }

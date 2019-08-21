@@ -11,6 +11,7 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.example.cabway.R;
+import com.example.database.Utills.AppConstants;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -23,9 +24,9 @@ public class ImageUtils {
 
     public static void pickImage(Activity context) {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
+        intent.setType(AppConstants.IMAGE_MIME_TYPE);
         context.startActivityForResult(
-                Intent.createChooser(intent, "select image"),
+                Intent.createChooser(intent, AppConstants.IMAGE_PICKER_MESSAGE),
                 IMAGE_PICK);
     }
 
