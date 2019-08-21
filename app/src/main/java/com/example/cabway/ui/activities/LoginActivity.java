@@ -55,6 +55,7 @@ public class LoginActivity extends BaseActivity {
                 Toast.makeText(LoginActivity.this, loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
                 setUserData(loginResponse.getUser());
                 LoginActivity.this.startActivity(new Intent(LoginActivity.this, DashBoardActivity.class));
+                finish();
             } else {
                 Toast.makeText(LoginActivity.this, loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -63,6 +64,7 @@ public class LoginActivity extends BaseActivity {
 
 
     private void setUserData(UserModel user) {
+        appPreferences.setIsLogin(true);
         appPreferences.setAuthKey(user.authKey);
         appPreferences.setUserDetails(user);
     }

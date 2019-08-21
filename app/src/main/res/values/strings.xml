@@ -132,6 +132,9 @@
     <string name="help">Help</string>
     <string name="logout">Logout</string>
 
+    <string name="exit_message">Are you sure you want to exit?</string>
+    <string name="logout_message">Are you sure you want to logout?</string>
+
 
     <!--Document types-->
     <string name="driver_license">Driver License</string>

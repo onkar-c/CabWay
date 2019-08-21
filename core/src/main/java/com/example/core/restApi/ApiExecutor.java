@@ -12,6 +12,7 @@ import com.example.core.RequestExecutor;
 import com.example.core.Utills.FileUtils;
 import com.example.core.Utills.HeroUtils;
 import com.example.core.requestModels.LoginRequestModel;
+import com.example.core.requestModels.ResetPasswordModel;
 import com.example.core.requestModels.VerifyOtpRequestModel;
 import com.example.core.responseModel.JsonResponse;
 import com.example.database.models.UserModel;
@@ -24,6 +25,10 @@ import okhttp3.RequestBody;
 
 public class ApiExecutor {
 
+    private static ApiInterface getApiInterface(){
+         return ApiClient.getClient().create(ApiInterface.class);
+    }
+
     public static void getUsersFromServer(final MutableLiveData<Boolean> response, final Context context) {
         MutableLiveData<JsonResponse> jsonResponseMutableLiveData = new MutableLiveData<>();
         jsonResponseMutableLiveData
@@ -34,29 +39,32 @@ public class ApiExecutor {
                         response.setValue(true);
                     }
                 });
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        RequestExecutor.ExecuteApi(apiInterface.getHeros(), jsonResponseMutableLiveData);
+        RequestExecutor.ExecuteApi(getApiInterface().getHeros(), jsonResponseMutableLiveData);
     }
 
     public static void getOtpForRegistration(final MutableLiveData<JsonResponse> mltOtpResponse, String mobileNo) {
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        RequestExecutor.ExecuteApi(apiInterface.getOtpForRegistration(mobileNo), mltOtpResponse);
+        RequestExecutor.ExecuteApi(getApiInterface().getOtpForRegistration(mobileNo), mltOtpResponse);
+    }
+
+    public static void getOtpForForgetPassword(final MutableLiveData<JsonResponse> mltOtpResponse, String mobileNo) {
+        RequestExecutor.ExecuteApi(getApiInterface().getOtpForForgetPassword(mobileNo), mltOtpResponse);
     }
 
     public static void verifyOTP(final MutableLiveData<JsonResponse> mltVerifyOtpResponse, VerifyOtpRequestModel verifyOtpRequestModel) {
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        RequestExecutor.ExecuteApi(apiInterface.verifyOTP(verifyOtpRequestModel), mltVerifyOtpResponse);
+        RequestExecutor.ExecuteApi(getApiInterface().verifyOTP(verifyOtpRequestModel), mltVerifyOtpResponse);
+    }
+
+    public static void resetPassword(final MutableLiveData<JsonResponse> mltResetPassword, ResetPasswordModel resetPasswordModel){
+        RequestExecutor.ExecuteApi(getApiInterface().resetPassword(resetPasswordModel), mltResetPassword);
     }
 
     public static void registerUser(final MutableLiveData<JsonResponse> mltRegisterUserResponse, com.example.core.CommonModels.UserModel userModel, String filePath) {
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         RequestBody user = RequestBody.create(MultipartBody.FORM, new Gson().toJson(userModel));
         MultipartBody.Part body = FileUtils.getMultipartBody(filePath);
-        RequestExecutor.ExecuteApi(apiInterface.register(body, user), mltRegisterUserResponse);
+        RequestExecutor.ExecuteApi(getApiInterface().register(body, user), mltRegisterUserResponse);
     }
 
     public static void validateLogin(final MutableLiveData<JsonResponse> mltLoginResponse, LoginRequestModel loginRequestModel) {
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        RequestExecutor.ExecuteApi(apiInterface.validateLogin(loginRequestModel), mltLoginResponse);
+        RequestExecutor.ExecuteApi(getApiInterface().validateLogin(loginRequestModel), mltLoginResponse);
     }
 }

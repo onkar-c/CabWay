@@ -132,7 +132,6 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         setUpUi();
         registrationViewModel = ViewModelProviders.of(this).get(RegistrationViewModel.class);
         registrationViewModel.init();
-        dialogOtp = new DialogOtp(this);
         setObservers();
     }
 
@@ -155,6 +154,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
             removeProgressDialog();
             if (Objects.requireNonNull(otpResponse).getStatus().equals(AppConstants.SUCCESS)) {
                 Toast.makeText(RegistrationActivity.this, R.string.otp_sent, Toast.LENGTH_SHORT).show();
+                dialogOtp = new DialogOtp(this);
                 if (!dialogOtp.isShowing())
                     dialogOtp.showCustomDialogVerifyMobile(mMobileNumber);
             } else {

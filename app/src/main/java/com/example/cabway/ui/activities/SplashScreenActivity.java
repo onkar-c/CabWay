@@ -17,7 +17,12 @@ public class SplashScreenActivity extends BaseActivity {
     }
 
     private void startDashboardActivity() {
-        startActivity(new Intent(this, LoginActivity.class));
+        Intent nextActivity;
+        if (appPreferences.isLogin())
+            nextActivity = new Intent(this, DashBoardActivity.class);
+        else
+            nextActivity = new Intent(this, LoginActivity.class);
+        startActivity(nextActivity);
         finish();
     }
 }
