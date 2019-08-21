@@ -19,15 +19,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/iv_profile"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:contentDescription="@string/profile"
-                android:src="@drawable/ic_profile" />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/profile_round_background"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                android:layout_centerHorizontal="true">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="10dp"
+                    android:contentDescription="@string/add_profile_image"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_add_profile" />
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/iv_edit"
@@ -65,7 +76,8 @@
             android:inputType="text"
             android:textColor="@android:color/black"
             android:textSize="@dimen/small_text"
-            tools:ignore="Autofill,LabelFor" />
+            tools:ignore="Autofill,LabelFor"
+            android:enabled="false"/>
 
         <View
             android:layout_width="match_parent"
@@ -123,7 +135,8 @@
             android:maxLines="1"
             android:textColor="@android:color/black"
             android:textSize="@dimen/small_text"
-            tools:ignore="Autofill,LabelFor,TextFields" />
+            tools:ignore="Autofill,LabelFor,TextFields"
+            android:enabled="false"/>
 
         <View
             android:layout_width="match_parent"
@@ -141,7 +154,7 @@
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/tv_email"
+            android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -151,7 +164,8 @@
             android:maxLines="1"
             android:textColor="@android:color/black"
             android:textSize="@dimen/small_text"
-            tools:ignore="Autofill,LabelFor" />
+            tools:ignore="Autofill,LabelFor"
+            android:enabled="false"/>
 
         <View
             android:layout_width="match_parent"
@@ -169,7 +183,7 @@
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/tv_address"
+            android:id="@+id/et_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -178,7 +192,8 @@
             android:inputType="text"
             android:textColor="@android:color/black"
             android:textSize="@dimen/small_text"
-            tools:ignore="Autofill,LabelFor" />
+            tools:ignore="Autofill,LabelFor"
+            android:enabled="false"/>
 
         <View
             android:layout_width="match_parent"
@@ -246,7 +261,7 @@
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/tv_pincode"
+            android:id="@+id/et_pincode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -257,18 +272,20 @@
             android:maxLines="1"
             android:textColor="@android:color/black"
             android:textSize="@dimen/small_text"
-            tools:ignore="Autofill,LabelFor" />
+            tools:ignore="Autofill,LabelFor"
+            android:enabled="false"/>
 
 
         <Button
-            android:id="@+id/generate_otp"
+            android:id="@+id/btn_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:background="@android:color/black"
             android:text="@string/save"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/button_text" />
+            android:textSize="@dimen/button_text"
+            android:visibility="gone"
+            android:layout_margin="10dp"/>
     </LinearLayout>
 </ScrollView>

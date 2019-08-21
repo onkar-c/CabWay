@@ -13,4 +13,7 @@
     <dimen name="large_text">18sp</dimen>
     <dimen name="extra_large_text">20sp</dimen>
     <dimen name="button_text">16sp</dimen>
+
+    <dimen name="input_label_vertical_spacing">4dp</dimen>
+    <dimen name="input_label_horizontal_spacing">4dp</dimen>
 </resources>
