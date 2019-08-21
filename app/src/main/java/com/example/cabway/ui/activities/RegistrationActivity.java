@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cabway.R;
@@ -56,6 +57,12 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
 
     @BindView(R.id.sp_state)
     AppCompatSpinner spState;
+
+    @BindView(R.id.tv_state_hint)
+    TextView tvStateHint;
+
+    @BindView(R.id.tv_city_hint)
+    TextView tvCityHint;
 
     @BindView(R.id.et_pincode)
     EditText etPincode;
@@ -245,6 +252,8 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         etAddress.setVisibility(View.VISIBLE);
         spCity.setVisibility(View.VISIBLE);
         spState.setVisibility(View.VISIBLE);
+        tvCityHint.setVisibility(View.VISIBLE);
+        tvStateHint.setVisibility(View.VISIBLE);
         etPincode.setVisibility(View.VISIBLE);
         bSubmit.setVisibility(View.VISIBLE);
         type.setVisibility(View.VISIBLE);

@@ -20,6 +20,10 @@ public class TextValidationUtils {
         return Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 
+    public static boolean isValidPinCode(String target) {
+        return !target.isEmpty() && target.length()==6 ;
+    }
+
     public static void showMandatoryError(int field, Context context) {
         String message = String.format(context.getResources().getString(R.string.mandatory_messages), context.getResources().getString(field));
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
