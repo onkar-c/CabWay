@@ -28,30 +28,9 @@ public class DocumentListActivity extends BaseActivity {
     RecyclerViewItemClickListener recyclerViewItemClickListener = new RecyclerViewItemClickListener() {
         @Override
         public void onItemClick(View v, int position) {
-            Intent intent = null;
-            String menuItem = documentList.get(position);
-
-            if (menuItem.equals(getString(R.string.driver_license)))
-                intent = new Intent(DocumentListActivity.this, IdRegistrationActivity.class);
-            else if (menuItem.equals(getString(R.string.aadhar_card))) {
-                intent = new Intent(DocumentListActivity.this, IdRegistrationActivity.class);
-                intent.putExtra(IntentConstants.AADHAR_CART_EXTRA, true);
-            } else if (menuItem.equals(getString(R.string.vehicle_registration))) {
-                intent = new Intent(DocumentListActivity.this, VehicleRegistrationActivity.class);
-                intent.putExtra(IntentConstants.DOC_TYPE_EXTRA, getString(R.string.vehicle_registration));
-            } else if (menuItem.equals(getString(R.string.vehicle_insurance))) {
-                intent = new Intent(DocumentListActivity.this, VehicleRegistrationActivity.class);
-                intent.putExtra(IntentConstants.DOC_TYPE_EXTRA, getString(R.string.vehicle_insurance));
-            } else if (menuItem.equals(getString(R.string.vehicle_permit))) {
-                intent = new Intent(DocumentListActivity.this, VehicleRegistrationActivity.class);
-                intent.putExtra(IntentConstants.DOC_TYPE_EXTRA, getString(R.string.vehicle_permit));
-            } else if (menuItem.equals(getString(R.string.shop_act))) {
-                intent = new Intent(DocumentListActivity.this, ShopRegistrationActivity.class);
-            }
-
-
-            if (intent != null)
-                startActivity(intent);
+            Intent intent = new Intent(DocumentListActivity.this, UploadDocumentActivity.class);
+            intent.putExtra(IntentConstants.DOC_TYPE_EXTRA, documentList.get(position));
+            startActivity(intent);
         }
     };
 

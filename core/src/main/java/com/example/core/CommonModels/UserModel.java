@@ -16,4 +16,5 @@ public class UserModel implements Serializable {
     public String pinCode;
     public String cityPreferences;
     public boolean documentCompleted;
+    public String profileImage;
 }

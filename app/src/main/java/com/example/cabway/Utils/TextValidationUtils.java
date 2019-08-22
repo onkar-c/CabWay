@@ -21,11 +21,16 @@ public class TextValidationUtils {
     }
 
     public static boolean isValidPinCode(String target) {
-        return !target.isEmpty() && target.length()==6 ;
+        return !target.isEmpty() && target.length() == 6;
     }
 
     public static void showMandatoryError(int field, Context context) {
         String message = String.format(context.getResources().getString(R.string.mandatory_messages), context.getResources().getString(field));
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+    }
+
+    public static void showMandatoryErrorUsingString(String field, Context context) {
+        String message = String.format(context.getResources().getString(R.string.mandatory_messages), field);
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 }

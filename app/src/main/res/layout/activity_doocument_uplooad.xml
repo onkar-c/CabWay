@@ -29,7 +29,7 @@
         </LinearLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/il_vehicle_registration_number"
+            android:id="@+id/il_doc_registration_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/ll_top"
@@ -37,7 +37,7 @@
             android:textColorHint="@android:color/darker_gray">
 
             <EditText
-                android:id="@+id/et_vehicle_registration_number"
+                android:id="@+id/et_doc_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/registration_number"
@@ -50,12 +50,13 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/il_doc_desc"
+            android:id="@+id/il_name_of_doc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/il_vehicle_registration_number"
+            android:layout_below="@id/il_doc_registration_number"
             android:layout_marginTop="10dp"
-            android:textColorHint="@android:color/darker_gray">
+            android:textColorHint="@android:color/darker_gray"
+            android:visibility="gone">
 
             <EditText
                 android:id="@+id/et_name_on_doc"
@@ -70,19 +71,36 @@
 
         </android.support.design.widget.TextInputLayout>
 
-        <RelativeLayout
-            android:id="@+id/date_states_layout"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/il_vehicle_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/il_doc_desc"
-            >
+            android:layout_below="@+id/il_name_of_doc"
+            android:layout_marginTop="10dp"
+            android:textColorHint="@android:color/darker_gray"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/et_vehicle_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/vehicle_type"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/small_text"
+                tools:ignore="Autofill" />
+
+        </android.support.design.widget.TextInputLayout>
+
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/il_states_name"
+            android:id="@+id/il_state_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColorHint="@android:color/darker_gray"
+            android:layout_below="@+id/il_vehicle_type"
             android:layout_marginTop="10dp"
+            android:textColorHint="@android:color/darker_gray"
             android:visibility="gone">
 
             <EditText
@@ -98,21 +116,81 @@
 
         </android.support.design.widget.TextInputLayout>
 
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/il_gst_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/il_state_name"
+            android:layout_marginTop="10dp"
+            android:textColorHint="@android:color/darker_gray"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/et_gst_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/gst_number"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/small_text"
+                tools:ignore="Autofill,TextFields" />
+
+        </android.support.design.widget.TextInputLayout>
 
 
         <LinearLayout
-            android:id="@+id/expired_layout"
+            android:id="@+id/ll_issued_date_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/il_gst_number"
             android:layout_marginStart="5dp"
             android:layout_marginTop="20dp"
             android:orientation="horizontal"
-            android:visibility="gone"
-            android:weightSum="3">
+            android:weightSum="3"
+            android:visibility="gone">
 
 
             <TextView
-                android:id="@+id/et_expired_date"
+                android:id="@+id/et_shop_act_issued_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:focusable="false"
+                android:hint="@string/issued_on"
+                android:maxLines="1"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/small_text"
+                tools:ignore="Autofill" />
+
+            <TextView
+                android:id="@+id/tv_issued_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:clickable="false"
+                android:focusable="false"
+                android:hint="@string/date_format"
+                android:maxLines="1"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/small_text"
+                tools:ignore="Autofill" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_expired_date_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_issued_date_layout"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:visibility="gone">
+
+
+            <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -125,7 +203,7 @@
                 tools:ignore="Autofill" />
 
             <TextView
-                android:id="@+id/expired_date"
+                android:id="@+id/tv_expired_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -137,13 +215,12 @@
                 android:textSize="@dimen/small_text"
                 tools:ignore="Autofill" />
         </LinearLayout>
-        </RelativeLayout>
 
         <Button
             android:id="@+id/btn_continue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/date_states_layout"
+            android:layout_below="@+id/ll_expired_date_layout"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="10dp"
             android:background="@android:color/black"

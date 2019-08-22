@@ -8,6 +8,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.cabway.R;
+import com.example.cabway.Utils.IntentConstants;
 import com.example.cabway.Utils.TextValidationUtils;
 import com.example.cabway.viewModels.LoginViewModel;
 import com.example.core.CommonModels.UserModel;
@@ -54,8 +55,7 @@ public class LoginActivity extends BaseActivity {
             if (Objects.requireNonNull(loginResponse).getStatus().equals(AppConstants.SUCCESS)) {
                 Toast.makeText(LoginActivity.this, loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
                 setUserData(loginResponse.getUser());
-                LoginActivity.this.startActivity(new Intent(LoginActivity.this, DashBoardActivity.class));
-                finish();
+                startNextActivity(loginResponse.getUser());
             } else {
                 Toast.makeText(LoginActivity.this, loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -67,6 +67,18 @@ public class LoginActivity extends BaseActivity {
         appPreferences.setIsLogin(true);
         appPreferences.setAuthKey(user.authKey);
         appPreferences.setUserDetails(user);
+    }
+
+    private void startNextActivity(UserModel user){
+        Intent nextActivityIntent;
+        if(user.documentCompleted)
+            nextActivityIntent = new Intent(LoginActivity.this, DashBoardActivity.class);
+        else {
+            nextActivityIntent = new Intent(LoginActivity.this, DocumentListActivity.class);
+            nextActivityIntent.putExtra(IntentConstants.IS_FROM_LOGIN, true);
+        }
+        startActivity(nextActivityIntent);
+        finish();
     }
 
 
