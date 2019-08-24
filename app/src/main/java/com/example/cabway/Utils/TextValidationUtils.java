@@ -16,12 +16,12 @@ public class TextValidationUtils {
         return mobileNumber.length() == 10;
     }
 
-    public static boolean isValidEmail(CharSequence target) {
-        return Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    public static boolean isValidEmail(CharSequence emailId) {
+        return isEmpty(emailId.toString()) || Patterns.EMAIL_ADDRESS.matcher(emailId).matches();
     }
 
-    public static boolean isValidPinCode(String target) {
-        return !target.isEmpty() && target.length() == 6;
+    public static boolean isValidPinCode(String pinCode) {
+        return isEmpty(pinCode) || pinCode.length()!= 6 ;
     }
 
     public static void showMandatoryError(int field, Context context) {
