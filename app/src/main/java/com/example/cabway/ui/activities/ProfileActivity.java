@@ -1,5 +1,6 @@
 package com.example.cabway.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
 import android.view.View;
@@ -9,11 +10,14 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.cabway.R;
+import com.example.cabway.Utils.ImageUtils;
 import com.example.cabway.Utils.TextValidationUtils;
 import com.example.cabway.ui.adapter.CitySpinnerAdapter;
 import com.example.core.CommonModels.CityModel;
 import com.example.core.CommonModels.UserModel;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,6 +32,9 @@ public class ProfileActivity extends BaseActivity {
 
     @BindView(R.id.iv_profile)
     ImageView ivProfile;
+
+    @BindView(R.id.addImage)
+    ImageView ivAddProfile;
 
     @BindView(R.id.iv_edit)
     ImageView ivEdit;
@@ -59,7 +66,8 @@ public class ProfileActivity extends BaseActivity {
     @BindView(R.id.btn_save)
     Button btnSave;
 
-    private List<CityModel> cityList,stateList;
+    private List<CityModel> cityList, stateList;
+    String mFilePath = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +78,7 @@ public class ProfileActivity extends BaseActivity {
         setUpUi();
     }
 
-    private void setUpUi(){
+    private void setUpUi() {
 
         UserModel user = appPreferences.getUserDetails();
 
@@ -82,22 +90,22 @@ public class ProfileActivity extends BaseActivity {
         etRole.setText(user.role);
 
         spCity.setEnabled(false);
-        cityList=getCities();
-        CitySpinnerAdapter citySpinnerAdapter=new CitySpinnerAdapter(this,cityList);
+        cityList = getCities();
+        CitySpinnerAdapter citySpinnerAdapter = new CitySpinnerAdapter(this, cityList);
         spCity.setAdapter(citySpinnerAdapter);
         spCity.setSelection(getSelectedCity(user.cityCode));
 
         spState.setEnabled(false);
-        stateList=getStates();
-        CitySpinnerAdapter stateSpinnerAdapter=new CitySpinnerAdapter(this,stateList);
+        stateList = getStates();
+        CitySpinnerAdapter stateSpinnerAdapter = new CitySpinnerAdapter(this, stateList);
         spState.setAdapter(stateSpinnerAdapter);
 
     }
 
     private int getSelectedCity(String cityCode) {
-        for(int i=0;i<cityList.size();i++){
-            CityModel city=cityList.get(i);
-            if(city.getCode().equals(cityCode)){
+        for (int i = 0; i < cityList.size(); i++) {
+            CityModel city = cityList.get(i);
+            if (city.getCode().equals(cityCode)) {
                 return i;
             }
         }
@@ -105,7 +113,7 @@ public class ProfileActivity extends BaseActivity {
     }
 
     @OnClick(R.id.iv_edit)
-    public void onClickOfEdit(){
+    public void onClickOfEdit() {
         etName.setFocusable(true);
         etName.setEnabled(true);
         etEmail.setEnabled(true);
@@ -114,11 +122,12 @@ public class ProfileActivity extends BaseActivity {
         etPincode.setEnabled(true);
         spState.setEnabled(true);
         spCity.setEnabled(true);
+        ivAddProfile.setVisibility(View.VISIBLE);
         btnSave.setVisibility(View.VISIBLE);
     }
 
     @OnClick(R.id.btn_save)
-    public void save(){
+    public void save() {
         if (checkNetworkAvailableWithoutError()) {
             if (validateAllFields()) {
 
@@ -130,29 +139,33 @@ public class ProfileActivity extends BaseActivity {
                 etPincode.setEnabled(false);
                 spState.setEnabled(false);
                 spCity.setEnabled(false);
+                ivAddProfile.setVisibility(View.GONE);
                 btnSave.setVisibility(View.GONE);
             }
         }
+    }
 
+    @OnClick({R.id.uploadImage,R.id.addImage})
+    void selectImage() {
+        if (isReadStoragePermissionGranted() && isWriteStoragePermissionGranted())
+            ImageUtils.pickImage(this);
+            //showPleaseWaitDialog();
     }
 
     private boolean validateAllFields() {
         if (TextValidationUtils.isEmpty(etName.getText().toString())) {
             showMandatoryError(R.string.full_name, this);
             return false;
-        } else if (TextValidationUtils.isEmpty(etEmail.getText().toString())) {
-            showMandatoryError(R.string.email, this);
-            return false;
-        }else if (!TextValidationUtils.isValidEmail(etEmail.getText().toString())) {
+        } else if (TextValidationUtils.isValidEmail(etEmail.getText().toString())) {
             Toast.makeText(this, R.string.invalid_email, Toast.LENGTH_SHORT).show();
             return false;
-        }else if (TextValidationUtils.isEmpty(etAddress.getText().toString())) {
+        } else if (TextValidationUtils.isEmpty(etAddress.getText().toString())) {
             showMandatoryError(R.string.address, this);
             return false;
-        }else if (spCity.getSelectedItemPosition()==0) {
+        } else if (spCity.getSelectedItemPosition() == 0) {
             showMandatoryError(R.string.city, this);
             return false;
-        }else if (spState.getSelectedItemPosition()==0) {
+        } else if (spState.getSelectedItemPosition() == 0) {
             showMandatoryError(R.string.state, this);
             return false;
         } else if (TextValidationUtils.isValidPinCode(etPincode.getText().toString())) {
@@ -161,4 +174,39 @@ public class ProfileActivity extends BaseActivity {
         } else
             return true;
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ImageUtils.IMAGE_PICK) {
+            //hidePleaseWaitDialog();
+            String fileName = "abc.png";
+            String filePath = ImageUtils.onImagePickResult(requestCode, resultCode, data, fileName, this);
+            if (!TextValidationUtils.isEmpty(filePath)) {
+                mFilePath = filePath;
+                Toast.makeText(this, filePath, Toast.LENGTH_SHORT).show();
+
+                Picasso.with(this)
+                        .load(new File(mFilePath))
+                        .into(ivProfile);
+            }
+        }
+    }
+
+   /* public void showPleaseWaitDialog() {
+        PleaseWaitDialogFragment fragment = (PleaseWaitDialogFragment) getSupportFragmentManager().findFragmentByTag(PleaseWaitDialogFragment.FRAGMENT_TAG);
+        if (fragment == null) {
+            fragment = new PleaseWaitDialogFragment();
+            fragment.setCancelable(false);
+            getSupportFragmentManager().beginTransaction()
+                    .add(fragment, PleaseWaitDialogFragment.FRAGMENT_TAG)
+                    .commitAllowingStateLoss();
+        }
+    }
+
+    public void hidePleaseWaitDialog() {
+        PleaseWaitDialogFragment fragment = (PleaseWaitDialogFragment) getSupportFragmentManager().findFragmentByTag(PleaseWaitDialogFragment.FRAGMENT_TAG);
+        if (fragment != null) {
+            getSupportFragmentManager().beginTransaction().remove(fragment).commitAllowingStateLoss();
+        }
+    }*/
 }

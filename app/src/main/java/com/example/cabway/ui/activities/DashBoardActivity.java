@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cabway.R;
@@ -50,6 +51,9 @@ public class DashBoardActivity extends BaseActivity
 
     @BindView(R.id.tv_role)
     TextView tvRole;
+
+    @BindView(R.id.profile_image)
+    ImageView ivProfile;
 
     @BindView(R.id.availableRidesList)
     RecyclerView availableRidesList;
@@ -89,6 +93,9 @@ public class DashBoardActivity extends BaseActivity
         UserModel user = appPreferences.getUserDetails();
         tvUserName.setText(String.format("%s %s", user.firstName, user.lastName));
         tvRole.setText(user.role);
+        /*Picasso.with(this)
+                .load(new File(mFilePath))
+                .into(ivProfile);*/
     }
 
     private void setRidesList() {

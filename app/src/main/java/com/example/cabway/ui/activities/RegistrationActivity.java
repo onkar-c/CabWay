@@ -8,7 +8,8 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +24,9 @@ import com.example.cabway.viewModels.RegistrationViewModel;
 import com.example.core.CommonModels.CityModel;
 import com.example.core.CommonModels.UserModel;
 import com.example.database.Utills.AppConstants;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -83,7 +86,11 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     RadioGroup type;
 
     @BindView(R.id.uploadImageLayout)
-    LinearLayout uploadImageLayout;
+    FrameLayout uploadImageLayout;
+
+    @BindView(R.id.uploadImage)
+    ImageView ivProfileImage;
+
     String mFilePath = "";
     private DialogOtp dialogOtp;
     private String mMobileNumber;
@@ -202,10 +209,11 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         }
     }
 
-    @OnClick(R.id.uploadImage)
+    @OnClick({R.id.uploadImage,R.id.addImage})
     void selectImage() {
         if (isReadStoragePermissionGranted() && isWriteStoragePermissionGranted())
             ImageUtils.pickImage(this);
+            //showPleaseWaitDialog();
     }
 
     private UserModel createUserModel() {
@@ -270,10 +278,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         } else if (TextValidationUtils.isEmpty(etLastName.getText().toString())) {
             showMandatoryError(R.string.last_name, this);
             return false;
-        } else if (TextValidationUtils.isEmpty(etEmail.getText().toString())) {
-            showMandatoryError(R.string.email, this);
-            return false;
-        } else if (!TextValidationUtils.isValidEmail(etEmail.getText().toString())) {
+        } else if (TextValidationUtils.isValidEmail(etEmail.getText().toString())) {
             Toast.makeText(this, R.string.invalid_email, Toast.LENGTH_SHORT).show();
             return false;
         } else if (TextValidationUtils.isEmpty(etAddress.getText().toString())) {
@@ -285,7 +290,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         } else if (spState.getSelectedItemPosition() == 0) {
             showMandatoryError(R.string.state, this);
             return false;
-        } else if (TextValidationUtils.isEmpty(etPincode.getText().toString())) {
+        } else if (TextValidationUtils.isValidPinCode(etPincode.getText().toString())) {
             showMandatoryError(R.string.pincode, this);
             return false;
         } else if (TextValidationUtils.isEmpty(etPassword.getText().toString())) {
@@ -304,11 +309,16 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == ImageUtils.IMAGE_PICK) {
+            //hidePleaseWaitDialog();
             String fileName = "abc.png";
             String filePath = ImageUtils.onImagePickResult(requestCode, resultCode, data, fileName, this);
             if (!TextValidationUtils.isEmpty(filePath)) {
                 mFilePath = filePath;
                 Toast.makeText(this, filePath, Toast.LENGTH_SHORT).show();
+
+                Picasso.with(this)
+                        .load(new File(mFilePath))
+                        .into(ivProfileImage);
             }
         }
     }
@@ -318,5 +328,22 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         ImageUtils.pickImage(this);
     }
 
+    /*public void showPleaseWaitDialog() {
+       PleaseWaitDialogFragment fragment = (PleaseWaitDialogFragment) getSupportFragmentManager().findFragmentByTag(PleaseWaitDialogFragment.FRAGMENT_TAG);
+        if (fragment == null) {
+            fragment = new PleaseWaitDialogFragment();
+            fragment.setCancelable(false);
+            getSupportFragmentManager().beginTransaction()
+                    .add(fragment, PleaseWaitDialogFragment.FRAGMENT_TAG)
+                    .commitAllowingStateLoss();
+        }
+    }
+
+    public void hidePleaseWaitDialog() {
+        PleaseWaitDialogFragment fragment = (PleaseWaitDialogFragment) getSupportFragmentManager().findFragmentByTag(PleaseWaitDialogFragment.FRAGMENT_TAG);
+        if (fragment != null) {
+            getSupportFragmentManager().beginTransaction().remove(fragment).commitAllowingStateLoss();
+        }
+    }*/
 
 }
