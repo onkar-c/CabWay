@@ -43,4 +43,11 @@ public interface ApiInterface {
     @Multipart
     @POST("maint/registerUser")
     Call<JsonResponse> register(@Part MultipartBody.Part file, @Part("user") RequestBody userModel);
+
+    @Multipart
+    @POST("document")
+    Call<JsonResponse> documentUpload(@Part MultipartBody.Part file, @Part("document") RequestBody documentUploadRequestModel);
+
+    @GET("document/list")
+    Call<JsonResponse> getDocuments();
 }

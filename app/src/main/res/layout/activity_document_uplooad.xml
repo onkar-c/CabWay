@@ -19,7 +19,7 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/iv_banner"
+                android:id="@+id/iv_document_image"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:contentDescription="@string/take_a_photo"
@@ -56,7 +56,7 @@
             android:layout_below="@id/il_doc_registration_number"
             android:layout_marginTop="10dp"
             android:textColorHint="@android:color/darker_gray"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <EditText
                 android:id="@+id/et_name_on_doc"
@@ -187,7 +187,7 @@
             android:layout_marginTop="20dp"
             android:orientation="horizontal"
             android:weightSum="3"
-            android:visibility="gone">
+            android:visibility="visible">
 
 
             <TextView
@@ -224,7 +224,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginBottom="10dp"
             android:background="@android:color/black"
-            android:text="@string/continue_bt"
+            android:text="@string/submit"
             android:textColor="@android:color/white"
             android:textSize="@dimen/small_text" />
     </RelativeLayout>

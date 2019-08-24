@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
 
+import com.example.cabway.Utils.IntentConstants;
+
 public class SplashScreenActivity extends BaseActivity {
 
     @Override
@@ -18,9 +20,15 @@ public class SplashScreenActivity extends BaseActivity {
 
     private void startDashboardActivity() {
         Intent nextActivity;
-        if (appPreferences.isLogin())
-            nextActivity = new Intent(this, DashBoardActivity.class);
-        else
+        if (appPreferences.isLogin()) {
+
+            if(appPreferences.getUserDetails().documentCompleted)
+                nextActivity = new Intent(this, DashBoardActivity.class);
+            else {
+                nextActivity = new Intent(this, DocumentListActivity.class);
+                nextActivity.putExtra(IntentConstants.IS_FROM_LOGIN, true);
+            }
+        } else
             nextActivity = new Intent(this, LoginActivity.class);
         startActivity(nextActivity);
         finish();

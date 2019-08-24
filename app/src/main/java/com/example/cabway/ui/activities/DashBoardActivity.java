@@ -60,11 +60,7 @@ public class DashBoardActivity extends BaseActivity
 
     RecyclerViewItemClickListener ridesViewItemClickListener = (v, position) -> startActivity(new Intent(DashBoardActivity.this, BookRideActivity.class));
 
-    DialogInterface.OnClickListener onLogoutListener = (dialog, id) -> {
-        appPreferences.clearPreferencesForLogout();
-        startActivity(new Intent(DashBoardActivity.this, LoginActivity.class));
-        DashBoardActivity.this.finish();
-    };
+
 
     RecyclerViewItemClickListener recyclerViewItemClickListener = new RecyclerViewItemClickListener() {
         @Override

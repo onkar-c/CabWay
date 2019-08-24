@@ -1,16 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.activities.DocumentListActivity">
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/documentList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:overScrollMode="never"
-        android:paddingBottom="10dp"
-        android:layout_marginTop="10dp"/>
+    android:layout_height="match_parent">
 
-</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".ui.activities.DocumentListActivity">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/documentList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:overScrollMode="never"
+            android:paddingBottom="10dp" />
+
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/documentList"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:background="@android:color/black"
+            android:text="@string/logout"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/small_text" />
+
+    </RelativeLayout>
+</ScrollView>

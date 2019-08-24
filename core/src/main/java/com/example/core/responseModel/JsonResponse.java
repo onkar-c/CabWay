@@ -1,5 +1,6 @@
 package com.example.core.responseModel;
 
+import com.example.core.CommonModels.DocumentModel;
 import com.example.core.CommonModels.UserModel;
 import com.google.gson.annotations.SerializedName;
 
@@ -16,6 +17,8 @@ public class JsonResponse implements Serializable {
     private List<HeroesModel> heroesList;
     @SerializedName("user")
     private UserModel user;
+    @SerializedName("listDocument")
+    private List<DocumentModel> documentsList;
 
     public List<HeroesModel> getHeroesList() {
         return heroesList;
@@ -39,5 +42,9 @@ public class JsonResponse implements Serializable {
 
     public UserModel getUser() {
         return user;
+    }
+
+    public List<DocumentModel> getDocumentsList() {
+        return documentsList;
     }
 }

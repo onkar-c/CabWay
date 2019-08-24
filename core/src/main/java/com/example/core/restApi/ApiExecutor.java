@@ -11,6 +11,7 @@ import com.example.core.ApiInterface;
 import com.example.core.RequestExecutor;
 import com.example.core.Utills.FileUtils;
 import com.example.core.Utills.HeroUtils;
+import com.example.core.CommonModels.DocumentModel;
 import com.example.core.requestModels.LoginRequestModel;
 import com.example.core.requestModels.ResetPasswordModel;
 import com.example.core.requestModels.VerifyOtpRequestModel;
@@ -66,5 +67,15 @@ public class ApiExecutor {
 
     public static void validateLogin(final MutableLiveData<JsonResponse> mltLoginResponse, LoginRequestModel loginRequestModel) {
         RequestExecutor.ExecuteApi(getApiInterface().validateLogin(loginRequestModel), mltLoginResponse);
+    }
+
+    public static void uploadDocument(final MutableLiveData<JsonResponse> mltUploadDocumentResponse, DocumentModel documentModel, String filePath) {
+        RequestBody document = RequestBody.create(MultipartBody.FORM, new Gson().toJson(documentModel));
+        MultipartBody.Part body = FileUtils.getMultipartBody(filePath);
+        RequestExecutor.ExecuteApi(getApiInterface().documentUpload(body, document), mltUploadDocumentResponse);
+    }
+
+    public static void getDocuments(final MutableLiveData<JsonResponse> mltDocumentsResponse) {
+        RequestExecutor.ExecuteApi(getApiInterface().getDocuments(), mltDocumentsResponse);
     }
 }

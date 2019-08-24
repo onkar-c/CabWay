@@ -17,4 +17,5 @@ public class AppConstants {
     public static final String PART_FILE_TYPE = "file";
     public static final String IMAGE_MIME_TYPE = "image/*";
     public static final String IMAGE_PICKER_MESSAGE = "Select Image";
+    public static final int DEFAULT_ID = 0;
 }

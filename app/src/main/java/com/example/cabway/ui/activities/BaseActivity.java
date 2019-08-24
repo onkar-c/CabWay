@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -180,6 +181,12 @@ public class BaseActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    DialogInterface.OnClickListener onLogoutListener = (dialog, id) -> {
+        appPreferences.clearPreferencesForLogout();
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
+    };
 
     public void performActionAfterPermission() {
 

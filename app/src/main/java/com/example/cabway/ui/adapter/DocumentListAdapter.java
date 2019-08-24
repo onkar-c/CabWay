@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.example.cabway.R;
 import com.example.cabway.ui.Interfaces.RecyclerViewItemClickListener;
+import com.example.cabway.ui.activities.DocumentListActivity;
+import com.example.core.CommonModels.DocumentModel;
 
 import java.util.List;
 
@@ -22,12 +24,14 @@ public class DocumentListAdapter extends RecyclerView.Adapter<DocumentListAdapte
     private Context context;
     private RecyclerViewItemClickListener recyclerViewItemClickListener;
     private List<String> documentList;
+    private List<DocumentModel> documentModelList;
 
 
-    public DocumentListAdapter(Context context, List<String> documentList, RecyclerViewItemClickListener recyclerViewItemClickListener) {
+    public DocumentListAdapter(Context context, List<String> documentList, List<DocumentModel> documentModelList, RecyclerViewItemClickListener recyclerViewItemClickListener) {
         this.context = context;
         this.documentList = documentList;
         this.recyclerViewItemClickListener = recyclerViewItemClickListener;
+        this.documentModelList = documentModelList;
     }
 
     @NonNull
@@ -40,15 +44,20 @@ public class DocumentListAdapter extends RecyclerView.Adapter<DocumentListAdapte
     public void onBindViewHolder(@NonNull DocumentListAdapter.DocumentListViewHolder holder, int position) {
         String displayText = context.getString(R.string.step) + " " + (position + 1) + " : " + documentList.get(position);
         holder.documentType.setText(displayText);
-        if(position%2 == 0) {
+        if(documentModelList != null && DocumentListActivity.getDocumentFromList(documentList.get(position), documentModelList) != null)
+            holder.documentType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_check_circle_yellow, 0);
+        else
             holder.documentType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.otp_cross, 0);
-            holder.documentType.setCompoundDrawablePadding(20);
-        }
+        holder.documentType.setCompoundDrawablePadding(20);
     }
 
     @Override
     public int getItemCount() {
         return documentList.size();
+    }
+
+    public void setDocumentModelList(List<DocumentModel> documentModelList){
+        this.documentModelList = documentModelList;
     }
 
     class DocumentListViewHolder extends RecyclerView.ViewHolder{
