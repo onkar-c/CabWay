@@ -3,7 +3,6 @@ package com.example.cabway.ui.activities;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,18 +22,20 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.example.cabway.Utils.TextValidationUtils.showMandatoryError;
-
 public class ForgotPasswordActivity extends BaseActivity implements RegistrationInterface {
 
     @BindView(R.id.phone)
     EditText etPhoneNumber;
     @BindView(R.id.new_password)
     EditText etNewPassword;
+    @BindView(R.id.confirm_password)
+    EditText etConfirmPassword;
     @BindView(R.id.ti_phone_number)
     TextInputLayout ti_phone_number;
     @BindView(R.id.ti_new_password)
     TextInputLayout ti_new_password;
+    @BindView(R.id.ti_confirm_password)
+    TextInputLayout ti_confirm_password;
     @BindView(R.id.generate_otp)
     Button generate_otp;
     @BindView(R.id.change_password)
@@ -55,7 +56,7 @@ public class ForgotPasswordActivity extends BaseActivity implements Registration
         forgotPasswordViewModel = ViewModelProviders.of(this).get(ForgotPasswordViewModel.class);
         forgotPasswordViewModel.init();
         setObservers();
-
+        dialogOtp = new DialogOtp(this);
     }
 
     private void setObservers() {
@@ -70,7 +71,6 @@ public class ForgotPasswordActivity extends BaseActivity implements Registration
             removeProgressDialog();
             if (Objects.requireNonNull(otpResponse).getStatus().equals(AppConstants.SUCCESS)) {
                 Toast.makeText(ForgotPasswordActivity.this, R.string.otp_sent, Toast.LENGTH_SHORT).show();
-                dialogOtp = new DialogOtp(this);
                 if (!dialogOtp.isShowing())
                     dialogOtp.showCustomDialogVerifyMobile(mMobileNumber);
             } else {
@@ -116,11 +116,12 @@ public class ForgotPasswordActivity extends BaseActivity implements Registration
     }
 
     private void setUiForOtpSuccess() {
-        displayMessage.setVisibility(View.GONE);
+        displayMessage.setText(getString(R.string.new_password_message));
         generate_otp.setVisibility(View.GONE);
         ti_phone_number.setVisibility(View.GONE);
         change_password.setVisibility(View.VISIBLE);
         ti_new_password.setVisibility(View.VISIBLE);
+        ti_confirm_password.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -138,13 +139,12 @@ public class ForgotPasswordActivity extends BaseActivity implements Registration
     @OnClick(R.id.change_password)
     public void Change_password() {
         String newPassword = etNewPassword.getText().toString();
-        if (!TextUtils.isEmpty(newPassword)) {
+        if (!TextValidationUtils.isValidPassword(newPassword, etConfirmPassword.getText().toString(), this)) {
             if (checkNetworkAvailableWithoutError()) {
                 forgotPasswordViewModel.getForgotPasswordRepository().resetPassword(forgotPasswordViewModel.getResetPasswordResponseMld(), mMobileNumber, newPassword);
                 showProgressDialog(AppConstants.PLEASE_WAIT, false);
             }
-        } else
-            showMandatoryError(R.string.password, this);
+        }
     }
 
 }

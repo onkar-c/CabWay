@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cabway.R;
@@ -19,7 +21,6 @@ import com.example.core.CommonModels.DocumentModel;
 import com.example.database.Utills.AppConstants;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,16 +35,23 @@ public class DocumentListActivity extends BaseActivity {
     DocumentListAdapter documentListAdapter;
     @BindView(R.id.btn_logout)
     Button btn_logout;
+    @BindView(R.id.errorView)
+    TextView errorView;
+    @BindView(R.id.docView)
+    LinearLayout docView;
     private DocumentViewModel documentViewModel;
     private List<String> documentList;
     private List<DocumentModel> documentModelList;
     RecyclerViewItemClickListener recyclerViewItemClickListener = new RecyclerViewItemClickListener() {
         @Override
         public void onItemClick(View v, int position) {
-            Intent intent = new Intent(DocumentListActivity.this, UploadDocumentActivity.class);
-            intent.putExtra(IntentConstants.DOCUMENT_EXTRA, getDocumentFromList(documentList.get(position), documentModelList));
-            intent.putExtra(IntentConstants.DOC_TYPE_EXTRA, documentList.get(position));
-            startActivity(intent);
+            if (documentModelList != null) {
+                Intent intent = new Intent(DocumentListActivity.this, UploadDocumentActivity.class);
+                intent.putExtra(IntentConstants.DOCUMENT_EXTRA, getDocumentFromList(documentList.get(position), documentModelList));
+                intent.putExtra(IntentConstants.DOC_TYPE_EXTRA, documentList.get(position));
+                startActivity(intent);
+            } else
+                getDocumentsFromServer();
         }
     };
 
@@ -76,8 +84,17 @@ public class DocumentListActivity extends BaseActivity {
         setDocumentsObserver();
         initData();
         setDocumentList();
-        showProgressDialog(AppConstants.PLEASE_WAIT, false);
-        documentViewModel.getDocumentRepository().getDocuments(documentViewModel.getDocumentsResponseMld());
+        getDocumentsFromServer();
+    }
+
+    private void getDocumentsFromServer() {
+        if (checkNetworkAvailableWithoutError()) {
+            showProgressDialog(AppConstants.PLEASE_WAIT, false);
+            documentViewModel.getDocumentRepository().getDocuments(documentViewModel.getDocumentsResponseMld());
+        } else {
+            docView.setVisibility(View.GONE);
+            errorView.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setDocumentsObserver() {
@@ -89,7 +106,7 @@ public class DocumentListActivity extends BaseActivity {
                 documentListAdapter.notifyDataSetChanged();
                 Toast.makeText(DocumentListActivity.this, documentsResponse.getMessage(), Toast.LENGTH_SHORT).show();
             } else {
-                documentModelList = Collections.emptyList();
+                documentModelList = null;
                 Toast.makeText(DocumentListActivity.this, documentsResponse.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

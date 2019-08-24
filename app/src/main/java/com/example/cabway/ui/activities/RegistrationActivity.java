@@ -139,6 +139,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         setUpUi();
         registrationViewModel = ViewModelProviders.of(this).get(RegistrationViewModel.class);
         registrationViewModel.init();
+        dialogOtp = new DialogOtp(this);
         setObservers();
     }
 
@@ -161,7 +162,6 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
             removeProgressDialog();
             if (Objects.requireNonNull(otpResponse).getStatus().equals(AppConstants.SUCCESS)) {
                 Toast.makeText(RegistrationActivity.this, R.string.otp_sent, Toast.LENGTH_SHORT).show();
-                dialogOtp = new DialogOtp(this);
                 if (!dialogOtp.isShowing())
                     dialogOtp.showCustomDialogVerifyMobile(mMobileNumber);
             } else {
@@ -209,11 +209,11 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         }
     }
 
-    @OnClick({R.id.uploadImage,R.id.addImage})
+    @OnClick({R.id.uploadImage, R.id.addImage})
     void selectImage() {
         if (isReadStoragePermissionGranted() && isWriteStoragePermissionGranted())
             ImageUtils.pickImage(this);
-            //showPleaseWaitDialog();
+//            showProgressDialog(AppConstants.PLEASE_WAIT, false);
     }
 
     private UserModel createUserModel() {
@@ -278,11 +278,10 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         } else if (TextValidationUtils.isEmpty(etLastName.getText().toString())) {
             showMandatoryError(R.string.last_name, this);
             return false;
-        } else if (TextValidationUtils.isValidEmail(etEmail.getText().toString())) {
+        } else if (!TextValidationUtils.isValidEmail(etEmail.getText().toString())) {
             Toast.makeText(this, R.string.invalid_email, Toast.LENGTH_SHORT).show();
             return false;
-        } else if (TextValidationUtils.isEmpty(etAddress.getText().toString())) {
-            showMandatoryError(R.string.address, this);
+        } else if (!TextValidationUtils.isValidAddress(etAddress.getText().toString(), this)) {
             return false;
         } else if (spCity.getSelectedItemPosition() == 0) {
             showMandatoryError(R.string.city, this);
@@ -293,23 +292,14 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         } else if (TextValidationUtils.isValidPinCode(etPincode.getText().toString())) {
             showMandatoryError(R.string.pincode, this);
             return false;
-        } else if (TextValidationUtils.isEmpty(etPassword.getText().toString())) {
-            showMandatoryError(R.string.password, this);
-            return false;
-        } else if (TextValidationUtils.isEmpty(etConfirmPassword.getText().toString())) {
-            showMandatoryError(R.string.confirm_password, this);
-            return false;
-        } else if (!etPassword.getText().toString().equals(etConfirmPassword.getText().toString())) {
-            Toast.makeText(this, R.string.password_mismatch_message, Toast.LENGTH_SHORT).show();
-            return false;
         } else
-            return true;
+            return TextValidationUtils.isValidPassword(etPassword.getText().toString(), etConfirmPassword.getText().toString(), this);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == ImageUtils.IMAGE_PICK) {
-            //hidePleaseWaitDialog();
+//            removeProgressDialog();
             String fileName = "abc.png";
             String filePath = ImageUtils.onImagePickResult(requestCode, resultCode, data, fileName, this);
             if (!TextValidationUtils.isEmpty(filePath)) {
@@ -327,23 +317,5 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     public void performActionAfterPermission() {
         ImageUtils.pickImage(this);
     }
-
-    /*public void showPleaseWaitDialog() {
-       PleaseWaitDialogFragment fragment = (PleaseWaitDialogFragment) getSupportFragmentManager().findFragmentByTag(PleaseWaitDialogFragment.FRAGMENT_TAG);
-        if (fragment == null) {
-            fragment = new PleaseWaitDialogFragment();
-            fragment.setCancelable(false);
-            getSupportFragmentManager().beginTransaction()
-                    .add(fragment, PleaseWaitDialogFragment.FRAGMENT_TAG)
-                    .commitAllowingStateLoss();
-        }
-    }
-
-    public void hidePleaseWaitDialog() {
-        PleaseWaitDialogFragment fragment = (PleaseWaitDialogFragment) getSupportFragmentManager().findFragmentByTag(PleaseWaitDialogFragment.FRAGMENT_TAG);
-        if (fragment != null) {
-            getSupportFragmentManager().beginTransaction().remove(fragment).commitAllowingStateLoss();
-        }
-    }*/
 
 }

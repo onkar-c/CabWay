@@ -156,11 +156,10 @@ public class ProfileActivity extends BaseActivity {
         if (TextValidationUtils.isEmpty(etName.getText().toString())) {
             showMandatoryError(R.string.full_name, this);
             return false;
-        } else if (TextValidationUtils.isValidEmail(etEmail.getText().toString())) {
+        } else if (!TextValidationUtils.isValidEmail(etEmail.getText().toString())) {
             Toast.makeText(this, R.string.invalid_email, Toast.LENGTH_SHORT).show();
             return false;
-        } else if (TextValidationUtils.isEmpty(etAddress.getText().toString())) {
-            showMandatoryError(R.string.address, this);
+        } else if(!TextValidationUtils.isValidAddress(etAddress.getText().toString(), this)){
             return false;
         } else if (spCity.getSelectedItemPosition() == 0) {
             showMandatoryError(R.string.city, this);

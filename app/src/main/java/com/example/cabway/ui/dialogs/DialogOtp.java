@@ -60,6 +60,7 @@ public class DialogOtp {
         String mobText = mContext.getString(R.string.otp_text);
 
         mTvHeader.setText(mobText.replace("*", "******" + mobileNo.substring(6, 10)));
+        mEdtOtp.setText("");
         dialog.show();
     }
 
@@ -74,6 +75,7 @@ public class DialogOtp {
 
     @OnClick(R.id.regenerateOtp)
     void regenerateOtp() {
+        mEdtOtp.setText("");
         registrationInterface.requestOtp();
     }
 

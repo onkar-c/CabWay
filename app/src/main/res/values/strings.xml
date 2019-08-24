@@ -30,7 +30,8 @@
     <string name="otp_length_message">Please enter 4 digit OTP.</string>
     <string name="otp_verification_success_message">OTP verified successfully.</string>
     <string name="otp_verification_failed_message">Please Enter Valid OTP</string>
-    <string name="mobile_length_message">Please enter valid 10 digit mobile number.</string>
+    <string name="new_password_message">Please Enter Your New Password. </string>
+    <string name="mobile_length_message">Please enter valid mobile number.</string>
     <string name="password_mismatch_message">Both password should match.</string>
     <string name="mandatory_messages">Please Enter %1$s.</string>
     <string name="registration_success">User Registered Successfully.</string>
@@ -74,6 +75,8 @@
     <string name="state">State</string>
     <string name="pincode">PinCode</string>
     <string name="invalid_email">Please Enter Valid Email.</string>
+    <string name="address_length">Address length should be more than 10 character. </string>
+    <string name="password_length">Password length should be more than 4 character. </string>
     <string name="date_validation">Expiry date should be greater than issued date</string>
     <string name="full_name">Full Name</string>
     <string name="role">Role</string>

@@ -13,11 +13,39 @@ public class TextValidationUtils {
     }
 
     public static boolean validateMobileNumber(String mobileNumber) {
-        return mobileNumber.length() == 10;
+        return (mobileNumber.length() == 10 || !mobileNumber.matches("[6789]\\d{9}$"));
     }
 
     public static boolean isValidEmail(CharSequence emailId) {
-        return isEmpty(emailId.toString()) || Patterns.EMAIL_ADDRESS.matcher(emailId).matches();
+        return (!isEmpty(emailId.toString()) && Patterns.EMAIL_ADDRESS.matcher(emailId).matches());
+    }
+
+    public static boolean isValidAddress(String address, Context context){
+        if (isEmpty(address)){
+            showMandatoryError(R.string.address, context);
+            return false;
+        } else if (address.trim().length() < 10) {
+            showMandatoryErrorUsingString(context.getString(R.string.address_length), context);
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean isValidPassword(String password, String confirmPassword, Context context){
+        if (isEmpty(password)) {
+            showMandatoryError(R.string.password, context);
+            return false;
+        } else if (password.trim().length() < 10) {
+            showMandatoryErrorUsingString(context.getString(R.string.password_length), context);
+            return false;
+        }if (isEmpty(confirmPassword)) {
+            showMandatoryError(R.string.confirm_password, context);
+            return false;
+        } else if (!password.equals(confirmPassword)) {
+            Toast.makeText(context, R.string.password_mismatch_message, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     public static boolean isValidPinCode(String pinCode) {
