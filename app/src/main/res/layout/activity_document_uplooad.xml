@@ -11,7 +11,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp">
 
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/ll_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,11 +22,26 @@
                 android:id="@+id/iv_document_image"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:contentDescription="@string/take_a_photo"
-                android:src="@drawable/id_image" />
+                android:contentDescription="@string/take_a_photo" />
 
+            <ImageView
+                android:id="@+id/iv_add_doc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_add_document"
+                android:contentDescription="@string/add_doc" />
 
-        </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/upload_img"
+                android:textSize="@dimen/extra_small_text"
+                android:textColor="#cccccc"
+                android:gravity="center_horizontal"
+                android:layout_gravity="center_horizontal|bottom"
+                android:background="#94000000"/>
+        </FrameLayout>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/il_doc_registration_number"
@@ -137,7 +152,6 @@
                 tools:ignore="Autofill,TextFields" />
 
         </android.support.design.widget.TextInputLayout>
-
 
         <LinearLayout
             android:id="@+id/ll_issued_date_layout"
