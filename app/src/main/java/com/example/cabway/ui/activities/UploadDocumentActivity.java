@@ -170,15 +170,17 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
 
     @OnClick(R.id.btn_continue)
     public void onClick(View view) {
+        DocumentModel documentModel = getDocumentModel();
         if (checkNetworkAvailableWithoutError() && validate()) {
-            if(isEditMode) {
-                btnContinue.setVisibility(View.GONE);
-                isEditMode=false;
-                disableAllFields();
+            if(validateDocWise(documentModel)) {
+                if (isEditMode) {
+                    btnContinue.setVisibility(View.GONE);
+                    isEditMode = false;
+                    disableAllFields();
+                }
+                showProgressDialog(AppConstants.PLEASE_WAIT, false);
+                documentViewModel.getDocumentRepository().uploadDocument(documentViewModel.getDocumentUploadResponseMld(), documentModel, mFilePath);
             }
-            showProgressDialog(AppConstants.PLEASE_WAIT, false);
-            DocumentModel documentModel = getDocumentModel();
-            documentViewModel.getDocumentRepository().uploadDocument(documentViewModel.getDocumentUploadResponseMld(), documentModel, mFilePath);
         }
     }
 
@@ -241,6 +243,21 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
             return false;
         } else
             return true;
+    }
+
+    private boolean validateDocWise(DocumentModel document){
+       if(docType.equals(getResources().getString(R.string.aadhar_card))) {
+           return TextValidationUtils.validateAdharCard(this, document);
+       }else  if(docType.equals(getResources().getString(R.string.driver_license))) {
+           return TextValidationUtils.validateDrivingLicense(this, document);
+       } else if(docType.equals(getResources().getString(R.string.vehicle_registration))) {
+            return TextValidationUtils.validateVehicleRegistration(this, document);
+        }else  if(docType.equals(getResources().getString(R.string.vehicle_insurance))) {
+           return TextValidationUtils.validateVehicleInsurance(this, document);
+       } if(docType.equals(getResources().getString(R.string.vehicle_permit))) {
+            return TextValidationUtils.validateVehiclePermit(this, document);
+       }
+       return true;
     }
 
     @OnClick({R.id.iv_document_image,R.id.iv_add_doc})
