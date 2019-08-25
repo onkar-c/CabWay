@@ -5,6 +5,11 @@ import android.util.Patterns;
 import android.widget.Toast;
 
 import com.example.cabway.R;
+import com.example.database.Utills.AppConstants;
+
+import static com.example.database.Utills.AppConstants.ADDRESS_LENGTH;
+import static com.example.database.Utills.AppConstants.MOBILE_NUMBER_LENGTH;
+import static com.example.database.Utills.AppConstants.PIN_CODE_LENGTH;
 
 public class TextValidationUtils {
 
@@ -13,7 +18,7 @@ public class TextValidationUtils {
     }
 
     public static boolean validateMobileNumber(String mobileNumber) {
-        return (mobileNumber.length() == 10 || !mobileNumber.matches("[6789]\\d{9}$"));
+        return (mobileNumber.length() == MOBILE_NUMBER_LENGTH || !mobileNumber.matches("[6789]\\d{9}$"));
     }
 
     public static boolean isValidEmail(CharSequence emailId) {
@@ -24,7 +29,7 @@ public class TextValidationUtils {
         if (isEmpty(address)){
             showMandatoryError(R.string.address, context);
             return false;
-        } else if (address.trim().length() < 10) {
+        } else if (address.trim().length() < ADDRESS_LENGTH) {
             showMandatoryErrorUsingString(context.getString(R.string.address_length), context);
             return false;
         }
@@ -35,7 +40,7 @@ public class TextValidationUtils {
         if (isEmpty(password)) {
             showMandatoryError(R.string.password, context);
             return false;
-        } else if (password.trim().length() < 10) {
+        } else if (password.trim().length() < AppConstants.PASSWORD_LENGTH) {
             showMandatoryErrorUsingString(context.getString(R.string.password_length), context);
             return false;
         }if (isEmpty(confirmPassword)) {
@@ -49,7 +54,7 @@ public class TextValidationUtils {
     }
 
     public static boolean isValidPinCode(String pinCode) {
-        return isEmpty(pinCode) || pinCode.length()!= 6 ;
+        return isEmpty(pinCode) || pinCode.length()!= PIN_CODE_LENGTH ;
     }
 
     public static void showMandatoryError(int field, Context context) {

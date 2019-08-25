@@ -9,9 +9,11 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.example.cabway.R;
 import com.example.database.Utills.AppConstants;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -84,6 +86,19 @@ public class ImageUtils {
             return mypath.getAbsolutePath();
         }
         return "";
+    }
+
+
+    public static void setImageFromUrl(Context context, String url, ImageView imageView){
+        Picasso.with(context)
+                .load(url)
+                .into(imageView);
+    }
+
+    public static void setImageFromFilePath(Context context, String filePath, ImageView imageView){
+        Picasso.with(context)
+                .load(new File(filePath))
+                .into(imageView);
     }
 
 }

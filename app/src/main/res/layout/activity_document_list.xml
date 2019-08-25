@@ -8,34 +8,53 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context=".ui.activities.DocumentListActivity">
-        <LinearLayout
+
+        <RelativeLayout
             android:id="@+id/docView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="10dp">
+            android:layout_alignParentTop="true">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/documentList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:overScrollMode="never"
-            android:paddingBottom="10dp" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/documentList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                android:overScrollMode="never"
+                android:paddingBottom="10dp" />
 
-        <Button
-            android:id="@+id/btn_logout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="20dp"
-            android:background="@android:color/black"
-            android:text="@string/logout"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/small_text" />
-        </LinearLayout>
+            <Button
+                android:id="@+id/btn_continue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/documentList"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@android:color/black"
+                android:text="@string/continue_bt"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/small_text"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btn_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btn_continue"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@android:color/black"
+                android:text="@string/logout"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/small_text" />
+
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/errorView"
@@ -43,7 +62,9 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_centerHorizontal="true"
-            android:text="@string/error_fail_connection"/>
+            android:text="@string/error_fail_connection"
+            android:visibility="gone" />
+
 
     </RelativeLayout>
 </ScrollView>

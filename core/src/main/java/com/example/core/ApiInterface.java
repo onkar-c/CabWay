@@ -34,15 +34,16 @@ public interface ApiInterface {
     @PUT("users/resetPassword")
     Call<JsonResponse> resetPassword(@Body ResetPasswordModel resetPasswordModel);
 
-//    @POST("users")
-//    Call<JsonResponse> registerUser(@Body UserModel userModel);
-
     @POST("users/Login")
     Call<JsonResponse> validateLogin(@Body LoginRequestModel loginRequestModel);
 
     @Multipart
-    @POST("maint/registerUser")
+    @POST("users")
     Call<JsonResponse> register(@Part MultipartBody.Part file, @Part("user") RequestBody userModel);
+
+    @Multipart
+    @PUT("users/updateUser")
+    Call<JsonResponse> updateUser(@Part MultipartBody.Part file, @Part("user") RequestBody userModel);
 
     @Multipart
     @POST("document")

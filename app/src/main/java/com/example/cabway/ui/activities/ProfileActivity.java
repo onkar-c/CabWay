@@ -1,5 +1,6 @@
 package com.example.cabway.ui.activities;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
@@ -16,12 +17,13 @@ import com.example.cabway.R;
 import com.example.cabway.Utils.ImageUtils;
 import com.example.cabway.Utils.TextValidationUtils;
 import com.example.cabway.ui.adapter.CitySpinnerAdapter;
+import com.example.cabway.viewModels.UserViewModel;
 import com.example.core.CommonModels.CityModel;
 import com.example.core.CommonModels.UserModel;
-import com.squareup.picasso.Picasso;
+import com.example.database.Utills.AppConstants;
 
-import java.io.File;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,9 +67,10 @@ public class ProfileActivity extends BaseActivity {
 
     @BindView(R.id.btn_save)
     Button btnSave;
-
-    private List<CityModel> cityList, stateList;
     String mFilePath = "";
+    private List<CityModel> cityList, stateList;
+    private UserViewModel userViewModel;
+    private boolean isEdit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +78,11 @@ public class ProfileActivity extends BaseActivity {
         setContentView(R.layout.activity_profile);
         setUpActionBar();
         ButterKnife.bind(this);
+        cityList = getCities();
+        stateList = getStates();
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        userViewModel.init();
+        setUpdateUserObserver();
         setUpUi();
     }
 
@@ -88,18 +96,26 @@ public class ProfileActivity extends BaseActivity {
         etAddress.setText(user.address);
         etPincode.setText(user.pinCode);
         etRole.setText(user.role);
-
-        spCity.setEnabled(false);
-        cityList = getCities();
         CitySpinnerAdapter citySpinnerAdapter = new CitySpinnerAdapter(this, cityList);
         spCity.setAdapter(citySpinnerAdapter);
         spCity.setSelection(getSelectedCity(user.cityCode));
-
-        spState.setEnabled(false);
-        stateList = getStates();
         CitySpinnerAdapter stateSpinnerAdapter = new CitySpinnerAdapter(this, stateList);
         spState.setAdapter(stateSpinnerAdapter);
+        toggleUi(false);
+    }
 
+    private void setUpdateUserObserver() {
+        userViewModel.getUserUpdateResponseMld().observe(this, userUpdateUserResponse -> {
+            removeProgressDialog();
+            if (Objects.requireNonNull(userUpdateUserResponse).getStatus().equals(AppConstants.SUCCESS)) {
+                toggleUi(false);
+                if(userUpdateUserResponse.getUser() != null)
+                appPreferences.setUserDetails(userUpdateUserResponse.getUser());
+                Toast.makeText(ProfileActivity.this, userUpdateUserResponse.getMessage(), Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(ProfileActivity.this, userUpdateUserResponse.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private int getSelectedCity(String cityCode) {
@@ -116,18 +132,22 @@ public class ProfileActivity extends BaseActivity {
     public void save() {
         if (checkNetworkAvailableWithoutError()) {
             if (validateAllFields()) {
-                etName.setFocusable(false);
-                etName.setEnabled(false);
-                etEmail.setEnabled(false);
-                etPhoneNumber.setEnabled(false);
-                etAddress.setEnabled(false);
-                etPincode.setEnabled(false);
-                spState.setEnabled(false);
-                spCity.setEnabled(false);
-                ivAddProfile.setVisibility(View.GONE);
-                btnSave.setVisibility(View.GONE);
+                showProgressDialog(AppConstants.PLEASE_WAIT, false);
+                UserModel userModel = createUserModel();
+                userViewModel.getUserRepository().updateUser(userViewModel.getUserUpdateResponseMld(), userModel, mFilePath);
             }
         }
+    }
+
+    private UserModel createUserModel() {
+        UserModel userModel = appPreferences.getUserDetails();
+        userModel.firstName = etName.getText().toString();
+        userModel.lastName = etName.getText().toString();
+        userModel.address = etAddress.getText().toString();
+        userModel.email = etEmail.getText().toString();
+        userModel.cityCode = getCities().get(spCity.getSelectedItemPosition()).getName();
+        userModel.pinCode = etPincode.getText().toString();
+        return userModel;
     }
 
     @OnClick({R.id.iv_profile, R.id.addImage})
@@ -166,10 +186,7 @@ public class ProfileActivity extends BaseActivity {
             if (!TextValidationUtils.isEmpty(filePath)) {
                 mFilePath = filePath;
                 Toast.makeText(this, filePath, Toast.LENGTH_SHORT).show();
-
-                Picasso.with(this)
-                        .load(new File(mFilePath))
-                        .into(ivProfile);
+                ImageUtils.setImageFromFilePath(this, mFilePath, ivProfile);
             }
         }
     }
@@ -182,20 +199,31 @@ public class ProfileActivity extends BaseActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.action_edit).setVisible(!isEdit);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_edit) {
-            etName.setFocusable(true);
-            etName.setEnabled(true);
-            etEmail.setEnabled(true);
-            etPhoneNumber.setEnabled(true);
-            etAddress.setEnabled(true);
-            etPincode.setEnabled(true);
-            spState.setEnabled(true);
-            spCity.setEnabled(true);
-            ivAddProfile.setVisibility(View.VISIBLE);
-            btnSave.setVisibility(View.VISIBLE);
+            toggleUi(true);
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void toggleUi(boolean isEnabled) {
+        isEdit = isEnabled;
+        etName.setFocusable(isEnabled);
+        etName.setEnabled(isEnabled);
+        etEmail.setEnabled(isEnabled);
+        etAddress.setEnabled(isEnabled);
+        etPincode.setEnabled(isEnabled);
+        spState.setEnabled(isEnabled);
+        spCity.setEnabled(isEnabled);
+        ivAddProfile.setVisibility(isEnabled ? View.VISIBLE : View.GONE);
+        btnSave.setVisibility(isEnabled ? View.VISIBLE : View.GONE);
+        invalidateOptionsMenu();
     }
 }

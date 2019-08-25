@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +18,7 @@ import com.example.cabway.ui.Interfaces.RecyclerViewItemClickListener;
 import com.example.cabway.ui.adapter.DocumentListAdapter;
 import com.example.cabway.viewModels.DocumentViewModel;
 import com.example.core.CommonModels.DocumentModel;
+import com.example.core.CommonModels.UserModel;
 import com.example.database.Utills.AppConstants;
 
 import java.util.Arrays;
@@ -35,13 +36,16 @@ public class DocumentListActivity extends BaseActivity {
     DocumentListAdapter documentListAdapter;
     @BindView(R.id.btn_logout)
     Button btn_logout;
+    @BindView(R.id.btn_continue)
+    Button btn_continue;
     @BindView(R.id.errorView)
     TextView errorView;
     @BindView(R.id.docView)
-    LinearLayout docView;
+    RelativeLayout docView;
     private DocumentViewModel documentViewModel;
     private List<String> documentList;
     private List<DocumentModel> documentModelList;
+    private boolean isFromLogin = false;
     RecyclerViewItemClickListener recyclerViewItemClickListener = new RecyclerViewItemClickListener() {
         @Override
         public void onItemClick(View v, int position) {
@@ -70,7 +74,7 @@ public class DocumentListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_document_list);
         ButterKnife.bind(this);
-        boolean isFromLogin = getIntent().getBooleanExtra(IntentConstants.IS_FROM_LOGIN, false);
+        isFromLogin = getIntent().getBooleanExtra(IntentConstants.IS_FROM_LOGIN, false);
         if (isFromLogin)
             btn_logout.setVisibility(View.VISIBLE);
         else {
@@ -83,7 +87,12 @@ public class DocumentListActivity extends BaseActivity {
         setDocumentsObserver();
         initData();
         setDocumentList();
+    }
+
+    @Override
+    protected void onResume() {
         getDocumentsFromServer();
+        super.onResume();
     }
 
     private void getDocumentsFromServer() {
@@ -103,6 +112,12 @@ public class DocumentListActivity extends BaseActivity {
                 documentModelList = documentsResponse.getDocumentsList();
                 documentListAdapter.setDocumentModelList(documentModelList);
                 documentListAdapter.notifyDataSetChanged();
+                if (isFromLogin && documentsResponse.isDocumentCompleted()) {
+                    UserModel userModel = appPreferences.getUserDetails();
+                    userModel.documentCompleted = documentsResponse.isDocumentCompleted();
+                    appPreferences.setUserDetails(userModel);
+                    btn_continue.setVisibility(View.VISIBLE);
+                }
                 Toast.makeText(DocumentListActivity.this, documentsResponse.getMessage(), Toast.LENGTH_SHORT).show();
             } else {
                 documentModelList = null;
@@ -125,5 +140,10 @@ public class DocumentListActivity extends BaseActivity {
     @OnClick(R.id.btn_logout)
     public void performLogout() {
         DialogUtils.showMessageDialog(this, getString(R.string.logout_message), onLogoutListener);
+    }
+
+    @OnClick(R.id.btn_continue)
+    public void onContinueClick() {
+        startActivity(new Intent(this, DashBoardActivity.class));
     }
 }
