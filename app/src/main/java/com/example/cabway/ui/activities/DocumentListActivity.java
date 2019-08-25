@@ -78,7 +78,6 @@ public class DocumentListActivity extends BaseActivity {
             setUpActionBar();
         }
 
-
         documentViewModel = ViewModelProviders.of(this).get(DocumentViewModel.class);
         documentViewModel.init();
         setDocumentsObserver();

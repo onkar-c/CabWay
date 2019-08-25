@@ -3,6 +3,9 @@ package com.example.cabway.ui.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,9 +38,6 @@ public class ProfileActivity extends BaseActivity {
 
     @BindView(R.id.addImage)
     ImageView ivAddProfile;
-
-    @BindView(R.id.iv_edit)
-    ImageView ivEdit;
 
     @BindView(R.id.et_name)
     EditText etName;
@@ -112,25 +112,10 @@ public class ProfileActivity extends BaseActivity {
         return 0;
     }
 
-    @OnClick(R.id.iv_edit)
-    public void onClickOfEdit() {
-        etName.setFocusable(true);
-        etName.setEnabled(true);
-        etEmail.setEnabled(true);
-        etPhoneNumber.setEnabled(true);
-        etAddress.setEnabled(true);
-        etPincode.setEnabled(true);
-        spState.setEnabled(true);
-        spCity.setEnabled(true);
-        ivAddProfile.setVisibility(View.VISIBLE);
-        btnSave.setVisibility(View.VISIBLE);
-    }
-
     @OnClick(R.id.btn_save)
     public void save() {
         if (checkNetworkAvailableWithoutError()) {
             if (validateAllFields()) {
-
                 etName.setFocusable(false);
                 etName.setEnabled(false);
                 etEmail.setEnabled(false);
@@ -145,11 +130,10 @@ public class ProfileActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.uploadImage,R.id.addImage})
+    @OnClick({R.id.iv_profile, R.id.addImage})
     void selectImage() {
         if (isReadStoragePermissionGranted() && isWriteStoragePermissionGranted())
             ImageUtils.pickImage(this);
-            //showPleaseWaitDialog();
     }
 
     private boolean validateAllFields() {
@@ -159,7 +143,7 @@ public class ProfileActivity extends BaseActivity {
         } else if (!TextValidationUtils.isValidEmail(etEmail.getText().toString())) {
             Toast.makeText(this, R.string.invalid_email, Toast.LENGTH_SHORT).show();
             return false;
-        } else if(!TextValidationUtils.isValidAddress(etAddress.getText().toString(), this)){
+        } else if (!TextValidationUtils.isValidAddress(etAddress.getText().toString(), this)) {
             return false;
         } else if (spCity.getSelectedItemPosition() == 0) {
             showMandatoryError(R.string.city, this);
@@ -177,7 +161,6 @@ public class ProfileActivity extends BaseActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == ImageUtils.IMAGE_PICK) {
-            //hidePleaseWaitDialog();
             String fileName = "abc.png";
             String filePath = ImageUtils.onImagePickResult(requestCode, resultCode, data, fileName, this);
             if (!TextValidationUtils.isEmpty(filePath)) {
@@ -191,21 +174,28 @@ public class ProfileActivity extends BaseActivity {
         }
     }
 
-   /* public void showPleaseWaitDialog() {
-        PleaseWaitDialogFragment fragment = (PleaseWaitDialogFragment) getSupportFragmentManager().findFragmentByTag(PleaseWaitDialogFragment.FRAGMENT_TAG);
-        if (fragment == null) {
-            fragment = new PleaseWaitDialogFragment();
-            fragment.setCancelable(false);
-            getSupportFragmentManager().beginTransaction()
-                    .add(fragment, PleaseWaitDialogFragment.FRAGMENT_TAG)
-                    .commitAllowingStateLoss();
-        }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_edit, menu);
+        return true;
     }
 
-    public void hidePleaseWaitDialog() {
-        PleaseWaitDialogFragment fragment = (PleaseWaitDialogFragment) getSupportFragmentManager().findFragmentByTag(PleaseWaitDialogFragment.FRAGMENT_TAG);
-        if (fragment != null) {
-            getSupportFragmentManager().beginTransaction().remove(fragment).commitAllowingStateLoss();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_edit) {
+            etName.setFocusable(true);
+            etName.setEnabled(true);
+            etEmail.setEnabled(true);
+            etPhoneNumber.setEnabled(true);
+            etAddress.setEnabled(true);
+            etPincode.setEnabled(true);
+            spState.setEnabled(true);
+            spCity.setEnabled(true);
+            ivAddProfile.setVisibility(View.VISIBLE);
+            btnSave.setVisibility(View.VISIBLE);
+            return true;
         }
-    }*/
+        return super.onOptionsItemSelected(item);
+    }
 }

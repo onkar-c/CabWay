@@ -107,7 +107,6 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-
     public void showProgressDialog(String bodyText, final boolean isRequestCancelable) {
         mProgressDialog.setCancelable(isRequestCancelable);
         mProgressDialog.setMessage(bodyText);
@@ -191,5 +190,4 @@ public class BaseActivity extends AppCompatActivity {
     public void performActionAfterPermission() {
 
     }
-
 }

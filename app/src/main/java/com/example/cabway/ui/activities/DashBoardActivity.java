@@ -1,6 +1,5 @@
 package com.example.cabway.ui.activities;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -17,13 +16,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.cabway.R;
 import com.example.cabway.Utils.DialogUtils;
 import com.example.cabway.ui.Interfaces.RecyclerViewItemClickListener;
 import com.example.cabway.ui.adapter.AvailableRidesListAdapter;
 import com.example.cabway.ui.adapter.ProfileMenuAdapter;
 import com.example.core.CommonModels.UserModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.Arrays;
 import java.util.List;
@@ -61,10 +60,7 @@ public class DashBoardActivity extends BaseActivity
     ProfileMenuAdapter profileMenuAdapter;
     AvailableRidesListAdapter availableRidesListAdapter;
 
-
     RecyclerViewItemClickListener ridesViewItemClickListener = (v, position) -> startActivity(new Intent(DashBoardActivity.this, BookRideActivity.class));
-
-
 
     RecyclerViewItemClickListener recyclerViewItemClickListener = new RecyclerViewItemClickListener() {
         @Override
@@ -93,9 +89,9 @@ public class DashBoardActivity extends BaseActivity
         UserModel user = appPreferences.getUserDetails();
         tvUserName.setText(String.format("%s %s", user.firstName, user.lastName));
         tvRole.setText(user.role);
-        /*Picasso.with(this)
-                .load(new File(mFilePath))
-                .into(ivProfile);*/
+        Picasso.with(this)
+                .load(user.profileImage)
+                .into(ivProfile);
     }
 
     private void setRidesList() {
@@ -168,5 +164,4 @@ public class DashBoardActivity extends BaseActivity
             startActivity(nextActivity);
         }
     }
-
 }
