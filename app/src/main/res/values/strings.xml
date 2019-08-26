@@ -122,6 +122,7 @@
     <string name="write_us">WRITE US</string>
     <string name="add_doc">Add Document</string>
     <string name="upload_img">Upload Image</string>
+    <string name="document_invalid_field">Please Enter Valid %1$s.</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
