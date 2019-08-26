@@ -18,4 +18,8 @@ public class AppConstants {
     public static final String IMAGE_MIME_TYPE = "image/*";
     public static final String IMAGE_PICKER_MESSAGE = "Select Image";
     public static final int DEFAULT_ID = 0;
+    public static final int PASSWORD_LENGTH = 4;
+    public static final int ADDRESS_LENGTH = 10;
+    public static final int MOBILE_NUMBER_LENGTH = 10;
+    public static final int PIN_CODE_LENGTH = 6;
 }

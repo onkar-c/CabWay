@@ -20,7 +20,7 @@ import com.example.cabway.Utils.TextValidationUtils;
 import com.example.cabway.ui.Interfaces.RegistrationInterface;
 import com.example.cabway.ui.adapter.CitySpinnerAdapter;
 import com.example.cabway.ui.dialogs.DialogOtp;
-import com.example.cabway.viewModels.RegistrationViewModel;
+import com.example.cabway.viewModels.UserViewModel;
 import com.example.core.CommonModels.CityModel;
 import com.example.core.CommonModels.UserModel;
 import com.example.database.Utills.AppConstants;
@@ -94,7 +94,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     String mFilePath = "";
     private DialogOtp dialogOtp;
     private String mMobileNumber;
-    private RegistrationViewModel registrationViewModel;
+    private UserViewModel userViewModel;
 
     public static List<CityModel> getCities() {
         CityModel city0 = new CityModel("0", "Select City");
@@ -137,8 +137,8 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         setUpActionBar();
         ButterKnife.bind(this);
         setUpUi();
-        registrationViewModel = ViewModelProviders.of(this).get(RegistrationViewModel.class);
-        registrationViewModel.init();
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        userViewModel.init();
         dialogOtp = new DialogOtp(this);
         setObservers();
     }
@@ -158,7 +158,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     }
 
     private void setOtpObserver() {
-        registrationViewModel.getOtpResponseMld().observe(this, otpResponse -> {
+        userViewModel.getOtpResponseMld().observe(this, otpResponse -> {
             removeProgressDialog();
             if (Objects.requireNonNull(otpResponse).getStatus().equals(AppConstants.SUCCESS)) {
                 Toast.makeText(RegistrationActivity.this, R.string.otp_sent, Toast.LENGTH_SHORT).show();
@@ -171,7 +171,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     }
 
     private void setVerifyOtpObserver() {
-        registrationViewModel.getVerifyOtpResponseMld().observe(this, verifyOtpResponse -> {
+        userViewModel.getVerifyOtpResponseMld().observe(this, verifyOtpResponse -> {
             removeProgressDialog();
             if (Objects.requireNonNull(verifyOtpResponse).getStatus().equals(AppConstants.SUCCESS)) {
                 dialogOtp.otpVerificationSuccess();
@@ -182,7 +182,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     }
 
     private void setRegisterUserObserver() {
-        registrationViewModel.getUserRegistrationResponseMld().observe(this, userRegistrationResponse -> {
+        userViewModel.getUserRegistrationResponseMld().observe(this, userRegistrationResponse -> {
             removeProgressDialog();
             if (Objects.requireNonNull(userRegistrationResponse).getStatus().equals(AppConstants.SUCCESS)) {
                 Toast.makeText(RegistrationActivity.this, userRegistrationResponse.getMessage(), Toast.LENGTH_SHORT).show();
@@ -204,7 +204,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
             if (validateAllFields()) {
                 showProgressDialog(AppConstants.PLEASE_WAIT, false);
                 UserModel userModel = createUserModel();
-                registrationViewModel.getRegistrationRepository().registerUser(registrationViewModel.getUserRegistrationResponseMld(), userModel, mFilePath);
+                userViewModel.getUserRepository().registerUser(userViewModel.getUserRegistrationResponseMld(), userModel, mFilePath);
             }
         }
     }
@@ -234,7 +234,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     public void verifyOtp(String enteredOtp) {
         if (checkNetworkAvailableWithoutError()) {
             showProgressDialog(AppConstants.PLEASE_WAIT, false);
-            registrationViewModel.getRegistrationRepository().verifyOtp(registrationViewModel.getVerifyOtpResponseMld(), mMobileNumber, Integer.parseInt(enteredOtp));
+            userViewModel.getUserRepository().verifyOtp(userViewModel.getVerifyOtpResponseMld(), mMobileNumber, Integer.parseInt(enteredOtp));
         }
     }
 
@@ -244,7 +244,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         if (TextValidationUtils.validateMobileNumber(mMobileNumber)) {
             if (checkNetworkAvailableWithoutError()) {
                 showProgressDialog(AppConstants.PLEASE_WAIT, false);
-                registrationViewModel.getRegistrationRepository().getOtp(registrationViewModel.getOtpResponseMld(), mMobileNumber);
+                userViewModel.getUserRepository().getOtp(userViewModel.getOtpResponseMld(), mMobileNumber);
             }
         } else
             Toast.makeText(this, R.string.mobile_length_message, Toast.LENGTH_SHORT).show();

@@ -19,6 +19,8 @@ public class JsonResponse implements Serializable {
     private UserModel user;
     @SerializedName("listDocument")
     private List<DocumentModel> documentsList;
+    @SerializedName("documentCompleted")
+    private boolean documentCompleted;
 
     public List<HeroesModel> getHeroesList() {
         return heroesList;
@@ -46,5 +48,9 @@ public class JsonResponse implements Serializable {
 
     public List<DocumentModel> getDocumentsList() {
         return documentsList;
+    }
+
+    public boolean isDocumentCompleted() {
+        return documentCompleted;
     }
 }

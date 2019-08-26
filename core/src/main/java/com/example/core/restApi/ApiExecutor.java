@@ -65,6 +65,12 @@ public class ApiExecutor {
         RequestExecutor.ExecuteApi(getApiInterface().register(body, user), mltRegisterUserResponse);
     }
 
+    public static void updateUser(final MutableLiveData<JsonResponse> mltUpdateUserResponse, com.example.core.CommonModels.UserModel userModel, String filePath) {
+        RequestBody user = RequestBody.create(MultipartBody.FORM, new Gson().toJson(userModel));
+        MultipartBody.Part body = FileUtils.getMultipartBody(filePath);
+        RequestExecutor.ExecuteApi(getApiInterface().updateUser(body, user), mltUpdateUserResponse);
+    }
+
     public static void validateLogin(final MutableLiveData<JsonResponse> mltLoginResponse, LoginRequestModel loginRequestModel) {
         RequestExecutor.ExecuteApi(getApiInterface().validateLogin(loginRequestModel), mltLoginResponse);
     }

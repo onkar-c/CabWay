@@ -8,12 +8,12 @@ import com.example.core.responseModel.JsonResponse;
 import com.example.core.restApi.ApiExecutor;
 import com.example.database.Utills.AppConstants;
 
-public class RegistrationRepository {
-    private static RegistrationRepository instance;
+public class UserRepository {
+    private static UserRepository instance;
 
-    public static RegistrationRepository getInstance() {
+    public static UserRepository getInstance() {
         if (instance == null) {
-            instance = new RegistrationRepository();
+            instance = new UserRepository();
 
         }
         return instance;
@@ -33,5 +33,9 @@ public class RegistrationRepository {
 
     public void registerUser(MutableLiveData<JsonResponse> registerUserResponse, UserModel userModel, String filePath) {
         ApiExecutor.registerUser(registerUserResponse, userModel, filePath);
+    }
+
+    public void updateUser(MutableLiveData<JsonResponse> updateUserResponse, UserModel userModel, String filePath) {
+        ApiExecutor.updateUser(updateUserResponse, userModel, filePath);
     }
 }

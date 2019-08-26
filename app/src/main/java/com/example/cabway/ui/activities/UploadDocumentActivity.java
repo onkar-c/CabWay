@@ -25,9 +25,7 @@ import com.example.cabway.ui.Interfaces.DatePickerCallBackInterface;
 import com.example.cabway.viewModels.DocumentViewModel;
 import com.example.core.CommonModels.DocumentModel;
 import com.example.database.Utills.AppConstants;
-import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -81,7 +79,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
     private String mFilePath;
     private boolean isIssuedDatePicker = true;
     private DocumentModel document = null;
-    private boolean isEditMode=false;
+    private boolean isEditMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +99,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
     }
 
     private void setDocumentToUi() {
-        disableAllFields();
+        toggleAllFields(false);
         etDocNumber.setText(document.getDocumentNumber());
         etNameOnDoc.setText(document.getNameOnDocument());
         etVehicleType.setText(document.getVehicleType());
@@ -110,10 +108,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
         tvIssuedDate.setText(document.getIssueDate());
         tvExpireDate.setText(document.getExpiryDate());
         if (document.getImageUrl() != null)
-            Picasso.with(this)
-                    .load(document.getImageUrl())
-                    .into(ivDocumentImage);
-
+            ImageUtils.setImageFromUrl(this, document.getImageUrl(), ivDocumentImage);
     }
 
     private void getExtras() {
@@ -127,6 +122,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
             removeProgressDialog();
             if (Objects.requireNonNull(documentUploadResponse).getStatus().equals(AppConstants.SUCCESS)) {
                 Toast.makeText(UploadDocumentActivity.this, documentUploadResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                onBackPressed();
             } else {
                 Toast.makeText(UploadDocumentActivity.this, documentUploadResponse.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -174,13 +170,12 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
         if (checkNetworkAvailableWithoutError() && validate()) {
             if(validateDocWise(documentModel)) {
                 if (isEditMode) {
-                    btnContinue.setVisibility(View.GONE);
-                    isEditMode = false;
-                    disableAllFields();
-                }
-                showProgressDialog(AppConstants.PLEASE_WAIT, false);
-                documentViewModel.getDocumentRepository().uploadDocument(documentViewModel.getDocumentUploadResponseMld(), documentModel, mFilePath);
+                btnContinue.setVisibility(View.GONE);
+                isEditMode = false;
+                toggleAllFields(false);
             }
+                showProgressDialog(AppConstants.PLEASE_WAIT, false);
+                documentViewModel.getDocumentRepository().uploadDocument(documentViewModel.getDocumentUploadResponseMld(), documentModel, mFilePath);          
         }
     }
 
@@ -245,6 +240,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
             return true;
     }
 
+
     private boolean validateDocWise(DocumentModel document){
        if(docType.equals(getResources().getString(R.string.aadhar_card))) {
            return TextValidationUtils.validateAdharCard(this, document);
@@ -260,7 +256,8 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
        return true;
     }
 
-    @OnClick({R.id.iv_document_image,R.id.iv_add_doc})
+
+    @OnClick({R.id.iv_document_image, R.id.iv_add_doc})
     void selectImage() {
         if (isReadStoragePermissionGranted() && isWriteStoragePermissionGranted())
             ImageUtils.pickImage(this);
@@ -275,9 +272,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
                 mFilePath = filePath;
                 Toast.makeText(this, filePath, Toast.LENGTH_SHORT).show();
                 if (mFilePath != null)
-                    Picasso.with(this)
-                            .load(new File(mFilePath))
-                            .into(ivDocumentImage);
+                    ImageUtils.setImageFromFilePath(this, mFilePath, ivDocumentImage);
             }
         }
     }
@@ -289,7 +284,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (isFromLogin && document != null) {
+        if (document != null) {
             MenuInflater menuInflater = getMenuInflater();
             menuInflater.inflate(R.menu.menu_edit, menu);
             return true;
@@ -298,37 +293,31 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.action_edit).setVisible(!isEditMode);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_edit) {
-            isEditMode=true;
-            enableAllFields();
+            isEditMode = true;
+            toggleAllFields(true);
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void disableAllFields() {
-        etDocNumber.setEnabled(false);
-        etNameOnDoc.setEnabled(false);
-        etVehicleType.setEnabled(false);
-        etStateName.setEnabled(false);
-        etGstNumber.setEnabled(false);
-        tvIssuedDate.setEnabled(false);
-        tvExpireDate.setEnabled(false);
-        ivDocumentImage.setClickable(false);
-        ivAddDocument.setClickable(false);
-        btnContinue.setVisibility(View.GONE);
-    }
-
-    private void enableAllFields() {
-        etDocNumber.setEnabled(true);
-        etNameOnDoc.setEnabled(true);
-        etVehicleType.setEnabled(true);
-        etStateName.setEnabled(true);
-        etGstNumber.setEnabled(true);
-        tvIssuedDate.setEnabled(true);
-        tvExpireDate.setEnabled(true);
-        ivDocumentImage.setClickable(true);
-        ivAddDocument.setClickable(true);
-        btnContinue.setVisibility(View.VISIBLE);
+    private void toggleAllFields(boolean isEnabled) {
+        etDocNumber.setEnabled(isEnabled);
+        etNameOnDoc.setEnabled(isEnabled);
+        etVehicleType.setEnabled(isEnabled);
+        etStateName.setEnabled(isEnabled);
+        etGstNumber.setEnabled(isEnabled);
+        tvIssuedDate.setEnabled(isEnabled);
+        tvExpireDate.setEnabled(isEnabled);
+        ivDocumentImage.setClickable(isEnabled);
+        ivAddDocument.setClickable(isEnabled);
+        btnContinue.setVisibility(isEnabled ? View.VISIBLE : View.GONE);
+        invalidateOptionsMenu();
     }
 }

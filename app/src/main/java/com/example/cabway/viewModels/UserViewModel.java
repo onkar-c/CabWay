@@ -3,21 +3,23 @@ package com.example.cabway.viewModels;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
-import com.example.cabway.repositories.RegistrationRepository;
+import com.example.cabway.repositories.UserRepository;
 import com.example.core.responseModel.JsonResponse;
 
-public class RegistrationViewModel extends ViewModel {
+public class UserViewModel extends ViewModel {
 
     private MutableLiveData<JsonResponse> otpResponse;
     private MutableLiveData<JsonResponse> verifyOtpResponse;
     private MutableLiveData<JsonResponse> userRegistrationResponse;
-    private RegistrationRepository registrationRepository;
+    private MutableLiveData<JsonResponse> userUpdateResponse;
+    private UserRepository userRepository;
 
     public void init() {
         otpResponse = new MutableLiveData<>();
         verifyOtpResponse = new MutableLiveData<>();
         userRegistrationResponse = new MutableLiveData<>();
-        registrationRepository = RegistrationRepository.getInstance();
+        userUpdateResponse = new MutableLiveData<>();
+        userRepository = UserRepository.getInstance();
     }
 
     public MutableLiveData<JsonResponse> getOtpResponseMld() {
@@ -32,7 +34,11 @@ public class RegistrationViewModel extends ViewModel {
         return userRegistrationResponse;
     }
 
-    public RegistrationRepository getRegistrationRepository() {
-        return registrationRepository;
+    public MutableLiveData<JsonResponse> getUserUpdateResponseMld() {
+        return userUpdateResponse;
+    }
+
+    public UserRepository getUserRepository() {
+        return userRepository;
     }
 }
