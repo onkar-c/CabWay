@@ -168,14 +168,15 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
     public void onClick(View view) {
         DocumentModel documentModel = getDocumentModel();
         if (checkNetworkAvailableWithoutError() && validate()) {
-            if(validateDocWise(documentModel)) {
+            if (validateDocWise(documentModel)) {
                 if (isEditMode) {
-                btnContinue.setVisibility(View.GONE);
-                isEditMode = false;
-                toggleAllFields(false);
-            }
+                    btnContinue.setVisibility(View.GONE);
+                    isEditMode = false;
+                    toggleAllFields(false);
+                }
                 showProgressDialog(AppConstants.PLEASE_WAIT, false);
-                documentViewModel.getDocumentRepository().uploadDocument(documentViewModel.getDocumentUploadResponseMld(), documentModel, mFilePath);          
+                documentViewModel.getDocumentRepository().uploadDocument(documentViewModel.getDocumentUploadResponseMld(), documentModel, mFilePath);
+            }
         }
     }
 
