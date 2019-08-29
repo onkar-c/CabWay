@@ -23,7 +23,7 @@ public class TextValidationUtils {
     }
 
     public static boolean validateMobileNumber(String mobileNumber) {
-        return (mobileNumber.length() == MOBILE_NUMBER_LENGTH || !mobileNumber.matches("[6789]\\d{9}$"));
+        return (mobileNumber.length() == MOBILE_NUMBER_LENGTH && mobileNumber.matches("[6789]\\d{9}$"));
     }
 
     public static boolean isValidEmail(CharSequence emailId) {

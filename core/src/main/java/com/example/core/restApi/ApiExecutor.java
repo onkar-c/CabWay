@@ -84,4 +84,8 @@ public class ApiExecutor {
     public static void getDocuments(final MutableLiveData<JsonResponse> mltDocumentsResponse) {
         RequestExecutor.ExecuteApi(getApiInterface().getDocuments(), mltDocumentsResponse);
     }
+
+    public static void getStateAndCity(final MutableLiveData<JsonResponse> mltStateCityResponse) {
+        RequestExecutor.ExecuteApi(getApiInterface().getStateAndCity(), mltStateCityResponse);
+    }
 }

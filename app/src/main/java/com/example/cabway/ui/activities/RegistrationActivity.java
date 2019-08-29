@@ -300,7 +300,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == ImageUtils.IMAGE_PICK) {
 //            removeProgressDialog();
-            String fileName = "abc.png";
+            String fileName = Math.random() + ".png";
             String filePath = ImageUtils.onImagePickResult(requestCode, resultCode, data, fileName, this);
             if (!TextValidationUtils.isEmpty(filePath)) {
                 mFilePath = filePath;

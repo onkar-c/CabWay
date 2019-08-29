@@ -295,6 +295,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+        if(menu.findItem(R.id.action_edit) != null)
         menu.findItem(R.id.action_edit).setVisible(!isEditMode);
         return super.onPrepareOptionsMenu(menu);
     }

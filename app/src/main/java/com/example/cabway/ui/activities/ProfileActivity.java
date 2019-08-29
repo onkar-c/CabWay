@@ -181,7 +181,7 @@ public class ProfileActivity extends BaseActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == ImageUtils.IMAGE_PICK) {
-            String fileName = "abc.png";
+            String fileName = Math.random() + ".png";
             String filePath = ImageUtils.onImagePickResult(requestCode, resultCode, data, fileName, this);
             if (!TextValidationUtils.isEmpty(filePath)) {
                 mFilePath = filePath;
@@ -200,6 +200,7 @@ public class ProfileActivity extends BaseActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+        if(menu.findItem(R.id.action_edit) != null)
         menu.findItem(R.id.action_edit).setVisible(!isEdit);
         return super.onPrepareOptionsMenu(menu);
     }

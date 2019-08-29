@@ -51,4 +51,7 @@ public interface ApiInterface {
 
     @GET("document/list")
     Call<JsonResponse> getDocuments();
+
+    @GET("address/cityList")
+    Call<JsonResponse> getStateAndCity();
 }
