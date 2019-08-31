@@ -1,7 +1,7 @@
 package com.example.cabway.viewModels;
 
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.example.cabway.repositories.DocumentRepository;
 import com.example.core.responseModel.JsonResponse;

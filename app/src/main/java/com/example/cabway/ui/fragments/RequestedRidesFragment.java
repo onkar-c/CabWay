@@ -2,10 +2,10 @@ package com.example.cabway.ui.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,12 +27,11 @@ public class RequestedRidesFragment extends Fragment {
 
     @BindView(R.id.availableRidesList)
     RecyclerView availableRidesList;
-    RidesListAdapter ridesListAdapter;
     @BindView(R.id.no_data_available)
     RelativeLayout noDataAvailable;
-    List<String> data;
+    private List<String> data;
     private DashBoardActivity activityContext;
-    RecyclerViewItemClickListener ridesViewItemClickListener = (v, position) -> startActivity(new Intent(activityContext, DriverRideDetailPage.class));
+    private RecyclerViewItemClickListener ridesViewItemClickListener = (v, position) -> startActivity(new Intent(activityContext, DriverRideDetailPage.class));
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -58,7 +57,7 @@ public class RequestedRidesFragment extends Fragment {
             noDataAvailable.setVisibility(View.GONE);
             LinearLayoutManager layoutManager = new LinearLayoutManager(activityContext);
             availableRidesList.setLayoutManager(layoutManager);
-            ridesListAdapter = new RidesListAdapter(activityContext, data, ridesViewItemClickListener);
+            RidesListAdapter ridesListAdapter = new RidesListAdapter(activityContext, data, ridesViewItemClickListener);
             availableRidesList.setAdapter(ridesListAdapter);
         }
     }

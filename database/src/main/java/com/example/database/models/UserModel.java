@@ -1,7 +1,7 @@
 package com.example.database.models;
 
 import android.annotation.SuppressLint;
-import android.arch.lifecycle.MutableLiveData;
+import androidx.lifecycle.MutableLiveData;
 import android.content.Context;
 
 import com.example.database.AppDatabase;

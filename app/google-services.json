@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "56340495298-m445t9rqir19hi9h65agqgmmdukg5gol.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cabway",
+            "certificate_hash": "61c4a5f74392d5a5da2bf320356c63469c34eb03"
+          }
+        },
+        {
           "client_id": "56340495298-g1bb0eulr7sm86glsnj6c27r0l27dja5.apps.googleusercontent.com",
           "client_type": 3
         }

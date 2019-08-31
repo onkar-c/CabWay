@@ -1,9 +1,9 @@
 package com.example.cabway.ui.activities;
 
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatSpinner;
+import androidx.appcompat.widget.AppCompatSpinner;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -180,6 +180,7 @@ public class ProfileActivity extends BaseActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ImageUtils.IMAGE_PICK) {
             String fileName = Math.random() + ".png";
             String filePath = ImageUtils.onImagePickResult(requestCode, resultCode, data, fileName, this);

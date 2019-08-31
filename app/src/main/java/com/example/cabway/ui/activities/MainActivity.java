@@ -1,6 +1,6 @@
 package com.example.cabway.ui.activities;
 
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;

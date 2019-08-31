@@ -76,7 +76,7 @@
 
         </RadioGroup>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
@@ -91,9 +91,9 @@
                 android:textSize="@dimen/small_text"
                 android:visibility="gone"
                 tools:ignore="Autofill" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
@@ -108,9 +108,9 @@
                 android:textSize="@dimen/small_text"
                 android:visibility="gone"
                 tools:ignore="Autofill" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
@@ -125,9 +125,9 @@
                 android:textSize="@dimen/small_text"
                 android:visibility="gone"
                 tools:ignore="Autofill" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
@@ -143,7 +143,7 @@
                 android:maxLines="1"
                 android:textSize="@dimen/small_text"
                 tools:ignore="Autofill" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/generate_otp"
@@ -155,7 +155,7 @@
             android:textColor="@android:color/white"
             android:textSize="@dimen/button_text" />
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -170,7 +170,7 @@
                 android:textSize="@dimen/small_text"
                 android:visibility="gone"
                 tools:ignore="Autofill" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/tv_state_hint"
@@ -181,7 +181,7 @@
             android:text="@string/state"
             android:visibility="gone"/>
 
-        <android.support.v7.widget.AppCompatSpinner
+        <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/sp_state"
             style="@style/Base.Widget.AppCompat.Spinner.Underlined"
             android:layout_width="match_parent"
@@ -197,7 +197,7 @@
             android:text="@string/city"
             android:visibility="gone" />
 
-        <android.support.v7.widget.AppCompatSpinner
+        <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/sp_city"
             style="@style/Base.Widget.AppCompat.Spinner.Underlined"
             android:layout_width="match_parent"
@@ -205,7 +205,7 @@
             android:visibility="gone" />
 
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
@@ -221,9 +221,9 @@
                 android:textSize="@dimen/small_text"
                 android:visibility="gone"
                 tools:ignore="Autofill" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
@@ -238,9 +238,9 @@
                 android:textSize="@dimen/small_text"
                 android:visibility="gone"
                 tools:ignore="Autofill" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
@@ -255,7 +255,7 @@
                 android:textSize="@dimen/small_text"
                 android:visibility="gone"
                 tools:ignore="Autofill" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <Button

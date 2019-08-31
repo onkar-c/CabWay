@@ -1,7 +1,7 @@
 package com.example.core;
 
-import android.arch.lifecycle.MutableLiveData;
-import android.support.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
+import androidx.annotation.NonNull;
 
 import com.example.core.responseModel.JsonResponse;
 import com.example.database.Utills.AppConstants;

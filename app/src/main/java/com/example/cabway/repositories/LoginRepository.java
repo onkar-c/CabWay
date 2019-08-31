@@ -1,6 +1,6 @@
 package com.example.cabway.repositories;
 
-import android.arch.lifecycle.MutableLiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.core.requestModels.LoginRequestModel;
 import com.example.core.responseModel.JsonResponse;

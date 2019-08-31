@@ -1,11 +1,12 @@
 package com.example.cabway.ui.activities;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
 import android.widget.Toast;
+
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.cabway.Utils.IntentConstants;
 import com.example.cabway.viewModels.SplashViewModel;
@@ -25,6 +26,7 @@ public class SplashScreenActivity extends BaseActivity {
         splashViewModel = ViewModelProviders.of(this).get(SplashViewModel.class);
         splashViewModel.init();
         setStateCityObserver();
+//        generateFcmTopic();
 //        splashViewModel.getSplashRepository().getStateCity(splashViewModel.getStateCityResponseMld());
         new Handler().postDelayed(SplashScreenActivity.this::startDashboardActivity, 500);
 
@@ -56,4 +58,12 @@ public class SplashScreenActivity extends BaseActivity {
         startActivity(nextActivity);
         finish();
     }
+
+    /*private void generateFcmTopic() {
+        FirebaseMessaging.getInstance().subscribeToTopic("weather")
+                .addOnCompleteListener(task -> {
+                    Log.d("FCM", "onComplete");
+                    Toast.makeText(SplashScreenActivity.this, "onComplete", Toast.LENGTH_SHORT).show();
+                });
+    }*/
 }

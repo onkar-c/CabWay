@@ -1,6 +1,6 @@
 package com.example.core;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.example.core.Utills.AppPreferences;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;

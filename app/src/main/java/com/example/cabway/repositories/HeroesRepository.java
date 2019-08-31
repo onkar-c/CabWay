@@ -1,6 +1,6 @@
 package com.example.cabway.repositories;
 
-import android.arch.lifecycle.MutableLiveData;
+import androidx.lifecycle.MutableLiveData;
 import android.content.Context;
 
 import com.example.core.restApi.ApiExecutor;

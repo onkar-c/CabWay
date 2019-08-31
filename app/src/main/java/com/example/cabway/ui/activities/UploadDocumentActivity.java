@@ -1,9 +1,9 @@
 package com.example.cabway.ui.activities;
 
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
+import com.google.android.material.textfield.TextInputLayout;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -266,6 +266,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ImageUtils.IMAGE_PICK) {
             String fileName = "abc.png";
             String filePath = ImageUtils.onImagePickResult(requestCode, resultCode, data, fileName, this);

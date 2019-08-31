@@ -8,10 +8,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Window;
 import android.widget.Toast;
@@ -21,12 +21,12 @@ import com.example.cabway.Utils.ConnectivityUtils;
 import com.example.cabway.Utils.DialogUtils;
 import com.example.core.Utills.AppPreferences;
 
-import static android.support.constraint.Constraints.TAG;
 
 public class BaseActivity extends AppCompatActivity {
 
     AppPreferences appPreferences;
     private ProgressDialog mProgressDialog;
+    private final String TAG = "Base activity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
