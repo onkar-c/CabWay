@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/available_rides"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/title_new" />
+
+    <item
+        android:id="@+id/requested_rides"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/title_requested" />
+
+    <item
+        android:id="@+id/ongoing_rides"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/title_on_going" />
+
+</menu>

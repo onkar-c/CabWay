@@ -25,8 +25,8 @@ public class SplashScreenActivity extends BaseActivity {
         splashViewModel = ViewModelProviders.of(this).get(SplashViewModel.class);
         splashViewModel.init();
         setStateCityObserver();
-        splashViewModel.getSplashRepository().getStateCity(splashViewModel.getStateCityResponseMld());
-
+//        splashViewModel.getSplashRepository().getStateCity(splashViewModel.getStateCityResponseMld());
+        new Handler().postDelayed(SplashScreenActivity.this::startDashboardActivity, 500);
 
     }
 
@@ -45,7 +45,6 @@ public class SplashScreenActivity extends BaseActivity {
     private void startDashboardActivity() {
         Intent nextActivity;
         if (appPreferences.isLogin()) {
-
             if (appPreferences.getUserDetails().documentCompleted)
                 nextActivity = new Intent(this, DashBoardActivity.class);
             else {

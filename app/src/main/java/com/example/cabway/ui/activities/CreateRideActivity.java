@@ -14,7 +14,7 @@ import com.example.cabway.ui.Interfaces.TimePickerCallBackInterface;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class BookRideActivity extends BaseActivity implements DatePickerCallBackInterface, TimePickerCallBackInterface {
+public class CreateRideActivity extends BaseActivity implements DatePickerCallBackInterface, TimePickerCallBackInterface {
 
     @BindView(R.id.et_home_loc)
     EditText fromLocET;
@@ -25,13 +25,13 @@ public class BookRideActivity extends BaseActivity implements DatePickerCallBack
     @BindView(R.id.et_car_type)
     EditText carTypeET;
 
-    //@BindView(R.id.et_date_of_journey)
+    @BindView(R.id.et_date_of_journey)
     EditText dateOfJourneyET;
 
     @BindView(R.id.il_date_of_journey)
     TextInputLayout dateOfJourneyTIL;
 
-    //@BindView(R.id.et_time_of_journey)
+    @BindView(R.id.et_time_of_journey)
     EditText timeOfJourneyET;
 
     @BindView(R.id.il_time_of_journey)
@@ -52,31 +52,33 @@ public class BookRideActivity extends BaseActivity implements DatePickerCallBack
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_book_ride);
+        setContentView(R.layout.activity_create_ride);
         setUpActionBar();
-        setUpUi();
     }
 
-    private void setUpUi(){
-        dateOfJourneyET=findViewById(R.id.et_date_of_journey);
-        dateOfJourneyET.setOnClickListener(v -> DatePickerUtils.startDatePicker(BookRideActivity.this, BookRideActivity.this));
 
-        timeOfJourneyET=findViewById(R.id.et_time_of_journey);
-        timeOfJourneyET.setOnClickListener(v -> TimePickerUtils.openTimePicker(BookRideActivity.this,BookRideActivity.this));
+    @OnClick(R.id.il_date_of_journey)
+    public void selectDate() {
+        DatePickerUtils.startDatePicker(CreateRideActivity.this, CreateRideActivity.this);
+    }
+
+    @OnClick(R.id.il_time_of_journey)
+    public void selectTime() {
+        TimePickerUtils.openTimePicker(CreateRideActivity.this, CreateRideActivity.this);
     }
 
     @OnClick(R.id.et_home_loc)
-    public void onClickOfFromLocEditText(){
+    public void onClickOfFromLocEditText() {
 
     }
 
     @OnClick(R.id.et_office_loc)
-    public void onClickOfToLocEditText(){
+    public void onClickOfToLocEditText() {
 
     }
 
     @OnClick(R.id.btn_book_ride)
-    public void bookRide(){
+    public void bookRide() {
 
     }
 
@@ -86,7 +88,7 @@ public class BookRideActivity extends BaseActivity implements DatePickerCallBack
     }
 
     @Override
-    public void setTimeFromTimePicker(String selectedTime){
+    public void setTimeFromTimePicker(String selectedTime) {
         timeOfJourneyET.setText(selectedTime);
     }
 

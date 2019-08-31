@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import com.example.cabway.R;
 import com.example.cabway.Utils.IntentConstants;
 import com.example.cabway.ui.Interfaces.RecyclerViewItemClickListener;
-import com.example.cabway.ui.adapter.AvailableRidesListAdapter;
+import com.example.cabway.ui.adapter.RidesListAdapter;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,7 +19,7 @@ public class HistoryListActivity extends BaseActivity {
     @BindView(R.id.ridesHistoryList)
     RecyclerView ridesHistoryList;
 
-    AvailableRidesListAdapter availableRidesListAdapter;
+    RidesListAdapter ridesListAdapter;
     RecyclerViewItemClickListener ridesViewItemClickListener = (v, position) -> {
         Intent nextActivity = new Intent(HistoryListActivity.this, DriverRideDetailPage.class);
         nextActivity.putExtra(IntentConstants.IS_FROM_HISTORY, true);
@@ -36,7 +38,7 @@ public class HistoryListActivity extends BaseActivity {
     private void setRidesList() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         ridesHistoryList.setLayoutManager(layoutManager);
-        availableRidesListAdapter = new AvailableRidesListAdapter(this, ridesViewItemClickListener);
-        ridesHistoryList.setAdapter(availableRidesListAdapter);
+        ridesListAdapter = new RidesListAdapter(this, new ArrayList<>(), ridesViewItemClickListener);
+        ridesHistoryList.setAdapter(ridesListAdapter);
     }
 }

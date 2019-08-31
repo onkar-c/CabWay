@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,21 +15,29 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
 import com.example.cabway.R;
 import com.example.cabway.Utils.DialogUtils;
+import com.example.cabway.Utils.ImageUtils;
 import com.example.cabway.ui.Interfaces.RecyclerViewItemClickListener;
-import com.example.cabway.ui.adapter.AvailableRidesListAdapter;
 import com.example.cabway.ui.adapter.ProfileMenuAdapter;
 import com.example.core.CommonModels.UserModel;
-import com.squareup.picasso.Picasso;
+import com.example.database.Utills.AppConstants;
 
 import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class DashBoardActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -54,13 +63,11 @@ public class DashBoardActivity extends BaseActivity
     @BindView(R.id.profile_image)
     ImageView ivProfile;
 
-    @BindView(R.id.availableRidesList)
-    RecyclerView availableRidesList;
+    @BindView(R.id.main_action)
+    Button mainAction;
 
     ProfileMenuAdapter profileMenuAdapter;
-    AvailableRidesListAdapter availableRidesListAdapter;
-
-    RecyclerViewItemClickListener ridesViewItemClickListener = (v, position) -> startActivity(new Intent(DashBoardActivity.this, BookRideActivity.class));
+    private List<String> menu_items;
 
     RecyclerViewItemClickListener recyclerViewItemClickListener = new RecyclerViewItemClickListener() {
         @Override
@@ -69,8 +76,6 @@ public class DashBoardActivity extends BaseActivity
             startMenuActivities(menuItem);
         }
     };
-
-    private List<String> menu_items;
     private TypedArray menu_items_icon;
 
     @Override
@@ -78,27 +83,29 @@ public class DashBoardActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash_board);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
         inItData();
-        setData();
+        setSupportActionBar(toolbar);
         setNavigationDrawerLayout();
-        setRidesList();
+        setUpFragments();
+        setData();
+    }
+
+    private void setUpFragments() {
+        BottomNavigationView navView = findViewById(R.id.bottom_view);
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.available_rides, R.id.requested_rides, R.id.ongoing_rides)
+                .build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(navView, navController);
     }
 
     private void setData() {
         UserModel user = appPreferences.getUserDetails();
         tvUserName.setText(String.format("%s %s", user.firstName, user.lastName));
         tvRole.setText(user.role);
-        Picasso.with(this)
-                .load(user.profileImage)
-                .into(ivProfile);
-    }
-
-    private void setRidesList() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        availableRidesList.setLayoutManager(layoutManager);
-        availableRidesListAdapter = new AvailableRidesListAdapter(this, ridesViewItemClickListener);
-        availableRidesList.setAdapter(availableRidesListAdapter);
+        mainAction.setText(getString((user.role.equals(AppConstants.AGENCY) ? R.string.create_ride : R.string.preferred_city)));
+        ImageUtils.setImageFromUrl(this, user.profileImage, ivProfile);
     }
 
     private void setNavigationDrawerLayout() {
@@ -114,7 +121,6 @@ public class DashBoardActivity extends BaseActivity
     }
 
     private void inItData() {
-        //Data
         menu_items = Arrays.asList(getResources().getStringArray(R.array.profile_menu));
         menu_items_icon = getResources().obtainTypedArray(R.array.profile_menu_icons);
     }
@@ -163,5 +169,22 @@ public class DashBoardActivity extends BaseActivity
         if (nextActivity != null) {
             startActivity(nextActivity);
         }
+    }
+
+
+    @OnClick(R.id.main_action)
+    public void performAction() {
+        Intent nextActivity;
+        if (appPreferences.getUserDetails().role.equals(AppConstants.AGENCY)) {
+            nextActivity = new Intent(this, CreateRideActivity.class);
+        } else {
+            nextActivity = new Intent(this, CreateRideActivity.class);
+        }
+        startActivity(nextActivity);
+    }
+
+
+    public List<String> getMenu_items() {
+        return menu_items;
     }
 }

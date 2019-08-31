@@ -52,6 +52,9 @@
     <string name="state_name">State Name</string>
     <string name="gst_number">GST Number</string>
     <string name="continue_bt">Continue</string>
+    <string name="create_ride">Create Ride</string>
+    <string name="no_data_available">No Data Available</string>
+    <string name="preferred_city">Preferred City</string>
     <string name="expiry_date">Expiry Date :</string>
     <string name="issued_on">Issued Date :</string>
     <string name="date_format">DD-MM-YYYY</string>
@@ -150,6 +153,10 @@
     <string name="vehicle_registration">Vehicle Registration</string>
     <string name="aadhar_card">Aadhar Card</string>
     <string name="shop_act">Shop Act</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_new">New</string>
+    <string name="title_requested">Requested</string>
+    <string name="title_on_going">On Going</string>
 
 
 </resources>

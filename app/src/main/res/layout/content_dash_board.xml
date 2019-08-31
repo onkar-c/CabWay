@@ -7,12 +7,35 @@
     app:layout_behavior= "@string/appbar_scrolling_view_behavior"
     tools:context=".ui.activities.DashBoardActivity"
     tools:showIn="@layout/app_bar_dash_board">
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/availableRidesList"
+    <Button
+        android:id="@+id/main_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="@string/create_ride"
+        android:layout_centerHorizontal="true"/>
+    <fragment
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="10dp"
-        android:clipToPadding="false"/>
+        app:defaultNavHost="true"
+        android:layout_margin="10dp"
+        android:layout_below="@+id/main_action"
+        android:layout_above="@+id/nav_view"
+        app:navGraph="@navigation/mobile_navigation" />
+
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="?android:attr/windowBackground"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_nav_menu" />
+
+
 
 </RelativeLayout>

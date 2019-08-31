@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "56340495298",
+    "firebase_url": "https://cab-way.firebaseio.com",
+    "project_id": "cab-way",
+    "storage_bucket": "cab-way.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56340495298:android:572dcc761f652c12",
+        "android_client_info": {
+          "package_name": "com.example.cabway"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "56340495298-g1bb0eulr7sm86glsnj6c27r0l27dja5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4jezsYVYJQvZ0RsdsDuFamLgN0AGfISg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "56340495298-g1bb0eulr7sm86glsnj6c27r0l27dja5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -10,41 +10,42 @@ import android.view.ViewGroup;
 import com.example.cabway.R;
 import com.example.cabway.ui.Interfaces.RecyclerViewItemClickListener;
 
+import java.util.List;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AvailableRidesListAdapter extends RecyclerView.Adapter<AvailableRidesListAdapter.AvailableRidesListViewHolder> {
+public class RidesListAdapter extends RecyclerView.Adapter<RidesListAdapter.RidesListViewHolder> {
 
     private Context context;
     private RecyclerViewItemClickListener recyclerViewItemClickListener;
+    private List<String> ridesList;
 
-
-    public AvailableRidesListAdapter(Context context, RecyclerViewItemClickListener recyclerViewItemClickListener) {
+    public RidesListAdapter(Context context,List<String> ridesList, RecyclerViewItemClickListener recyclerViewItemClickListener) {
         this.context = context;
+        this.ridesList = ridesList;
         this.recyclerViewItemClickListener = recyclerViewItemClickListener;
     }
 
     @NonNull
     @Override
-    public AvailableRidesListAdapter.AvailableRidesListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RidesListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.available_trip_list_item, parent, false);
-        return new AvailableRidesListAdapter.AvailableRidesListViewHolder(view);
+        return new RidesListViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AvailableRidesListAdapter.AvailableRidesListViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RidesListViewHolder holder, int position) {
 
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return (ridesList != null) ? ridesList.size() : 0;
     }
 
-    class AvailableRidesListViewHolder extends RecyclerView.ViewHolder {
-
-
-        AvailableRidesListViewHolder(View itemView) {
+    class RidesListViewHolder extends RecyclerView.ViewHolder {
+        RidesListViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
 

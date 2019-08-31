@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:paddingBottom="5dp"
-    tools:context=".ui.activities.BookRideActivity">
+    tools:context=".ui.activities.CreateRideActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
