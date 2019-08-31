@@ -22,4 +22,6 @@ public class AppConstants {
     public static final int ADDRESS_LENGTH = 10;
     public static final int MOBILE_NUMBER_LENGTH = 10;
     public static final int PIN_CODE_LENGTH = 6;
+    public static final String STATE = "state";
+    public static final String CITY = "city";
 }

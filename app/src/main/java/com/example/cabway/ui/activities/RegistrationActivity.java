@@ -1,9 +1,7 @@
 package com.example.cabway.ui.activities;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.widget.AppCompatSpinner;
 import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
@@ -14,21 +12,24 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.example.cabway.R;
 import com.example.cabway.Utils.ImageUtils;
+import com.example.cabway.Utils.SpinnerUtils;
 import com.example.cabway.Utils.TextValidationUtils;
 import com.example.cabway.ui.Interfaces.RegistrationInterface;
 import com.example.cabway.ui.adapter.CitySpinnerAdapter;
 import com.example.cabway.ui.dialogs.DialogOtp;
 import com.example.cabway.viewModels.UserViewModel;
 import com.example.core.CommonModels.CityModel;
+import com.example.core.CommonModels.StateModel;
 import com.example.core.CommonModels.UserModel;
 import com.example.database.Utills.AppConstants;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -38,7 +39,7 @@ import butterknife.OnClick;
 import static com.example.cabway.Utils.TextValidationUtils.showMandatoryError;
 
 
-public class RegistrationActivity extends BaseActivity implements RegistrationInterface {
+public class RegistrationActivity extends BaseActivity implements RegistrationInterface, CitySpinnerAdapter.ItemSelectedCallback {
 
     @BindView(R.id.first_name)
     EditText etFirstName;
@@ -96,40 +97,6 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     private String mMobileNumber;
     private UserViewModel userViewModel;
 
-    public static List<CityModel> getCities() {
-        CityModel city0 = new CityModel("0", "Select City");
-        CityModel city1 = new CityModel("1", "Pune");
-        CityModel city2 = new CityModel("2", "Mumbai");
-        CityModel city3 = new CityModel("3", "Satara");
-        CityModel city4 = new CityModel("4", "Banglore");
-
-        List<CityModel> cityList = new ArrayList<>();
-        cityList.add(city0);
-        cityList.add(city1);
-        cityList.add(city2);
-        cityList.add(city3);
-        cityList.add(city4);
-
-        return cityList;
-    }
-
-    public static List<CityModel> getStates() {
-        CityModel city0 = new CityModel("0", "Select State");
-        CityModel city1 = new CityModel("1", "Maharashtra");
-        CityModel city2 = new CityModel("2", "Karnatak");
-        CityModel city3 = new CityModel("3", "Rajastan");
-        CityModel city4 = new CityModel("4", "Tamilnadu");
-
-        List<CityModel> cityList = new ArrayList<>();
-        cityList.add(city0);
-        cityList.add(city1);
-        cityList.add(city2);
-        cityList.add(city3);
-        cityList.add(city4);
-
-        return cityList;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -144,11 +111,8 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     }
 
     private void setUpUi() {
-        CitySpinnerAdapter citySpinnerAdapter = new CitySpinnerAdapter(this, getCities());
-        spCity.setAdapter(citySpinnerAdapter);
-
-        CitySpinnerAdapter stateSpinnerAdapter = new CitySpinnerAdapter(this, getStates());
-        spState.setAdapter(stateSpinnerAdapter);
+        spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, "0"));
+        spState.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.STATE, "0"));
     }
 
     private void setObservers() {
@@ -224,7 +188,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         userModel.mobileNo = etPhone.getText().toString();
         userModel.address = etAddress.getText().toString();
         userModel.email = etEmail.getText().toString();
-        userModel.cityCode = getCities().get(spCity.getSelectedItemPosition()).getName();
+        userModel.cityCode = SpinnerUtils.getCityData(spCity.getSelectedItemPosition()).getName();
         userModel.pinCode = etPincode.getText().toString();
         userModel.role = (type.getCheckedRadioButtonId() == R.id.agency) ? AppConstants.AGENCY : AppConstants.DRIVER;
         return userModel;
@@ -317,6 +281,14 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     @Override
     public void performActionAfterPermission() {
         ImageUtils.pickImage(this);
+    }
+
+    @Override
+    public <T> void sendDataOnSelection(T data) {
+        if (data instanceof StateModel) {
+            spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, ((StateModel) data).getId()));
+        } else if (data instanceof CityModel) {
+        }
     }
 
 }

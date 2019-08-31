@@ -4,10 +4,12 @@ public class CityModel {
 
     private String code;
     private String name;
+    private String stateCode;
 
-    public CityModel(String code, String name) {
+    public CityModel(String code, String name, String stateCode) {
         this.code = code;
         this.name = name;
+        this.stateCode = stateCode;
     }
 
     public String getCode() {
@@ -24,5 +26,13 @@ public class CityModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getStateCode() {
+        return stateCode;
+    }
+
+    public void setStateCode(String stateCode) {
+        this.stateCode = stateCode;
     }
 }

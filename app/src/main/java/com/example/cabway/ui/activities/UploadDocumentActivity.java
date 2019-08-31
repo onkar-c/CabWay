@@ -1,8 +1,13 @@
 package com.example.cabway.ui.activities;
 
+import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+
+import com.example.cabway.Utils.SpinnerUtils;
+import com.example.cabway.ui.adapter.CitySpinnerAdapter;
+import com.example.core.CommonModels.StateModel;
 import com.google.android.material.textfield.TextInputLayout;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -35,7 +40,7 @@ import butterknife.OnClick;
 import static com.example.cabway.Utils.TextValidationUtils.showMandatoryError;
 import static com.example.cabway.Utils.TextValidationUtils.showMandatoryErrorUsingString;
 
-public class UploadDocumentActivity extends BaseActivity implements DatePickerCallBackInterface {
+public class UploadDocumentActivity extends BaseActivity implements DatePickerCallBackInterface, CitySpinnerAdapter.ItemSelectedCallback {
 
     @BindView(R.id.il_doc_registration_number)
     TextInputLayout tilCardNumber;
@@ -43,8 +48,6 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
     TextInputLayout tilNameOnDoc;
     @BindView(R.id.il_vehicle_type)
     TextInputLayout tilVehicleType;
-    @BindView(R.id.il_state_name)
-    TextInputLayout tilStateName;
     @BindView(R.id.il_gst_number)
     TextInputLayout tilGstNumber;
     @BindView(R.id.ll_issued_date_layout)
@@ -58,8 +61,10 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
     EditText etNameOnDoc;
     @BindView(R.id.et_vehicle_type)
     EditText etVehicleType;
-    @BindView(R.id.et_state_name)
-    EditText etStateName;
+    @BindView(R.id.tv_state_hint)
+    TextView tvStateHint;
+    @BindView(R.id.sp_state)
+    AppCompatSpinner spState;
     @BindView(R.id.et_gst_number)
     EditText etGstNumber;
     @BindView(R.id.tv_issued_date)
@@ -103,7 +108,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
         etDocNumber.setText(document.getDocumentNumber());
         etNameOnDoc.setText(document.getNameOnDocument());
         etVehicleType.setText(document.getVehicleType());
-        etStateName.setText(document.getStateName());
+        spState.setSelection(SpinnerUtils.getStatePosition(document.getStateName()));
         etGstNumber.setText(document.getGstNumber());
         tvIssuedDate.setText(document.getIssueDate());
         tvExpireDate.setText(document.getExpiryDate());
@@ -138,20 +143,23 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
 
     private void setUiForDoc() {
         if (docType.equals(getString(R.string.shop_act))) {
-            tilStateName.setVisibility(View.VISIBLE);
+            tvStateHint.setVisibility(View.VISIBLE);
+            spState.setVisibility(View.VISIBLE);
             tilGstNumber.setVisibility(View.VISIBLE);
             llIssuedDate.setVisibility(View.VISIBLE);
         } else if (docType.equals(getString(R.string.driver_license))) {
             tilVehicleType.setVisibility(View.VISIBLE);
             llIssuedDate.setVisibility(View.VISIBLE);
         } else if (docType.equals(getString(R.string.vehicle_permit))) {
-            tilStateName.setVisibility(View.VISIBLE);
+            tvStateHint.setVisibility(View.VISIBLE);
+            spState.setVisibility(View.VISIBLE);
         } else if (docType.equals(getString(R.string.vehicle_registration))) {
             tilNameOnDoc.setVisibility(View.GONE);
             tilVehicleType.setVisibility(View.VISIBLE);
         } else if (docType.equals(getString(R.string.aadhar_card))) {
             llExpiryDate.setVisibility(View.GONE);
-        }
+        } if(spState.getVisibility() == View.VISIBLE)
+            spState.setAdapter(SpinnerUtils.setSpinnerAdapter(this,AppConstants.STATE,"0"));
 //        else if (docType.equals(getString(R.string.vehicle_insurance))) {
 //
 //        }
@@ -189,8 +197,8 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
         documentModel.setUserId(appPreferences.getUserDetails().uuId);
         if (tilNameOnDoc.getVisibility() == View.VISIBLE)
             documentModel.setNameOnDocument(etNameOnDoc.getText().toString());
-        if (tilStateName.getVisibility() == View.VISIBLE)
-            documentModel.setStateName(etStateName.getText().toString());
+        if (spState.getVisibility() == View.VISIBLE)
+            documentModel.setStateName(SpinnerUtils.getStateData(spState.getSelectedItemId()).getName());
         if (tilGstNumber.getVisibility() == View.VISIBLE)
             documentModel.setGstNumber(etGstNumber.getText().toString());
         if (tilVehicleType.getVisibility() == View.VISIBLE)
@@ -218,7 +226,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
         } else if (tilNameOnDoc.getVisibility() == View.VISIBLE && TextUtils.isEmpty(etNameOnDoc.getText().toString())) {
             showMandatoryErrorUsingString(Objects.requireNonNull(tilNameOnDoc.getHint()).toString(), this);
             return false;
-        } else if (tilStateName.getVisibility() == View.VISIBLE && TextUtils.isEmpty(etStateName.getText().toString())) {
+        } else if (spState.getVisibility() == View.VISIBLE && spState.getSelectedItemPosition()!=0) {
             showMandatoryError(R.string.state_name, this);
             return false;
         } else if (tilGstNumber.getVisibility() == View.VISIBLE && TextUtils.isEmpty(etGstNumber.getText().toString())) {
@@ -314,7 +322,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
         etDocNumber.setEnabled(isEnabled);
         etNameOnDoc.setEnabled(isEnabled);
         etVehicleType.setEnabled(isEnabled);
-        etStateName.setEnabled(isEnabled);
+        spState.setEnabled(isEnabled);
         etGstNumber.setEnabled(isEnabled);
         tvIssuedDate.setEnabled(isEnabled);
         tvExpireDate.setEnabled(isEnabled);
@@ -322,5 +330,11 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
         ivAddDocument.setClickable(isEnabled);
         btnContinue.setVisibility(isEnabled ? View.VISIBLE : View.GONE);
         invalidateOptionsMenu();
+    }
+
+    @Override
+    public <T> void sendDataOnSelection(T data) {
+        if(data instanceof StateModel){
+        }
     }
 }

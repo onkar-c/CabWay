@@ -1,12 +1,14 @@
 package com.example.core.CommonModels;
 
-import java.util.ArrayList;
-
 public class StateModel {
 
     private String id;
     private String name;
-    private ArrayList<CityModel> cityArr;
+
+    public StateModel(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public String getId() {
         return id;
@@ -24,11 +26,4 @@ public class StateModel {
         this.name = name;
     }
 
-    public ArrayList<CityModel> getCityArr() {
-        return cityArr;
-    }
-
-    public void setCityArr(ArrayList<CityModel> cityArr) {
-        this.cityArr = cityArr;
-    }
 }
