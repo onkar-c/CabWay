@@ -10,9 +10,12 @@ import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.cabway.R;
 import com.example.database.Utills.AppConstants;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -89,16 +92,41 @@ public class ImageUtils {
     }
 
 
-    public static void setImageFromUrl(Context context, String url, ImageView imageView){
-        Picasso.with(context)
+    public static void setImageFromUrl(Context context,String url, ImageView imageView) {
+        Picasso.get()
                 .load(url)
-                .into(imageView);
+                .error(R.drawable.ic_add_profile)
+                .into(imageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Toast.makeText(context,"Failed to Load Image",Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
+                });
     }
 
-    public static void setImageFromFilePath(Context context, String filePath, ImageView imageView){
-        Picasso.with(context)
+    public static void setImageFromFilePath(Context context,String filePath, ImageView imageView) {
+        Picasso.get()
                 .load(new File(filePath))
-                .into(imageView);
+                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                .error(R.drawable.ic_add_profile)
+                .into(imageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Toast.makeText(context,"Failed to Load Image",Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
+                });
     }
 
 }

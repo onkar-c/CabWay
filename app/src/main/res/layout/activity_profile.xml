@@ -56,17 +56,40 @@
             android:background="@color/white_smoke" />
 
         <TextView
-            android:id="@+id/tv_name_title"
+            android:id="@+id/tv_fname_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:text="@string/full_name"
+            android:text="@string/first_name"
             android:textColor="#797878"
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/et_name"
+            android:id="@+id/et_fname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="5dp"
+            android:enabled="false"
+            android:inputType="text"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/small_text"
+            tools:ignore="Autofill,LabelFor" />
+
+        <TextView
+            android:id="@+id/tv_lname_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/last_name"
+            android:textColor="#797878"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/et_lname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"

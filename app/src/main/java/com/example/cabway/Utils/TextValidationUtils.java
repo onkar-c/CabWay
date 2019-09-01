@@ -82,8 +82,7 @@ public class TextValidationUtils {
             showMandatoryErrorUsingString("Valid" + pContext.getString(R.string.name_on_document), pContext);
             return false;
         } else if (pAdharCardDoc.getDocumentNumber().trim().isEmpty() ||
-                pAdharCardDoc.getDocumentNumber().length() != 12 ||
-                TextUtils.isDigitsOnly(pAdharCardDoc.getDocumentNumber())) {
+                pAdharCardDoc.getDocumentNumber().length() != 12 ) {
             showMandatoryErrorUsingString("Valid" + pContext.getString(R.string.registration_number), pContext);
             return false;
         }
@@ -95,11 +94,7 @@ public class TextValidationUtils {
             showMandatoryErrorUsingString("Valid" + pContext.getString(R.string.name_on_document), pContext);
             return false;
         } else if (pDrivingLicenceDoc.getDocumentNumber().trim().isEmpty() ||
-                pDrivingLicenceDoc.getDocumentNumber().length() != 13 ||
-                !TextUtils.isDigitsOnly(pDrivingLicenceDoc.getDocumentNumber().substring(0, 2)) ||
-                TextUtils.isDigitsOnly(pDrivingLicenceDoc.getDocumentNumber().substring(2, 4)) ||
-                pDrivingLicenceDoc.getDocumentNumber().substring(4, 8).matches(yearRegex) ||
-                TextUtils.isDigitsOnly(pDrivingLicenceDoc.getDocumentNumber().substring(8))) {
+                pDrivingLicenceDoc.getDocumentNumber().length() != 13 ) {
 
             showMandatoryErrorUsingString("Valid" + pContext.getString(R.string.registration_number), pContext);
             return false;
@@ -114,8 +109,7 @@ public class TextValidationUtils {
         if (pVehicleRegistration.getVehicleType().trim().isEmpty()) {
             showMandatoryErrorUsingString("Valid" + pContext.getString(R.string.vehicle_type), pContext);
             return false;
-        } else if (pVehicleRegistration.getDocumentNumber().trim().isEmpty() ||
-                !pVehicleRegistration.getDocumentNumber().matches(vehicleNumberRegex)) {
+        } else if (pVehicleRegistration.getDocumentNumber().trim().isEmpty()) {
             showMandatoryErrorUsingString("Valid" + pContext.getString(R.string.vehicle_registration), pContext);
             return false;
         }
@@ -137,7 +131,7 @@ public class TextValidationUtils {
         if (pVehiclePermit.getNameOnDocument().trim().isEmpty()) {
             showMandatoryErrorUsingString("Valid" + pContext.getString(R.string.name_on_document), pContext);
             return false;
-        } else if (pVehiclePermit.getVehicleType().trim().isEmpty()) {
+        } else if (pVehiclePermit.getNameOnDocument().trim().isEmpty()) {
             showMandatoryErrorUsingString("Valid" + pContext.getString(R.string.vehicle_name), pContext);
             return false;
         } else if (pVehiclePermit.getDocumentNumber().trim().isEmpty()) {

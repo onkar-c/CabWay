@@ -2,21 +2,20 @@ package com.example.core.CommonModels;
 
 public class CityModel {
 
-    private String code;
+    private int cityId;
     private String name;
+    private StateModel state;
 
-    public CityModel(String code, String name) {
-        this.code = code;
+
+    public CityModel(int cityId, String name) {
+        this.cityId = cityId;
         this.name = name;
     }
 
-    public String getCode() {
-        return code;
+    public int getCityId() {
+        return cityId;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
 
     public String getName() {
         return name;
@@ -24,5 +23,13 @@ public class CityModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getStateCode() {
+        return getState().getId();
+    }
+
+    public StateModel getState() {
+        return state;
     }
 }

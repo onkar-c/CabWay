@@ -4,8 +4,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.example.core.CommonModels.CityModel;
+import com.example.core.CommonModels.StateModel;
 import com.example.core.CommonModels.UserModel;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AppPreferences {
     private static AppPreferences instance;
@@ -88,6 +95,30 @@ public class AppPreferences {
         savePref(Constants.AUTH_KEY, authKey);
     }
 
+    public void setStateList(List<StateModel> data) {
+        Gson gson = new Gson();
+        savePref(Constants.STATE_DATA, gson.toJson(data));
+    }
+
+    public ArrayList<StateModel> getStateList() {
+        ArrayList<StateModel> stateList =  new Gson().fromJson(getPref(Constants.STATE_DATA, ""), new TypeToken<ArrayList<StateModel>>() {
+        }.getType());
+        return (stateList != null)? stateList : new ArrayList<StateModel>();
+    }
+
+    public void setCityList(List<CityModel> data) {
+        Gson gson = new Gson();
+        savePref(Constants.CITY_DATA, gson.toJson(data));
+    }
+
+    public ArrayList<CityModel> getCityList() {
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<CityModel>>() {
+        }.getType();
+        return gson.fromJson(getPref(Constants.CITY_DATA, ""), type);
+    }
+
+
     public void clearPreferencesForLogout() {
         setIsLogin(false);
         clearAuthKey();
@@ -110,6 +141,8 @@ public class AppPreferences {
         private static final String USER_DETAILS = "user_details";
         private static final String IS_LOGIN = "is_login";
         private static final String AUTH_KEY = "auth_key";
+        private static final String STATE_DATA = "state_data";
+        private static final String CITY_DATA = "city_data";
 
     }
 }
