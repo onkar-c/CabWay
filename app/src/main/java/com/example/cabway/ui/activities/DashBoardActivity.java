@@ -105,7 +105,7 @@ public class DashBoardActivity extends BaseActivity
         tvUserName.setText(String.format("%s %s", user.firstName, user.lastName));
         tvRole.setText(user.role);
         mainAction.setText(getString((user.role.equals(AppConstants.AGENCY) ? R.string.create_ride : R.string.preferred_city)));
-        ImageUtils.setImageFromUrl(this, user.profileImage, ivProfile);
+        ImageUtils.setImageFromUrl(this,user.profileImage, ivProfile);
     }
 
     private void setNavigationDrawerLayout() {

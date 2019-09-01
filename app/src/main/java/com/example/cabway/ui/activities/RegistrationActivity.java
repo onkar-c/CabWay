@@ -27,9 +27,7 @@ import com.example.core.CommonModels.CityModel;
 import com.example.core.CommonModels.StateModel;
 import com.example.core.CommonModels.UserModel;
 import com.example.database.Utills.AppConstants;
-import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -111,8 +109,8 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     }
 
     private void setUpUi() {
-        spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, "0"));
-        spState.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.STATE, "0"));
+        spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, 0,spCity));
+        spState.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.STATE, 0,spState));
     }
 
     private void setObservers() {
@@ -173,7 +171,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         }
     }
 
-    @OnClick({R.id.uploadImage, R.id.addImage})
+    @OnClick(R.id.uploadImageLayout)
     void selectImage() {
         if (isReadStoragePermissionGranted() && isWriteStoragePermissionGranted())
             ImageUtils.pickImage(this);
@@ -270,10 +268,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
             if (!TextValidationUtils.isEmpty(filePath)) {
                 mFilePath = filePath;
                 Toast.makeText(this, filePath, Toast.LENGTH_SHORT).show();
-
-                Picasso.with(this)
-                        .load(new File(mFilePath))
-                        .into(ivProfileImage);
+                ImageUtils.setImageFromFilePath(this,mFilePath, ivProfileImage);
             }
         }
     }
@@ -286,7 +281,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     @Override
     public <T> void sendDataOnSelection(T data) {
         if (data instanceof StateModel) {
-            spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, ((StateModel) data).getId()));
+            spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, ((StateModel) data).getId(),spCity));
         } else if (data instanceof CityModel) {
         }
     }

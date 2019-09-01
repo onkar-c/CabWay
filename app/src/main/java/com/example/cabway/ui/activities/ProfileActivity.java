@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -35,6 +36,9 @@ import static com.example.cabway.Utils.TextValidationUtils.showMandatoryError;
 
 public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.ItemSelectedCallback {
 
+    @BindView(R.id.uploadImageLayout)
+    FrameLayout flProfile;
+
     @BindView(R.id.iv_profile)
     ImageView ivProfile;
 
@@ -43,6 +47,7 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
 
     @BindView(R.id.et_fname)
     EditText etFName;
+
     @BindView(R.id.et_lname)
     EditText etLName;
 
@@ -72,6 +77,7 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
     String mFilePath = "";
     private UserViewModel userViewModel;
     private boolean isEdit = false;
+    private UserModel user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +93,7 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
 
     private void setUpUi() {
 
-        UserModel user = appPreferences.getUserDetails();
+        user = appPreferences.getUserDetails();
 
         etFName.setText(user.firstName);
         etLName.setText(user.lastName);
@@ -96,9 +102,11 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
         etAddress.setText(user.address);
         etPincode.setText(user.pinCode);
         etRole.setText(user.role);
-        spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, "0"));
-        spCity.setSelection(SpinnerUtils.getCityPosition(user.cityCode));
-        spState.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.STATE, "0"));
+        spState.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.STATE, 0,spState));
+        spState.setSelection(SpinnerUtils.getStatePosition((SpinnerUtils.getStateOfCityByCityName(user.cityCode)).getId()));
+        spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, 0,spCity));
+        spCity.setSelection(SpinnerUtils.getCityPositionByName(user.cityCode));
+        ImageUtils.setImageFromUrl(this,user.profileImage,ivProfile);
         //TODO:spState.setSelection(SpinnerUtils.getStateData(user.));
         toggleUi(false);
     }
@@ -134,12 +142,12 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
         userModel.lastName = etLName.getText().toString();
         userModel.address = etAddress.getText().toString();
         userModel.email = etEmail.getText().toString();
-        userModel.cityCode = SpinnerUtils.getCityData(spCity.getSelectedItemPosition()).getCode();
+        userModel.cityCode = String.valueOf(SpinnerUtils.getCityData(spCity.getSelectedItemPosition()).getCityId());
         userModel.pinCode = etPincode.getText().toString();
         return userModel;
     }
 
-    @OnClick({R.id.iv_profile, R.id.addImage})
+    @OnClick(R.id.uploadImageLayout)
     void selectImage() {
         if (isReadStoragePermissionGranted() && isWriteStoragePermissionGranted())
             ImageUtils.pickImage(this);
@@ -175,8 +183,8 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
             String filePath = ImageUtils.onImagePickResult(requestCode, resultCode, data, fileName, this);
             if (!TextValidationUtils.isEmpty(filePath)) {
                 mFilePath = filePath;
-                Toast.makeText(this, filePath, Toast.LENGTH_SHORT).show();
-                ImageUtils.setImageFromFilePath(this, mFilePath, ivProfile);
+                //Toast.makeText(this, filePath, Toast.LENGTH_SHORT).show();
+                ImageUtils.setImageFromFilePath(this,mFilePath, ivProfile);
             }
         }
     }
@@ -214,6 +222,7 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
         etPincode.setEnabled(isEnabled);
         spState.setEnabled(isEnabled);
         spCity.setEnabled(isEnabled);
+        flProfile.setEnabled(isEnabled);
         ivAddProfile.setVisibility(isEnabled ? View.VISIBLE : View.GONE);
         btnSave.setVisibility(isEnabled ? View.VISIBLE : View.GONE);
         invalidateOptionsMenu();
@@ -222,7 +231,9 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
     @Override
     public <T> void sendDataOnSelection(T data) {
         if (data instanceof StateModel) {
-            spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, ((StateModel) data).getId()));
+            if(((StateModel) data).getId() != -1){
+                spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, ((StateModel) data).getId(), spCity));
+            }
         } else if (data instanceof CityModel) {
         }
     }

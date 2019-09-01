@@ -95,19 +95,18 @@ public class AppPreferences {
         savePref(Constants.AUTH_KEY, authKey);
     }
 
-    public void saveStateJson(List<StateModel> data) {
+    public void setStateList(List<StateModel> data) {
         Gson gson = new Gson();
         savePref(Constants.STATE_DATA, gson.toJson(data));
     }
 
     public ArrayList<StateModel> getStateList() {
-        Gson gson = new Gson();
-        Type type = new TypeToken<ArrayList<StateModel>>() {
-        }.getType();
-        return gson.fromJson(getPref(Constants.STATE_DATA, ""), type);
+        ArrayList<StateModel> stateList =  new Gson().fromJson(getPref(Constants.STATE_DATA, ""), new TypeToken<ArrayList<StateModel>>() {
+        }.getType());
+        return (stateList != null)? stateList : new ArrayList<StateModel>();
     }
 
-    public void saveCityJson(List<CityModel> data) {
+    public void setCityList(List<CityModel> data) {
         Gson gson = new Gson();
         savePref(Constants.CITY_DATA, gson.toJson(data));
     }

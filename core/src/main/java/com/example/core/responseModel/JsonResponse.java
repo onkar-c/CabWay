@@ -1,6 +1,8 @@
 package com.example.core.responseModel;
 
+import com.example.core.CommonModels.CityModel;
 import com.example.core.CommonModels.DocumentModel;
+import com.example.core.CommonModels.StateModel;
 import com.example.core.CommonModels.UserModel;
 import com.google.gson.annotations.SerializedName;
 
@@ -21,6 +23,12 @@ public class JsonResponse implements Serializable {
     private List<DocumentModel> documentsList;
     @SerializedName("documentCompleted")
     private boolean documentCompleted;
+    @SerializedName("stateList")
+    private List<StateModel> stateList;
+    @SerializedName("cityList")
+    private List<CityModel> cityList;
+
+
 
     public List<HeroesModel> getHeroesList() {
         return heroesList;
@@ -52,5 +60,13 @@ public class JsonResponse implements Serializable {
 
     public boolean isDocumentCompleted() {
         return documentCompleted;
+    }
+
+    public List<StateModel> getStateList() {
+        return stateList;
+    }
+
+    public List<CityModel> getCityList() {
+        return cityList;
     }
 }

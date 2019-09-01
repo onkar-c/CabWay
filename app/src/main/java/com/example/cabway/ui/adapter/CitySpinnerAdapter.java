@@ -10,9 +10,13 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.core.content.ContextCompat;
 
 import com.example.cabway.R;
+import com.example.cabway.ui.activities.ProfileActivity;
+import com.example.cabway.ui.activities.RegistrationActivity;
+import com.example.cabway.ui.activities.UploadDocumentActivity;
 import com.example.core.CommonModels.CityModel;
 import com.example.core.CommonModels.StateModel;
 
@@ -25,12 +29,18 @@ public class CitySpinnerAdapter<T> extends ArrayAdapter<T> implements AdapterVie
     private List<T> dataList;
     private ItemSelectedCallback itemSelectedCallback;
 
-    public CitySpinnerAdapter(Context context, List<T> dataList) {
+    public CitySpinnerAdapter(Context context, AppCompatSpinner spinner, List<T> dataList) {
         super(context, R.layout.city_item);
         this.mContext = context;
         this.dataList = new ArrayList<>();
         this.dataList = dataList;
-        this.itemSelectedCallback = (ItemSelectedCallback) context;
+        if(context instanceof RegistrationActivity)
+            this.itemSelectedCallback = (RegistrationActivity) context;
+        if(context instanceof ProfileActivity)
+            this.itemSelectedCallback = (ProfileActivity) context;
+        if(context instanceof UploadDocumentActivity)
+            this.itemSelectedCallback = (UploadDocumentActivity) context;
+        spinner.setOnItemSelectedListener(this);
     }
 
 

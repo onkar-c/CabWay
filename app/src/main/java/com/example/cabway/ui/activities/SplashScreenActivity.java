@@ -27,8 +27,8 @@ public class SplashScreenActivity extends BaseActivity {
         splashViewModel.init();
         setStateCityObserver();
 //        generateFcmTopic();
-//        splashViewModel.getSplashRepository().getStateCity(splashViewModel.getStateCityResponseMld());
-        new Handler().postDelayed(SplashScreenActivity.this::startDashboardActivity, 500);
+        splashViewModel.getSplashRepository().getStateCity(splashViewModel.getStateCityResponseMld());
+//        new Handler().postDelayed(SplashScreenActivity.this::startDashboardActivity, 500);
 
     }
 
@@ -36,7 +36,10 @@ public class SplashScreenActivity extends BaseActivity {
         splashViewModel.getStateCityResponseMld().observe(this, stateCityResponse -> {
             removeProgressDialog();
             if (Objects.requireNonNull(stateCityResponse).getStatus().equals(AppConstants.SUCCESS)) {
-                Toast.makeText(SplashScreenActivity.this, stateCityResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                if (stateCityResponse.getCityList() != null)
+                    appPreferences.setCityList(stateCityResponse.getCityList());
+                if (stateCityResponse.getStateList() != null)
+                    appPreferences.setStateList(stateCityResponse.getStateList());
                 new Handler().postDelayed(SplashScreenActivity.this::startDashboardActivity, 500);
             } else {
                 Toast.makeText(SplashScreenActivity.this, stateCityResponse.getMessage(), Toast.LENGTH_SHORT).show();

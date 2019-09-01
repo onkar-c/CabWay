@@ -118,7 +118,7 @@
             android:visibility="gone"
             android:layout_below="@+id/il_vehicle_type"/>
 
-        <android.support.v7.widget.AppCompatSpinner
+        <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/sp_state"
             style="@style/Base.Widget.AppCompat.Spinner.Underlined"
             android:layout_width="match_parent"

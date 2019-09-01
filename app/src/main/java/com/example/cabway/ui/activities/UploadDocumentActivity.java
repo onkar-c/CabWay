@@ -108,7 +108,8 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
         etDocNumber.setText(document.getDocumentNumber());
         etNameOnDoc.setText(document.getNameOnDocument());
         etVehicleType.setText(document.getVehicleType());
-        spState.setSelection(SpinnerUtils.getStatePosition(document.getStateName()));
+        //TODO: code /state name
+        spState.setSelection(SpinnerUtils.getStatePosition(Integer.parseInt(document.getStateName())));
         etGstNumber.setText(document.getGstNumber());
         tvIssuedDate.setText(document.getIssueDate());
         tvExpireDate.setText(document.getExpiryDate());
@@ -158,8 +159,9 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
             tilVehicleType.setVisibility(View.VISIBLE);
         } else if (docType.equals(getString(R.string.aadhar_card))) {
             llExpiryDate.setVisibility(View.GONE);
-        } if(spState.getVisibility() == View.VISIBLE)
-            spState.setAdapter(SpinnerUtils.setSpinnerAdapter(this,AppConstants.STATE,"0"));
+        }
+        if (spState.getVisibility() == View.VISIBLE)
+            spState.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.STATE, 0, spState));
 //        else if (docType.equals(getString(R.string.vehicle_insurance))) {
 //
 //        }
@@ -195,10 +197,11 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
         if (isFromLogin)
             documentModel.setUuid(AppConstants.DEFAULT_ID);
         documentModel.setUserId(appPreferences.getUserDetails().uuId);
-        if (tilNameOnDoc.getVisibility() == View.VISIBLE)
+        if (tilNameOnDoc.getVisibility() == View.VISIBLE) {
             documentModel.setNameOnDocument(etNameOnDoc.getText().toString());
+        }
         if (spState.getVisibility() == View.VISIBLE)
-            documentModel.setStateName(SpinnerUtils.getStateData(spState.getSelectedItemId()).getName());
+            documentModel.setStateName(SpinnerUtils.getStateDataByPosition(spState.getSelectedItemId()).getName());
         if (tilGstNumber.getVisibility() == View.VISIBLE)
             documentModel.setGstNumber(etGstNumber.getText().toString());
         if (tilVehicleType.getVisibility() == View.VISIBLE)
@@ -226,7 +229,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
         } else if (tilNameOnDoc.getVisibility() == View.VISIBLE && TextUtils.isEmpty(etNameOnDoc.getText().toString())) {
             showMandatoryErrorUsingString(Objects.requireNonNull(tilNameOnDoc.getHint()).toString(), this);
             return false;
-        } else if (spState.getVisibility() == View.VISIBLE && spState.getSelectedItemPosition()!=0) {
+        } else if (spState.getVisibility() == View.VISIBLE && spState.getSelectedItemPosition() == 0) {
             showMandatoryError(R.string.state_name, this);
             return false;
         } else if (tilGstNumber.getVisibility() == View.VISIBLE && TextUtils.isEmpty(etGstNumber.getText().toString())) {
@@ -250,19 +253,20 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
     }
 
 
-    private boolean validateDocWise(DocumentModel document){
-       if(docType.equals(getResources().getString(R.string.aadhar_card))) {
-           return TextValidationUtils.validateAdharCard(this, document);
-       }else  if(docType.equals(getResources().getString(R.string.driver_license))) {
-           return TextValidationUtils.validateDrivingLicense(this, document);
-       } else if(docType.equals(getResources().getString(R.string.vehicle_registration))) {
+    private boolean validateDocWise(DocumentModel document) {
+        if (docType.equals(getResources().getString(R.string.aadhar_card))) {
+            return TextValidationUtils.validateAdharCard(this, document);
+        } else if (docType.equals(getResources().getString(R.string.driver_license))) {
+            return TextValidationUtils.validateDrivingLicense(this, document);
+        } else if (docType.equals(getResources().getString(R.string.vehicle_registration))) {
             return TextValidationUtils.validateVehicleRegistration(this, document);
-        }else  if(docType.equals(getResources().getString(R.string.vehicle_insurance))) {
-           return TextValidationUtils.validateVehicleInsurance(this, document);
-       } if(docType.equals(getResources().getString(R.string.vehicle_permit))) {
+        } else if (docType.equals(getResources().getString(R.string.vehicle_insurance))) {
+            return TextValidationUtils.validateVehicleInsurance(this, document);
+        }
+        if (docType.equals(getResources().getString(R.string.vehicle_permit))) {
             return TextValidationUtils.validateVehiclePermit(this, document);
-       }
-       return true;
+        }
+        return true;
     }
 
 
@@ -280,7 +284,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
             String filePath = ImageUtils.onImagePickResult(requestCode, resultCode, data, fileName, this);
             if (!TextValidationUtils.isEmpty(filePath)) {
                 mFilePath = filePath;
-                Toast.makeText(this, filePath, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, filePath, Toast.LENGTH_SHORT).show();
                 if (mFilePath != null)
                     ImageUtils.setImageFromFilePath(this, mFilePath, ivDocumentImage);
             }
@@ -304,8 +308,8 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if(menu.findItem(R.id.action_edit) != null)
-        menu.findItem(R.id.action_edit).setVisible(!isEditMode);
+        if (menu.findItem(R.id.action_edit) != null)
+            menu.findItem(R.id.action_edit).setVisible(!isEditMode);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -334,7 +338,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
 
     @Override
     public <T> void sendDataOnSelection(T data) {
-        if(data instanceof StateModel){
+        if (data instanceof StateModel) {
         }
     }
 }
