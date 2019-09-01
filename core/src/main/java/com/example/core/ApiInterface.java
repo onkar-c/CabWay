@@ -1,6 +1,7 @@
 package com.example.core;
 
 
+import com.example.core.CommonModels.CityModel;
 import com.example.core.requestModels.LoginRequestModel;
 import com.example.core.requestModels.ResetPasswordModel;
 import com.example.core.requestModels.VerifyOtpRequestModel;
@@ -54,4 +55,7 @@ public interface ApiInterface {
 
     @GET("cabinfo/cityList")
     Call<JsonResponse> getStateAndCity();
+
+    @PUT("users/cityPrefrence")
+    Call<JsonResponse> updatePreferredCity(@Body CityModel cityModel);
 }

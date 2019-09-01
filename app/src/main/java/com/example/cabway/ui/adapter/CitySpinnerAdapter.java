@@ -14,6 +14,7 @@ import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.core.content.ContextCompat;
 
 import com.example.cabway.R;
+import com.example.cabway.ui.activities.PreferredCityActivity;
 import com.example.cabway.ui.activities.ProfileActivity;
 import com.example.cabway.ui.activities.RegistrationActivity;
 import com.example.cabway.ui.activities.UploadDocumentActivity;
@@ -40,6 +41,8 @@ public class CitySpinnerAdapter<T> extends ArrayAdapter<T> implements AdapterVie
             this.itemSelectedCallback = (ProfileActivity) context;
         if(context instanceof UploadDocumentActivity)
             this.itemSelectedCallback = (UploadDocumentActivity) context;
+        if(context instanceof PreferredCityActivity)
+            this.itemSelectedCallback = (PreferredCityActivity) context;
         spinner.setOnItemSelectedListener(this);
     }
 

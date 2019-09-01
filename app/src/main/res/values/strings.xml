@@ -86,6 +86,9 @@
     <string name="save">Save</string>
     <string name="edit">Edit</string>
     <string name="add_profile_image">Add Profile Image</string>
+    <string name="create_new_ride">Create A New Ride</string>
+    <string name="city_updated_success">City Updated Successfully</string>
+    <string name="preferred_city_description">Please select your preferred city so we can display you related rides.</string>
 
     //dummy text
     <string name="dummy_document_type_text">Step 1 : Document Type</string>

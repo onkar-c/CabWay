@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 
 import com.example.core.ApiClient;
 import com.example.core.ApiInterface;
+import com.example.core.CommonModels.CityModel;
 import com.example.core.RequestExecutor;
 import com.example.core.Utills.FileUtils;
 import com.example.core.Utills.HeroUtils;
@@ -87,5 +88,9 @@ public class ApiExecutor {
 
     public static void getStateAndCity(final MutableLiveData<JsonResponse> mltStateCityResponse) {
         RequestExecutor.ExecuteApi(getApiInterface().getStateAndCity(), mltStateCityResponse);
+    }
+
+    public static void updatePreferredCity(final MutableLiveData<JsonResponse> mltPreferredCityResponse, CityModel cityModel) {
+        RequestExecutor.ExecuteApi(getApiInterface().updatePreferredCity(cityModel), mltPreferredCityResponse);
     }
 }
