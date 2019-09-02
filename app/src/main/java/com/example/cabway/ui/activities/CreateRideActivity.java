@@ -2,6 +2,7 @@ package com.example.cabway.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -14,10 +15,8 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.cabway.R;
 import com.example.cabway.Utils.CarTypeSpinnerUtils;
 import com.example.cabway.Utils.DatePickerUtils;
+import com.example.cabway.Utils.DateTimePicker;
 import com.example.cabway.Utils.IntentConstants;
-import com.example.cabway.Utils.TimePickerUtils;
-import com.example.cabway.ui.Interfaces.DatePickerCallBackInterface;
-import com.example.cabway.ui.Interfaces.TimePickerCallBackInterface;
 import com.example.cabway.ui.adapter.CarTypeSpinnerAdapter;
 import com.example.cabway.viewModels.CreateRideViewModel;
 import com.example.core.CommonModels.CityModel;
@@ -27,6 +26,7 @@ import com.example.core.responseModel.JsonResponse;
 import com.example.database.Utills.AppConstants;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.Date;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -35,7 +35,7 @@ import butterknife.OnClick;
 
 import static com.example.cabway.Utils.TextValidationUtils.showMandatoryError;
 
-public class CreateRideActivity extends BaseActivity implements DatePickerCallBackInterface, TimePickerCallBackInterface, CarTypeSpinnerAdapter.TypeSelectedCallback {
+public class CreateRideActivity extends BaseActivity implements CarTypeSpinnerAdapter.TypeSelectedCallback, DateTimePicker.ResultCallback {
 
     @BindView(R.id.et_start_loc)
     EditText fromLocET;
@@ -46,17 +46,17 @@ public class CreateRideActivity extends BaseActivity implements DatePickerCallBa
     @BindView(R.id.sp_vehicle_type)
     AppCompatSpinner vehicleTypeSP;
 
-    @BindView(R.id.et_date_of_journey)
-    EditText dateOfJourneyET;
+    @BindView(R.id.et_pickup_date_time)
+    EditText pickupDateTimeET;
 
-    @BindView(R.id.il_date_of_journey)
-    TextInputLayout dateOfJourneyTIL;
+    @BindView(R.id.il_pickup_date_time)
+    TextInputLayout pickupDateTimeTIL;
 
-    @BindView(R.id.et_time_of_journey)
-    EditText timeOfJourneyET;
+    @BindView(R.id.et_drop_off_date_time)
+    EditText dropOffDateTimeET;
 
-    @BindView(R.id.il_time_of_journey)
-    TextInputLayout timeOfJourneyTIL;
+    @BindView(R.id.il_drop_off_date_time)
+    TextInputLayout dropOffDateTimeTIL;
 
     @BindView(R.id.et_cost_of_trip)
     EditText costOfTripET;
@@ -71,7 +71,6 @@ public class CreateRideActivity extends BaseActivity implements DatePickerCallBa
     RadioGroup rideTypeRg;
 
     CreateRideViewModel createRideViewModel;
-
     CityModel fromCity, toCity;
     public final int startLocation = 1;
     public final int endLocation = 2;
@@ -106,14 +105,18 @@ public class CreateRideActivity extends BaseActivity implements DatePickerCallBa
     }
 
 
-    @OnClick(R.id.et_date_of_journey)
+    @OnClick(R.id.et_pickup_date_time)
     public void selectDate() {
-        DatePickerUtils.startDatePickerWithTodaysDate(CreateRideActivity.this, CreateRideActivity.this);
+        DateTimePicker dateTimePicker=new DateTimePicker();
+        dateTimePicker.setDateResultCallback(CreateRideActivity.this);
+        dateTimePicker.showDialog(CreateRideActivity.this,1000,true);
     }
 
-    @OnClick(R.id.et_time_of_journey)
+    @OnClick(R.id.et_drop_off_date_time)
     public void selectTime() {
-        TimePickerUtils.openTimePicker(CreateRideActivity.this, CreateRideActivity.this);
+        DateTimePicker dateTimePicker=new DateTimePicker();
+        dateTimePicker.setDateResultCallback(CreateRideActivity.this);
+        dateTimePicker.showDialog(CreateRideActivity.this,1000,false);
     }
 
     @OnClick(R.id.et_start_loc)
@@ -141,16 +144,6 @@ public class CreateRideActivity extends BaseActivity implements DatePickerCallBa
     }
 
     @Override
-    public void setDateFromDatePicker(String selectedDate) {
-        dateOfJourneyET.setText(selectedDate);
-    }
-
-    @Override
-    public void setTimeFromTimePicker(String selectedTime) {
-        timeOfJourneyET.setText(selectedTime);
-    }
-
-    @Override
     public void sendTypeOnSelection(VehicleTypeModel data) {
 
     }
@@ -159,9 +152,9 @@ public class CreateRideActivity extends BaseActivity implements DatePickerCallBa
         if (vehicleTypeSP.getSelectedItemPosition() == 0) {
             showMandatoryError(R.string.vehicle_type, this);
             return false;
-        } else if (dateOfJourneyET.getText().toString().isEmpty()) {
+        } else if (pickupDateTimeET.getText().toString().isEmpty()) {
             return false;
-        } else if (timeOfJourneyET.getText().toString().isEmpty()) {
+        } else if (dropOffDateTimeET.getText().toString().isEmpty()) {
             showMandatoryError(R.string.time_of_journey_hint, this);
             return false;
         } else if (distanceET.getText().toString().trim().isEmpty()) {
@@ -169,6 +162,9 @@ public class CreateRideActivity extends BaseActivity implements DatePickerCallBa
             return false;
         } else if (costOfTripET.getText().toString().trim().isEmpty()) {
             showMandatoryError(R.string.cost_of_trip_hint, this);
+            return false;
+        }else if (dropOffDateTimeET.getText().toString().compareTo(pickupDateTimeET.getText().toString()) < 0) {
+            Toast.makeText(this, getString(R.string.date_validation_create_ride), Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -183,8 +179,8 @@ public class CreateRideActivity extends BaseActivity implements DatePickerCallBa
         rideRequestModel.setFromCity(fromCity);
         rideRequestModel.setToCity(toCity);
         rideRequestModel.setRideType((rideTypeRg.getCheckedRadioButtonId() == R.id.rb_one_way) ? AppConstants.ONE_WAY : AppConstants.TWO_WAY);
-        rideRequestModel.setPickupTime("1234");
-        rideRequestModel.setDropTime("1234");
+        rideRequestModel.setPickupTime(DatePickerUtils.getDateTimeForApiReq(pickupDateTimeET.getText().toString()));
+        rideRequestModel.setDropTime(DatePickerUtils.getDateTimeForApiReq(dropOffDateTimeET.getText().toString()));
 
         return rideRequestModel;
     }
@@ -205,4 +201,15 @@ public class CreateRideActivity extends BaseActivity implements DatePickerCallBa
 
 
     }
+
+    @Override
+    public void onResult(@Nullable Object o,boolean isPickup) {
+        Log.e("result",o+"");
+        if(isPickup){
+            pickupDateTimeET.setText(DatePickerUtils.getDateTimeToDisplay((Date) o));
+        }else{
+            dropOffDateTimeET.setText(DatePickerUtils.getDateTimeToDisplay((Date) o));
+        }
+    }
+
 }
