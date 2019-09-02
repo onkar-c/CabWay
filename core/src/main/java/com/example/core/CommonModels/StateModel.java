@@ -1,6 +1,8 @@
 package com.example.core.CommonModels;
 
-public class StateModel {
+import java.io.Serializable;
+
+public class StateModel implements Serializable {
 
     private int id;
     private String name;

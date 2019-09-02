@@ -1,30 +1,31 @@
 package com.example.cabway.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import com.example.cabway.Utils.CarTypeSpinnerUtils;
-import com.example.cabway.ui.adapter.CarTypeSpinnerAdapter;
-import com.example.cabway.viewModels.CreateRideViewModel;
-import com.example.core.CommonModels.VehicleTypeModel;
-import com.example.core.responseModel.JsonResponse;
-import com.example.database.Utills.AppConstants;
-import com.google.android.material.textfield.TextInputLayout;
-
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.cabway.R;
+import com.example.cabway.Utils.CarTypeSpinnerUtils;
 import com.example.cabway.Utils.DatePickerUtils;
+import com.example.cabway.Utils.IntentConstants;
 import com.example.cabway.Utils.TimePickerUtils;
 import com.example.cabway.ui.Interfaces.DatePickerCallBackInterface;
 import com.example.cabway.ui.Interfaces.TimePickerCallBackInterface;
+import com.example.cabway.ui.adapter.CarTypeSpinnerAdapter;
+import com.example.cabway.viewModels.CreateRideViewModel;
+import com.example.core.CommonModels.CityModel;
+import com.example.core.CommonModels.VehicleTypeModel;
+import com.example.core.requestModels.CreateRideRequestModel;
+import com.example.core.responseModel.JsonResponse;
+import com.example.database.Utills.AppConstants;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
@@ -36,14 +37,11 @@ import static com.example.cabway.Utils.TextValidationUtils.showMandatoryError;
 
 public class CreateRideActivity extends BaseActivity implements DatePickerCallBackInterface, TimePickerCallBackInterface, CarTypeSpinnerAdapter.TypeSelectedCallback {
 
-    @BindView(R.id.et_home_loc)
+    @BindView(R.id.et_start_loc)
     EditText fromLocET;
 
-    @BindView(R.id.et_office_loc)
+    @BindView(R.id.et_drop_loc)
     EditText toLocET;
-
-    @BindView(R.id.tv_vehicle_type_hint)
-    TextView carTypeHintTV;
 
     @BindView(R.id.sp_vehicle_type)
     AppCompatSpinner vehicleTypeSP;
@@ -60,12 +58,6 @@ public class CreateRideActivity extends BaseActivity implements DatePickerCallBa
     @BindView(R.id.il_time_of_journey)
     TextInputLayout timeOfJourneyTIL;
 
-    @BindView(R.id.et_agency_mob_no)
-    EditText agencyMobNoET;
-
-    @BindView(R.id.et_trip_mode)
-    EditText tripModeET;
-
     @BindView(R.id.et_cost_of_trip)
     EditText costOfTripET;
 
@@ -75,16 +67,15 @@ public class CreateRideActivity extends BaseActivity implements DatePickerCallBa
     @BindView(R.id.btn_book_ride)
     Button bookRideBtn;
 
-    @BindView(R.id.rb_one_way)
-    RadioButton oneWayRb;
-
-    @BindView(R.id.rb_two_way)
-    RadioButton returnRb;
-
     @BindView(R.id.rg_ride_type)
     RadioGroup rideTypeRg;
 
     CreateRideViewModel createRideViewModel;
+
+    CityModel fromCity, toCity;
+    public final int startLocation = 1;
+    public final int endLocation = 2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,24 +83,22 @@ public class CreateRideActivity extends BaseActivity implements DatePickerCallBa
         setContentView(R.layout.activity_create_ride);
         ButterKnife.bind(this);
         setUpActionBar();
-        createRideViewModel= ViewModelProviders.of(this).get(CreateRideViewModel.class);
+        createRideViewModel = ViewModelProviders.of(this).get(CreateRideViewModel.class);
         createRideViewModel.init();
         setCreateRideObserver();
         setUpUi();
     }
 
     private void setCreateRideObserver() {
-        createRideViewModel.getCreateRideMld().observe(this,(JsonResponse createRideResponse) ->{
+        createRideViewModel.getCreateRideMld().observe(this, (JsonResponse createRideResponse) -> {
             removeProgressDialog();
             if (Objects.requireNonNull(createRideResponse).getStatus().equals(AppConstants.SUCCESS)) {
-                if (createRideResponse.getCityList() != null){
-
-                }
-
+                Toast.makeText(CreateRideActivity.this, createRideResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                onBackPressed();
             } else {
                 Toast.makeText(CreateRideActivity.this, createRideResponse.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        } );
+        });
     }
 
     private void setUpUi() {
@@ -127,23 +116,27 @@ public class CreateRideActivity extends BaseActivity implements DatePickerCallBa
         TimePickerUtils.openTimePicker(CreateRideActivity.this, CreateRideActivity.this);
     }
 
-    @OnClick(R.id.et_home_loc)
+    @OnClick(R.id.et_start_loc)
     public void onClickOfFromLocEditText() {
-
+        Intent nextActivity = new Intent(this, PreferredCityActivity.class);
+        nextActivity.putExtra(IntentConstants.IS_FROM_CREATE_RIDE, true);
+        startActivityForResult(nextActivity, startLocation);
     }
 
-    @OnClick(R.id.et_office_loc)
+    @OnClick(R.id.et_drop_loc)
     public void onClickOfToLocEditText() {
+        Intent nextActivity = new Intent(this, PreferredCityActivity.class);
+        nextActivity.putExtra(IntentConstants.IS_FROM_CREATE_RIDE, true);
+        startActivityForResult(nextActivity, endLocation);
 
     }
 
     @OnClick(R.id.btn_book_ride)
     public void bookRide() {
-//        CreateRideRequestModel createRideRequestModel=getRideDetails();
-//        if (checkNetworkAvailableWithoutError() && validate()) {
-//            showProgressDialog(AppConstants.PLEASE_WAIT, false);
-//            createRideViewModel.getCreateRideRepository().createRide(createRideViewModel.getCreateRideMld(),createRideRequestModel);
-//        }
+        if (checkNetworkAvailableWithoutError() && validate()) {
+            showProgressDialog(AppConstants.PLEASE_WAIT, false);
+            createRideViewModel.getCreateRideRepository().createRide(createRideViewModel.getCreateRideMld(), getRideDetails());
+        }
 
     }
 
@@ -162,46 +155,54 @@ public class CreateRideActivity extends BaseActivity implements DatePickerCallBa
 
     }
 
-    private boolean validate(){
-//        if(rideTypeRg.i)
-        if(vehicleTypeSP.getSelectedItemPosition()==0){
+    private boolean validate() {
+        if (vehicleTypeSP.getSelectedItemPosition() == 0) {
             showMandatoryError(R.string.vehicle_type, this);
             return false;
-        }else if(dateOfJourneyET.getText().toString().isEmpty()){
+        } else if (dateOfJourneyET.getText().toString().isEmpty()) {
             return false;
-        }else if(timeOfJourneyET.getText().toString().isEmpty()){
+        } else if (timeOfJourneyET.getText().toString().isEmpty()) {
             showMandatoryError(R.string.time_of_journey_hint, this);
             return false;
-        }else if(agencyMobNoET.getText().toString().trim().isEmpty()){
-            showMandatoryError(R.string.agency_number_hint, this);
-            return false;
-        }else if(tripModeET.getText().toString().trim().isEmpty()){
-            showMandatoryError(R.string.trip_mode_hint, this);
-            return false;
-        }else if(distanceET.getText().toString().trim().isEmpty()){
+        } else if (distanceET.getText().toString().trim().isEmpty()) {
             showMandatoryError(R.string.distance_hint, this);
             return false;
-        }else if(costOfTripET.getText().toString().trim().isEmpty()){
+        } else if (costOfTripET.getText().toString().trim().isEmpty()) {
             showMandatoryError(R.string.cost_of_trip_hint, this);
             return false;
         }
         return true;
     }
 
-//    private CreateRideRequestModel getRideDetails(){
-//        CreateRideRequestModel rideRequestModel=new CreateRideRequestModel();
-//        rideRequestModel.setCarType(((VehicleTypeModel) vehicleTypeSP.getSelectedItem()).getType());
-//        rideRequestModel.setAgencyId(appPreferences.getUserDetails().uuId);
-//        rideRequestModel.setAgencyMobileNo(agencyMobNoET.getText().toString().trim());
-//        rideRequestModel.setCost(Integer.parseInt(costOfTripET.getText().toString().trim()));
-//        rideRequestModel.setDistance(Integer.parseInt(distanceET.getText().toString()));
-//        //TODO:
-//        rideRequestModel.setFromCity(fromLocET.getText().toString());
-//        rideRequestModel.setToCity(toLocET.getText().toString());
-//        rideRequestModel.setRideType(oneWayRb.isChecked() ?"OneWay":"Return");
-//        rideRequestModel.setStatus("New");
-//        rideRequestModel.setPickupTime();
-//
-//        return rideRequestModel;
-//    }
+    private CreateRideRequestModel getRideDetails() {
+        CreateRideRequestModel rideRequestModel = new CreateRideRequestModel();
+        rideRequestModel.setCarType(((VehicleTypeModel) vehicleTypeSP.getSelectedItem()).getType());
+        rideRequestModel.setAgencyMobileNo(appPreferences.getUserDetails().mobileNo);
+        rideRequestModel.setCost(Integer.parseInt(costOfTripET.getText().toString().trim()));
+        rideRequestModel.setDistance(Integer.parseInt(distanceET.getText().toString()));
+        rideRequestModel.setFromCity(fromCity);
+        rideRequestModel.setToCity(toCity);
+        rideRequestModel.setRideType((rideTypeRg.getCheckedRadioButtonId() == R.id.rb_one_way) ? AppConstants.ONE_WAY : AppConstants.TWO_WAY);
+        rideRequestModel.setPickupTime("1234");
+        rideRequestModel.setDropTime("1234");
+
+        return rideRequestModel;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            CityModel cityModel = (CityModel) Objects.requireNonNull(data).getSerializableExtra(IntentConstants.PREFERRED_CITY);
+            if(requestCode == startLocation) {
+                fromLocET.setText(cityModel.getName());
+                fromCity = cityModel;
+            } else {
+                toLocET.setText(cityModel.getName());
+                toCity = cityModel;
+            }
+        }
+
+
+    }
 }

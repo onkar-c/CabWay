@@ -67,11 +67,10 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_gravity="center_vertical"
-                    android:layout_toEndOf="@id/ll_route_images"
-                    android:layout_toStartOf="@+id/iv_reverse_image">
+                    android:layout_toEndOf="@id/ll_route_images">
 
                     <EditText
-                        android:id="@+id/et_home_loc"
+                        android:id="@+id/et_start_loc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="15dp"
@@ -82,7 +81,10 @@
                         android:textColor="@android:color/black"
                         android:textSize="16sp"
                         tools:ignore="Autofill"
-                        android:gravity="center_vertical"/>
+                        android:gravity="center_vertical"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="true"/>
 
                     <View
                         android:id="@+id/divider"
@@ -94,7 +96,7 @@
 
 
                     <EditText
-                        android:id="@+id/et_office_loc"
+                        android:id="@+id/et_drop_loc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
@@ -107,18 +109,14 @@
                         android:textColor="@android:color/black"
                         android:textSize="16sp"
                         tools:ignore="Autofill"
-                        android:gravity="center_vertical"/>
+                        android:gravity="center_vertical"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="true"/>
 
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/iv_reverse_image"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/ic_reverse"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"/>
+
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
@@ -147,6 +145,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/one_way_ride"
                 android:layout_margin="5dp"
+                android:checked="true"
                 android:textSize="@dimen/small_text"
                 android:layout_weight="1"
                 android:textStyle="normal"/>
@@ -226,53 +225,13 @@
                 android:focusableInTouchMode="false"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/il_agency_mobile_no"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/il_time_of_journey"
-            android:layout_marginTop="10dp"
-            android:textColorHint="@android:color/darker_gray">
-
-            <EditText
-                android:id="@+id/et_agency_mob_no"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/agency_number_hint"
-                android:inputType="number"
-                android:maxLines="1"
-                android:maxLength="10"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/small_text"
-                tools:ignore="Autofill,TextFields" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/il_trip_mode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/il_agency_mobile_no"
-            android:layout_marginTop="10dp"
-            android:textColorHint="@android:color/darker_gray">
-
-            <EditText
-                android:id="@+id/et_trip_mode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/trip_mode_hint"
-                android:inputType="number"
-                android:maxLines="1"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/small_text"
-                tools:ignore="Autofill,TextFields" />
-        </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/il_distance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/il_trip_mode"
+            android:layout_below="@id/il_time_of_journey"
             android:layout_marginTop="10dp"
             android:textColorHint="@android:color/darker_gray">
 

@@ -1,6 +1,8 @@
 package com.example.core.CommonModels;
 
-public class CityModel {
+import java.io.Serializable;
+
+public class CityModel implements Serializable {
 
     private int cityId;
     private String name;
