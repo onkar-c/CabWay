@@ -187,7 +187,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         userModel.mobileNo = etPhone.getText().toString();
         userModel.address = etAddress.getText().toString();
         userModel.email = etEmail.getText().toString();
-        userModel.cityCode = String.valueOf(selectedCity.getCityId());
+        userModel.cityCode = selectedCity;
         userModel.pinCode = etPincode.getText().toString();
         userModel.role = (type.getCheckedRadioButtonId() == R.id.agency) ? AppConstants.AGENCY : AppConstants.DRIVER;
         return userModel;

@@ -98,6 +98,5 @@ public class ApiExecutor {
 
     public static void updatePreferredCity(final MutableLiveData<JsonResponse> mltPreferredCityResponse, CityModel cityModel) {
         RequestExecutor.ExecuteApi(getApiInterface().updatePreferredCity(cityModel), mltPreferredCityResponse);
-
     }
 }

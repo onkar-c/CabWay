@@ -4,6 +4,7 @@ import com.example.core.CommonModels.CityModel;
 import com.example.core.CommonModels.DocumentModel;
 import com.example.core.CommonModels.StateModel;
 import com.example.core.CommonModels.UserModel;
+import com.example.core.CommonModels.VehicleTypeModel;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -27,7 +28,8 @@ public class JsonResponse implements Serializable {
     private List<StateModel> stateList;
     @SerializedName("cityList")
     private List<CityModel> cityList;
-
+    @SerializedName("carType")
+    private List<VehicleTypeModel> vehicleList;
 
 
     public List<HeroesModel> getHeroesList() {
@@ -68,5 +70,13 @@ public class JsonResponse implements Serializable {
 
     public List<CityModel> getCityList() {
         return cityList;
+    }
+
+    public List<VehicleTypeModel> getVehicleList() {
+        return vehicleList;
+    }
+
+    public void setVehicleList(List<VehicleTypeModel> vehicleList) {
+        this.vehicleList = vehicleList;
     }
 }

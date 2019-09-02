@@ -41,7 +41,8 @@ public class SplashScreenActivity extends BaseActivity {
                     appPreferences.setCityList(stateCityResponse.getCityList());
                 if (stateCityResponse.getStateList() != null)
                     appPreferences.setStateList(stateCityResponse.getStateList());
-
+                if(stateCityResponse.getVehicleList() !=null)
+                    appPreferences.setVehicleList(stateCityResponse.getVehicleList());
                 new Handler().postDelayed(SplashScreenActivity.this::startDashboardActivity, 500);
             } else {
                 Toast.makeText(SplashScreenActivity.this, stateCityResponse.getMessage(), Toast.LENGTH_SHORT).show();

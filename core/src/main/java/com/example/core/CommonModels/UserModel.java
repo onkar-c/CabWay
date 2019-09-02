@@ -12,7 +12,7 @@ public class UserModel implements Serializable {
     public String address;
     public String email;
     public String role;
-    public String cityCode;
+    public CityModel cityCode;
     public String pinCode;
     public CityModel cityPreferences;
     public boolean documentCompleted;

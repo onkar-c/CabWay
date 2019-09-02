@@ -79,11 +79,11 @@ public class TextValidationUtils {
 
     public static boolean validateAdharCard(Context pContext, DocumentModel pAdharCardDoc) {
         if (pAdharCardDoc.getNameOnDocument().trim().isEmpty()) {
-            showMandatoryErrorUsingString("Valid" + pContext.getString(R.string.name_on_document), pContext);
+            showMandatoryErrorUsingString("Valid " + pContext.getString(R.string.name_on_document), pContext);
             return false;
         } else if (pAdharCardDoc.getDocumentNumber().trim().isEmpty() ||
                 pAdharCardDoc.getDocumentNumber().length() != 12 ) {
-            showMandatoryErrorUsingString("Valid" + pContext.getString(R.string.registration_number), pContext);
+            showMandatoryErrorUsingString("Valid " + pContext.getString(R.string.registration_number), pContext);
             return false;
         }
         return true;
@@ -91,25 +91,22 @@ public class TextValidationUtils {
 
     public static boolean validateDrivingLicense(Context pContext, DocumentModel pDrivingLicenceDoc) {
         if (pDrivingLicenceDoc.getNameOnDocument().trim().isEmpty()) {
-            showMandatoryErrorUsingString("Valid" + pContext.getString(R.string.name_on_document), pContext);
+            showMandatoryErrorUsingString("Valid " + pContext.getString(R.string.name_on_document), pContext);
             return false;
         } else if (pDrivingLicenceDoc.getDocumentNumber().trim().isEmpty() ||
-                (pDrivingLicenceDoc.getDocumentNumber().length() >= 13 && pDrivingLicenceDoc.getDocumentNumber().length() <=15) ) {
-            showMandatoryErrorUsingString("Valid" + pContext.getString(R.string.registration_number), pContext);
+                (pDrivingLicenceDoc.getDocumentNumber().length() < 13 || pDrivingLicenceDoc.getDocumentNumber().length() >15) ) {
+            showMandatoryErrorUsingString("Valid " + pContext.getString(R.string.registration_number), pContext);
             return false;
         } else if (pDrivingLicenceDoc.getVehicleType().trim().isEmpty()) {
-            showMandatoryErrorUsingString("Valid" + pContext.getString(R.string.vehicle_type), pContext);
+            showMandatoryErrorUsingString("Valid " + pContext.getString(R.string.vehicle_type), pContext);
             return false;
         }
         return true;
     }
 
     public static boolean validateVehicleRegistration(Context pContext, DocumentModel pVehicleRegistration) {
-        if (pVehicleRegistration.getVehicleType().trim().isEmpty()) {
-            showMandatoryErrorUsingString("Valid" + pContext.getString(R.string.vehicle_type), pContext);
-            return false;
-        } else if (pVehicleRegistration.getDocumentNumber().trim().isEmpty()) {
-            showMandatoryErrorUsingString("Valid" + pContext.getString(R.string.vehicle_registration), pContext);
+         if (pVehicleRegistration.getDocumentNumber().trim().isEmpty()) {
+            showMandatoryErrorUsingString("Valid " + pContext.getString(R.string.vehicle_registration), pContext);
             return false;
         }
         return true;
@@ -117,10 +114,10 @@ public class TextValidationUtils {
 
     public static boolean validateVehicleInsurance(Context pContext, DocumentModel pVehicleInsurance) {
         if (pVehicleInsurance.getNameOnDocument().trim().isEmpty()) {
-            showMandatoryErrorUsingString("Valid" + pContext.getString(R.string.name_on_document), pContext);
+            showMandatoryErrorUsingString("Valid " + pContext.getString(R.string.name_on_document), pContext);
             return false;
         } else if (pVehicleInsurance.getDocumentNumber().trim().isEmpty()) {
-            showMandatoryErrorUsingString("Valid" + pContext.getString(R.string.registration_number), pContext);
+            showMandatoryErrorUsingString("Valid " + pContext.getString(R.string.registration_number), pContext);
             return false;
         }
         return true;
@@ -128,16 +125,15 @@ public class TextValidationUtils {
 
     public static boolean validateVehiclePermit(Context pContext, DocumentModel pVehiclePermit) {
         if (pVehiclePermit.getNameOnDocument().trim().isEmpty()) {
-            showMandatoryErrorUsingString("Valid" + pContext.getString(R.string.name_on_document), pContext);
+            showMandatoryErrorUsingString("Valid " + pContext.getString(R.string.name_on_document), pContext);
             return false;
         } else if (pVehiclePermit.getNameOnDocument().trim().isEmpty()) {
-            showMandatoryErrorUsingString("Valid" + pContext.getString(R.string.vehicle_name), pContext);
+            showMandatoryErrorUsingString("Valid " + pContext.getString(R.string.vehicle_name), pContext);
             return false;
         } else if (pVehiclePermit.getDocumentNumber().trim().isEmpty()) {
-            showMandatoryErrorUsingString("Valid" + pContext.getString(R.string.registration_number), pContext);
+            showMandatoryErrorUsingString("Valid " + pContext.getString(R.string.registration_number), pContext);
             return false;
         }
         return true;
     }
-
 }

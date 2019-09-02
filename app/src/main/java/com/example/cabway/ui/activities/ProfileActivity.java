@@ -105,11 +105,10 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
             etPincode.setText(user.pinCode);
             etRole.setText(user.role);
             spState.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.STATE, 0, spState));
-            spState.setSelection(SpinnerUtils.getStatePosition((SpinnerUtils.getStateOfCity(Integer.parseInt(user.cityCode)).getId())));
+            spState.setSelection(SpinnerUtils.getStatePosition((SpinnerUtils.getStateOfCity(user.cityCode.getCityId()).getId())));
             spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, 0, spCity));
-            spCity.setSelection(SpinnerUtils.getCityPosition(Integer.parseInt(user.cityCode),(SpinnerUtils.getStateOfCity(Integer.parseInt(user.cityCode)).getId())));
+            spCity.setSelection(SpinnerUtils.getCityPosition(user.cityCode.getCityId(),(SpinnerUtils.getStateOfCity(user.cityCode.getCityId()).getId())));
             ImageUtils.setImageFromUrl(this, user.profileImage, ivProfile);
-            //TODO:spState.setSelection(SpinnerUtils.getStateData(user.));
         }
         toggleUi(false);
     }
@@ -145,7 +144,7 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
         userModel.lastName = etLName.getText().toString();
         userModel.address = etAddress.getText().toString();
         userModel.email = etEmail.getText().toString();
-        userModel.cityCode = String.valueOf(selectedCity.getCityId());
+        userModel.cityCode = selectedCity;
         userModel.pinCode = etPincode.getText().toString();
         return userModel;
     }
@@ -237,7 +236,7 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
             if (((StateModel) data).getId() != -1) {
                 spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, ((StateModel) data).getId(), spCity));
                 if (user != null) {
-                    spCity.setSelection(SpinnerUtils.getCityPosition(Integer.parseInt(user.cityCode),(SpinnerUtils.getStateOfCity(Integer.parseInt(user.cityCode)).getId())));
+                    spCity.setSelection(SpinnerUtils.getCityPosition(user.cityCode.getCityId(),(SpinnerUtils.getStateOfCity(user.cityCode.getCityId()).getId())));
                 }
             }
         } else if (data instanceof CityModel) {

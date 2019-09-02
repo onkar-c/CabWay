@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.cabway.R;
 import com.example.core.CommonModels.VehicleTypeModel;
+import com.example.core.Utills.AppPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +32,10 @@ public class CarTypeSpinnerAdapter extends ArrayAdapter implements AdapterView.O
         this.mContext = context;
         this.dataList = new ArrayList<>();
         this.dataList = dataList;
-        //TODO:Remove
-        dataList.addAll(getVehicleTypeList());
+        VehicleTypeModel vehicleTypeModel=new VehicleTypeModel();
+        vehicleTypeModel.setType("Select Vehicle Type");
+        dataList.add(vehicleTypeModel);
+        dataList.addAll(AppPreferences.getInstance().getVehicleTypeList());
         this.itemSelectedCallback = (TypeSelectedCallback) context;
         spinner.setOnItemSelectedListener(this);
     }
@@ -120,18 +123,6 @@ public class CarTypeSpinnerAdapter extends ArrayAdapter implements AdapterView.O
 
     public interface TypeSelectedCallback {
         void sendTypeOnSelection(VehicleTypeModel data);
-    }
-
-    private static List<VehicleTypeModel> getVehicleTypeList(){
-        List<VehicleTypeModel> vehicleTypeModels =new ArrayList<>();
-        for(int i=0;i<4;i++){
-            VehicleTypeModel vehicleTypeModel = new VehicleTypeModel();
-            vehicleTypeModel.setType("Sedan");
-            vehicleTypeModel.setCarImageUrl("R.drawable.ic_add_image");
-            vehicleTypeModels.add(vehicleTypeModel);
-        }
-
-        return vehicleTypeModels;
     }
 
 }

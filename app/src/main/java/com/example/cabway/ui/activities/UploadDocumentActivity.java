@@ -113,7 +113,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
         toggleAllFields(false);
         etDocNumber.setText(document.getDocumentNumber());
         etNameOnDoc.setText(document.getNameOnDocument());
-        //TODO:spVehicleType.setText(document.getVehicleType());
+        spVehicleType.setSelection(CarTypeSpinnerUtils.getVehicleTypePosition(document.getVehicleType()));
         spState.setSelection(SpinnerUtils.getStatePositionByName(document.getStateName()));
         etGstNumber.setText(document.getGstNumber());
         tvIssuedDate.setText(document.getIssueDate());
@@ -213,7 +213,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
         if (tilGstNumber.getVisibility() == View.VISIBLE)
             documentModel.setGstNumber(etGstNumber.getText().toString());
         if (spVehicleType.getVisibility() == View.VISIBLE)
-            //TODO:documentModel.setVehicleType(spVehicleType.getText().toString());
+            documentModel.setVehicleType(((VehicleTypeModel)spVehicleType.getSelectedItem()).getType());
         if (llIssuedDate.getVisibility() == View.VISIBLE)
             documentModel.setIssueDate(tvIssuedDate.getText().toString());
         if (llExpiryDate.getVisibility() == View.VISIBLE)
