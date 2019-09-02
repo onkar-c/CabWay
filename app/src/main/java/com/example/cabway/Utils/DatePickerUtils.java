@@ -4,11 +4,14 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 
 import com.example.cabway.ui.Interfaces.DatePickerCallBackInterface;
+import com.example.database.Utills.AppConstants;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+
 
 public class DatePickerUtils {
 
@@ -37,6 +40,10 @@ public class DatePickerUtils {
         datePickerDialog.show();
     }
 
+
+    public static String getDateTimeToDisplay(Date date){
+        return new SimpleDateFormat(AppConstants.DATE_TIME_FORMAT_FOR_DISPLAY, Locale.ENGLISH).format(date);
+  }
     public static String convertDate(String inputDate){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         SimpleDateFormat output = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -49,4 +56,16 @@ public class DatePickerUtils {
         return output.format(d);
     }
 
+    public static String getDateTimeForApiReq(String dateStr){
+        String str = null;
+
+        try {
+            Date date = new SimpleDateFormat(AppConstants.DATE_TIME_FORMAT_FOR_DISPLAY,Locale.ENGLISH).parse(dateStr);
+            str = new SimpleDateFormat(AppConstants.DATE_TIME_FORMAT_FOR_REQUEST,Locale.ENGLISH).format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return str;
+        //return new SimpleDateFormat(AppConstants.DATE_TIME_FORMAT_FOR_REQUEST, Locale.ENGLISH).format(date);
+    }
 }

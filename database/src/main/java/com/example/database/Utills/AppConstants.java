@@ -11,7 +11,8 @@ public class AppConstants {
     public static final String ERROR = "error";
     public static final String PLEASE_WAIT = "Please Wait...";
     public static final String TIME_FORMAT="hh:mm a";
-    public static final String TIME_FORMAT_FOR_REQUEST="yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+    public static final String DATE_TIME_FORMAT_FOR_REQUEST="yyyy-MM-dd'T'HH:mm:ss";
+    public static final String DATE_TIME_FORMAT_FOR_DISPLAY="dd-MM-yyyy hh:mm a";
     public static final String FORGOT_PASSWORD_OTP_TYPE = "Reset";
     public static final String REGISTRATION_OTP_TYPE = "Request";
     public static final String FILE_TYPE = "multipart/form-data";
