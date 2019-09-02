@@ -1,26 +1,24 @@
 package com.example.cabway.ui.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.example.cabway.R;
-import com.example.cabway.ui.Interfaces.RecyclerViewItemClickListener;
-import com.example.cabway.ui.activities.DashBoardActivity;
-import com.example.cabway.ui.activities.DriverRideDetailPage;
-import com.example.cabway.ui.adapter.RidesListAdapter;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import com.example.cabway.R;
+import com.example.cabway.ui.activities.DashBoardActivity;
+import com.example.cabway.ui.adapter.RidesListAdapter;
+import com.example.core.responseModel.RideResponseModel;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -29,13 +27,13 @@ import butterknife.ButterKnife;
 
 public class OnGoingRidesFragment extends Fragment {
 
+    public RidesListAdapter ridesListAdapter;
     @BindView(R.id.availableRidesList)
     RecyclerView availableRidesList;
     @BindView(R.id.no_data_available)
     RelativeLayout noDataAvailable;
     private DashBoardActivity activityContext;
-    private List<String> data;
-    private RecyclerViewItemClickListener ridesViewItemClickListener = (v, position) -> startActivity(new Intent(activityContext, DriverRideDetailPage.class));
+    private List<RideResponseModel> rides;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -43,17 +41,19 @@ public class OnGoingRidesFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_ongoing_rides, container, false);
         ButterKnife.bind(this, root);
         activityContext = (DashBoardActivity) getActivity();
+        rides = Objects.requireNonNull(activityContext).onGoingRides;
+        setRidesList();
         return root;
     }
 
     private void setRidesList() {
-        if(data == null || data.size() == 0){
+        if (rides == null || rides.size() == 0) {
             noDataAvailable.setVisibility(View.VISIBLE);
         } else {
             noDataAvailable.setVisibility(View.GONE);
             LinearLayoutManager layoutManager = new LinearLayoutManager(activityContext);
             availableRidesList.setLayoutManager(layoutManager);
-            RidesListAdapter ridesListAdapter = new RidesListAdapter(activityContext, data, ridesViewItemClickListener);
+            ridesListAdapter = new RidesListAdapter(activityContext, rides);
             availableRidesList.setAdapter(ridesListAdapter);
         }
     }
@@ -63,7 +63,6 @@ public class OnGoingRidesFragment extends Fragment {
         super.onAttach(context);
         Log.i("fragment", "onAttach");
     }
-
 
 
     @Override
@@ -87,9 +86,6 @@ public class OnGoingRidesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        data = new ArrayList<>();
-        data.add(Objects.requireNonNull(activityContext).getMenu_items().get(0));
-        setRidesList();
         Log.i("fragment", "onResume");
     }
 
