@@ -1,13 +1,10 @@
 package com.example.cabway.ui.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cabway.R;
-import com.example.cabway.Utils.IntentConstants;
-import com.example.cabway.ui.Interfaces.RecyclerViewItemClickListener;
 import com.example.cabway.ui.adapter.RidesListAdapter;
 
 import java.util.ArrayList;
@@ -20,11 +17,6 @@ public class HistoryListActivity extends BaseActivity {
     RecyclerView ridesHistoryList;
 
     RidesListAdapter ridesListAdapter;
-    RecyclerViewItemClickListener ridesViewItemClickListener = (v, position) -> {
-        Intent nextActivity = new Intent(HistoryListActivity.this, DriverRideDetailPage.class);
-        nextActivity.putExtra(IntentConstants.IS_FROM_HISTORY, true);
-        HistoryListActivity.this.startActivity(nextActivity);
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +30,7 @@ public class HistoryListActivity extends BaseActivity {
     private void setRidesList() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         ridesHistoryList.setLayoutManager(layoutManager);
-        ridesListAdapter = new RidesListAdapter(this, new ArrayList<>(), ridesViewItemClickListener);
+        ridesListAdapter = new RidesListAdapter(this, new ArrayList<>());
         ridesHistoryList.setAdapter(ridesListAdapter);
     }
 }

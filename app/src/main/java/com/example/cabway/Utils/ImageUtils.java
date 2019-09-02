@@ -104,7 +104,7 @@ public class ImageUtils {
 
                     @Override
                     public void onError(Exception e) {
-                        Toast.makeText(context,"Failed to Load Image",Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context,"Failed to Load Image",Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
                     }
                 });
@@ -123,7 +123,7 @@ public class ImageUtils {
 
                     @Override
                     public void onError(Exception e) {
-                        Toast.makeText(context,"Failed to Load Image",Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context,"Failed to Load Image",Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
                     }
                 });

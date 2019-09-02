@@ -31,6 +31,13 @@ public class JsonResponse implements Serializable {
     @SerializedName("carType")
     private List<VehicleTypeModel> vehicleList;
 
+    @SerializedName("rideList")
+    private List<RideResponseModel> rideList;
+    @SerializedName("acceptedRideList")
+    private List<RideResponseModel> acceptedRideList;
+    @SerializedName("requestedRideList")
+    private List<RideResponseModel> requestedRideList;
+
 
     public List<HeroesModel> getHeroesList() {
         return heroesList;
@@ -78,5 +85,17 @@ public class JsonResponse implements Serializable {
 
     public void setVehicleList(List<VehicleTypeModel> vehicleList) {
         this.vehicleList = vehicleList;
+    }
+
+    public List<RideResponseModel> getRideList() {
+        return rideList;
+    }
+
+    public List<RideResponseModel> getAcceptedRideList() {
+        return acceptedRideList;
+    }
+
+    public List<RideResponseModel> getRequestedRideList() {
+        return requestedRideList;
     }
 }

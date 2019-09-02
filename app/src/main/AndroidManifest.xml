@@ -78,7 +78,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.activities.DriverRideDetailPage"
+            android:name=".ui.activities.RideDetailPage"
             android:label="@string/ride_details"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />

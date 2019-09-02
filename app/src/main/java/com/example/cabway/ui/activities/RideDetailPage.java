@@ -9,14 +9,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cabway.R;
+import com.example.cabway.Utils.DatePickerUtils;
+import com.example.cabway.Utils.ImageUtils;
 import com.example.cabway.Utils.IntentConstants;
+import com.example.core.responseModel.RideResponseModel;
 import com.example.database.Utills.AppConstants;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DriverRideDetailPage extends BaseActivity {
+public class RideDetailPage extends BaseActivity {
 
     @BindView(R.id.agencyName)
     TextView tvAgencyName;
@@ -40,9 +43,8 @@ public class DriverRideDetailPage extends BaseActivity {
     ImageView ivProfileImage;
     @BindView(R.id.call_agency)
     Button btCall;
-
+    RideResponseModel ride;
     private boolean isFromHistory = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +57,23 @@ public class DriverRideDetailPage extends BaseActivity {
     }
 
     private void setUi() {
+
+        tvAgencyName.setText(String.format("%s %s", ride.getAgency().getFirstName(), ride.getAgency().getLastName()));
+        tvRideDate.setText(DatePickerUtils.convertDate(ride.getPickupTime()));
+        tvRideTime.setText(DatePickerUtils.convertDate(ride.getDropTime()));
+        tvCarType.setText(ride.getCarType());
+        tvTripMode.setText(ride.getRideType());
+        tvAgencyNumber.setText(ride.getAgency().getMobileNo());
+        tvKm.setText(String.format("%s ", ride.getDistance().toString()));
+        tvStartLocation.setText(ride.getFromCity().getName());
+        tvDestinationLocation.setText(ride.getToCity().getName());
+        ImageUtils.setImageFromUrl(this, ride.getAgency().getProfileImage(), ivProfileImage);
         btCall.setVisibility((isFromHistory) ? View.GONE : View.VISIBLE);
     }
 
     private void getDataFromExtras() {
         isFromHistory = getIntent().getBooleanExtra(IntentConstants.IS_FROM_HISTORY, false);
+        ride = (RideResponseModel) getIntent().getSerializableExtra(IntentConstants.RIDE);
     }
 
     @OnClick(R.id.call_agency)

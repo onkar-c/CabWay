@@ -5,7 +5,10 @@ import android.content.Context;
 
 import com.example.cabway.ui.Interfaces.DatePickerCallBackInterface;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class DatePickerUtils {
 
@@ -34,5 +37,16 @@ public class DatePickerUtils {
         datePickerDialog.show();
     }
 
+    public static String convertDate(String inputDate){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        SimpleDateFormat output = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date d = null;
+        try {
+            d = sdf.parse(inputDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return output.format(d);
+    }
 
 }

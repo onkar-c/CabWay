@@ -19,7 +19,7 @@ import com.example.cabway.Utils.TimePickerUtils;
 import com.example.cabway.ui.Interfaces.DatePickerCallBackInterface;
 import com.example.cabway.ui.Interfaces.TimePickerCallBackInterface;
 import com.example.cabway.ui.adapter.CarTypeSpinnerAdapter;
-import com.example.cabway.viewModels.CreateRideViewModel;
+import com.example.cabway.viewModels.RidesViewModel;
 import com.example.core.CommonModels.CityModel;
 import com.example.core.CommonModels.VehicleTypeModel;
 import com.example.core.requestModels.CreateRideRequestModel;
@@ -70,7 +70,7 @@ public class CreateRideActivity extends BaseActivity implements DatePickerCallBa
     @BindView(R.id.rg_ride_type)
     RadioGroup rideTypeRg;
 
-    CreateRideViewModel createRideViewModel;
+    RidesViewModel ridesViewModel;
 
     CityModel fromCity, toCity;
     public final int startLocation = 1;
@@ -83,14 +83,14 @@ public class CreateRideActivity extends BaseActivity implements DatePickerCallBa
         setContentView(R.layout.activity_create_ride);
         ButterKnife.bind(this);
         setUpActionBar();
-        createRideViewModel = ViewModelProviders.of(this).get(CreateRideViewModel.class);
-        createRideViewModel.init();
+        ridesViewModel = ViewModelProviders.of(this).get(RidesViewModel.class);
+        ridesViewModel.init();
         setCreateRideObserver();
         setUpUi();
     }
 
     private void setCreateRideObserver() {
-        createRideViewModel.getCreateRideMld().observe(this, (JsonResponse createRideResponse) -> {
+        ridesViewModel.getCreateRideMld().observe(this, (JsonResponse createRideResponse) -> {
             removeProgressDialog();
             if (Objects.requireNonNull(createRideResponse).getStatus().equals(AppConstants.SUCCESS)) {
                 Toast.makeText(CreateRideActivity.this, createRideResponse.getMessage(), Toast.LENGTH_SHORT).show();
@@ -135,7 +135,7 @@ public class CreateRideActivity extends BaseActivity implements DatePickerCallBa
     public void bookRide() {
         if (checkNetworkAvailableWithoutError() && validate()) {
             showProgressDialog(AppConstants.PLEASE_WAIT, false);
-            createRideViewModel.getCreateRideRepository().createRide(createRideViewModel.getCreateRideMld(), getRideDetails());
+            ridesViewModel.getRidesRepository().createRide(ridesViewModel.getCreateRideMld(), getRideDetails());
         }
 
     }

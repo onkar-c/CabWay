@@ -58,11 +58,13 @@ public interface ApiInterface {
     @GET("cabinfo/cityList")
     Call<JsonResponse> getStateAndCity();
 
-
     @POST("ride/createRide")
     Call<JsonResponse> createRide(@Body CreateRideRequestModel createRideRequestModel);
 
     @PUT("users/cityPrefrence")
     Call<JsonResponse> updatePreferredCity(@Body CityModel cityModel);
+
+    @GET("ride/list")
+    Call<JsonResponse> getRides();
 
 }
