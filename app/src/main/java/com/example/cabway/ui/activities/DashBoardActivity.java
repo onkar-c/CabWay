@@ -3,26 +3,24 @@ package com.example.cabway.ui.activities;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cabway.R;
 import com.example.cabway.Utils.DialogUtils;
@@ -31,6 +29,8 @@ import com.example.cabway.ui.Interfaces.RecyclerViewItemClickListener;
 import com.example.cabway.ui.adapter.ProfileMenuAdapter;
 import com.example.core.CommonModels.UserModel;
 import com.example.database.Utills.AppConstants;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.Arrays;
 import java.util.List;
@@ -64,7 +64,9 @@ public class DashBoardActivity extends BaseActivity
     ImageView ivProfile;
 
     @BindView(R.id.main_action)
-    Button mainAction;
+    ImageButton mainAction;
+    @BindView(R.id.tod_description)
+    TextView top_description;
 
     ProfileMenuAdapter profileMenuAdapter;
     private List<String> menu_items;
@@ -87,7 +89,7 @@ public class DashBoardActivity extends BaseActivity
         setSupportActionBar(toolbar);
         setNavigationDrawerLayout();
         setUpFragments();
-        setData();
+
     }
 
     private void setUpFragments() {
@@ -104,8 +106,14 @@ public class DashBoardActivity extends BaseActivity
         UserModel user = appPreferences.getUserDetails();
         tvUserName.setText(String.format("%s %s", user.firstName, user.lastName));
         tvRole.setText(user.role);
-        mainAction.setText(getString((user.role.equals(AppConstants.AGENCY) ? R.string.create_ride : R.string.preferred_city)));
-        ImageUtils.setImageFromUrl(this,user.profileImage, ivProfile);
+        String textToDisplay;
+        if(user.role.equals(AppConstants.AGENCY))
+            textToDisplay = getString(R.string.create_new_ride);
+        else
+            textToDisplay = getString(R.string.preferred_city) + " : " + appPreferences.getUserDetails().cityPreferences.getName();
+
+        top_description.setText(textToDisplay);
+        ImageUtils.setImageFromUrl(this, user.profileImage, ivProfile);
     }
 
     private void setNavigationDrawerLayout() {
@@ -133,6 +141,12 @@ public class DashBoardActivity extends BaseActivity
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setData();
     }
 
     @Override
@@ -172,13 +186,13 @@ public class DashBoardActivity extends BaseActivity
     }
 
 
-    @OnClick(R.id.main_action)
+    @OnClick(R.id.top_view)
     public void performAction() {
         Intent nextActivity;
         if (appPreferences.getUserDetails().role.equals(AppConstants.AGENCY)) {
             nextActivity = new Intent(this, CreateRideActivity.class);
         } else {
-            nextActivity = new Intent(this, CreateRideActivity.class);
+            nextActivity = new Intent(this, PreferredCityActivity.class);
         }
         startActivity(nextActivity);
     }

@@ -20,6 +20,7 @@ import com.example.cabway.ui.activities.DashBoardActivity;
 import com.example.cabway.ui.activities.DriverRideDetailPage;
 import com.example.cabway.ui.adapter.RidesListAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -86,7 +87,8 @@ public class OnGoingRidesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        data = Objects.requireNonNull(activityContext).getMenu_items();
+        data = new ArrayList<>();
+        data.add(Objects.requireNonNull(activityContext).getMenu_items().get(0));
         setRidesList();
         Log.i("fragment", "onResume");
     }

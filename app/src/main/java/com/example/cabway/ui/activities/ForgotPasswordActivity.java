@@ -139,7 +139,7 @@ public class ForgotPasswordActivity extends BaseActivity implements Registration
     @OnClick(R.id.change_password)
     public void Change_password() {
         String newPassword = etNewPassword.getText().toString();
-        if (!TextValidationUtils.isValidPassword(newPassword, etConfirmPassword.getText().toString(), this)) {
+        if (TextValidationUtils.isValidPassword(newPassword, etConfirmPassword.getText().toString(), this)) {
             if (checkNetworkAvailableWithoutError()) {
                 forgotPasswordViewModel.getForgotPasswordRepository().resetPassword(forgotPasswordViewModel.getResetPasswordResponseMld(), mMobileNumber, newPassword);
                 showProgressDialog(AppConstants.PLEASE_WAIT, false);
