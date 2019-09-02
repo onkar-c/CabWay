@@ -13,6 +13,7 @@ import com.example.core.RequestExecutor;
 import com.example.core.Utills.FileUtils;
 import com.example.core.Utills.HeroUtils;
 import com.example.core.CommonModels.DocumentModel;
+import com.example.core.requestModels.CreateRideRequestModel;
 import com.example.core.requestModels.LoginRequestModel;
 import com.example.core.requestModels.ResetPasswordModel;
 import com.example.core.requestModels.VerifyOtpRequestModel;
@@ -90,7 +91,12 @@ public class ApiExecutor {
         RequestExecutor.ExecuteApi(getApiInterface().getStateAndCity(), mltStateCityResponse);
     }
 
+
+    public static void createRide(final MutableLiveData<JsonResponse> mltCreateRideResponse, CreateRideRequestModel createRideRequestModel) {
+        RequestExecutor.ExecuteApi(getApiInterface().createRide(createRideRequestModel), mltCreateRideResponse);
+
     public static void updatePreferredCity(final MutableLiveData<JsonResponse> mltPreferredCityResponse, CityModel cityModel) {
         RequestExecutor.ExecuteApi(getApiInterface().updatePreferredCity(cityModel), mltPreferredCityResponse);
+
     }
 }

@@ -78,6 +78,7 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
     private UserViewModel userViewModel;
     private boolean isEdit = false;
     private UserModel user;
+    private CityModel selectedCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,19 +96,21 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
 
         user = appPreferences.getUserDetails();
 
-        etFName.setText(user.firstName);
-        etLName.setText(user.lastName);
-        etPhoneNumber.setText(user.mobileNo);
-        etEmail.setText(user.email);
-        etAddress.setText(user.address);
-        etPincode.setText(user.pinCode);
-        etRole.setText(user.role);
-        spState.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.STATE, 0,spState));
-        spState.setSelection(SpinnerUtils.getStatePosition((SpinnerUtils.getStateOfCityByCityName(user.cityCode)).getId()));
-        spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, 0,spCity));
-        spCity.setSelection(SpinnerUtils.getCityPositionByName(user.cityCode));
-        ImageUtils.setImageFromUrl(this,user.profileImage,ivProfile);
-        //TODO:spState.setSelection(SpinnerUtils.getStateData(user.));
+        if (user != null) {
+            etFName.setText(user.firstName);
+            etLName.setText(user.lastName);
+            etPhoneNumber.setText(user.mobileNo);
+            etEmail.setText(user.email);
+            etAddress.setText(user.address);
+            etPincode.setText(user.pinCode);
+            etRole.setText(user.role);
+            spState.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.STATE, 0, spState));
+            spState.setSelection(SpinnerUtils.getStatePosition((SpinnerUtils.getStateOfCity(Integer.parseInt(user.cityCode)).getId())));
+            spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, 0, spCity));
+            spCity.setSelection(SpinnerUtils.getCityPosition(Integer.parseInt(user.cityCode),(SpinnerUtils.getStateOfCity(Integer.parseInt(user.cityCode)).getId())));
+            ImageUtils.setImageFromUrl(this, user.profileImage, ivProfile);
+            //TODO:spState.setSelection(SpinnerUtils.getStateData(user.));
+        }
         toggleUi(false);
     }
 
@@ -142,7 +145,7 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
         userModel.lastName = etLName.getText().toString();
         userModel.address = etAddress.getText().toString();
         userModel.email = etEmail.getText().toString();
-        userModel.cityCode = String.valueOf(SpinnerUtils.getCityData(spCity.getSelectedItemPosition()).getCityId());
+        userModel.cityCode = String.valueOf(selectedCity.getCityId());
         userModel.pinCode = etPincode.getText().toString();
         return userModel;
     }
@@ -184,7 +187,7 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
             if (!TextValidationUtils.isEmpty(filePath)) {
                 mFilePath = filePath;
                 //Toast.makeText(this, filePath, Toast.LENGTH_SHORT).show();
-                ImageUtils.setImageFromFilePath(this,mFilePath, ivProfile);
+                ImageUtils.setImageFromFilePath(this, mFilePath, ivProfile);
             }
         }
     }
@@ -231,10 +234,14 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
     @Override
     public <T> void sendDataOnSelection(T data) {
         if (data instanceof StateModel) {
-            if(((StateModel) data).getId() != -1){
+            if (((StateModel) data).getId() != -1) {
                 spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, ((StateModel) data).getId(), spCity));
+                if (user != null) {
+                    spCity.setSelection(SpinnerUtils.getCityPosition(Integer.parseInt(user.cityCode),(SpinnerUtils.getStateOfCity(Integer.parseInt(user.cityCode)).getId())));
+                }
             }
         } else if (data instanceof CityModel) {
+            selectedCity= (CityModel) data;
         }
     }
 }

@@ -94,8 +94,7 @@ public class TextValidationUtils {
             showMandatoryErrorUsingString("Valid" + pContext.getString(R.string.name_on_document), pContext);
             return false;
         } else if (pDrivingLicenceDoc.getDocumentNumber().trim().isEmpty() ||
-                pDrivingLicenceDoc.getDocumentNumber().length() != 13 ) {
-
+                (pDrivingLicenceDoc.getDocumentNumber().length() >= 13 && pDrivingLicenceDoc.getDocumentNumber().length() <=15) ) {
             showMandatoryErrorUsingString("Valid" + pContext.getString(R.string.registration_number), pContext);
             return false;
         } else if (pDrivingLicenceDoc.getVehicleType().trim().isEmpty()) {

@@ -1,6 +1,8 @@
 package com.example.core;
 
 
+
+import com.example.core.requestModels.CreateRideRequestModel;
 import com.example.core.CommonModels.CityModel;
 import com.example.core.requestModels.LoginRequestModel;
 import com.example.core.requestModels.ResetPasswordModel;
@@ -56,6 +58,11 @@ public interface ApiInterface {
     @GET("cabinfo/cityList")
     Call<JsonResponse> getStateAndCity();
 
+
+    @POST("ride/createRide")
+    Call<JsonResponse> createRide(@Body CreateRideRequestModel createRideRequestModel);
+
     @PUT("users/cityPrefrence")
     Call<JsonResponse> updatePreferredCity(@Body CityModel cityModel);
+
 }

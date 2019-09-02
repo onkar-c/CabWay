@@ -1,6 +1,6 @@
 package com.example.cabway.Utils;
 
-import android.content.Context;
+import android.app.Activity;
 
 import androidx.appcompat.widget.AppCompatSpinner;
 
@@ -72,11 +72,11 @@ public class SpinnerUtils {
         return null;
     }
 
-    public static int getCityPosition(int cityCode) {
-        List<CityModel> tempList = AppPreferences.getInstance().getCityList();
+    public static int getCityPosition(int cityCode,int stateCode) {
+        List<CityModel> tempList = getCityList(stateCode);
         for (int i = 0; i < tempList.size(); i++) {
             if (tempList.get(i).getCityId() == cityCode) {
-                return i + 1;//spinner list contains extra select element
+                return i ;//spinner list contains extra select element
             }
         }
         return 0;
@@ -86,7 +86,7 @@ public class SpinnerUtils {
         List<CityModel> tempList = AppPreferences.getInstance().getCityList();
         for (int i = 0; i < tempList.size(); i++) {
             if (tempList.get(i).getName().equalsIgnoreCase(cityName)) {
-                return i + 1;//spinner list contains extra select element
+                return i ;//spinner list contains extra select element
             }
         }
         return 0;
@@ -106,8 +106,8 @@ public class SpinnerUtils {
         return tempList.get((int) position - 1);
     }
 
-    public static CityModel getCityData(long position) {
-        List<CityModel> tempList = AppPreferences.getInstance().getCityList();
+    public static CityModel getCityData(long position,int stateCode) {
+        List<CityModel> tempList = getCityList(stateCode);
         return tempList.get((int) position - 1);
     }
 
@@ -120,7 +120,16 @@ public class SpinnerUtils {
         return 0;
     }
 
-    public static CitySpinnerAdapter setSpinnerAdapter(Context context, String type, int stateCode, AppCompatSpinner spinner) {
+    public static int getStatePositionByName(String stateName) {
+        List<StateModel> tempList = AppPreferences.getInstance().getStateList();
+        for (int j = 0; j < tempList.size(); j++) {
+            if (tempList.get(j).getName().equalsIgnoreCase(stateName))
+                return j + 1;
+        }
+        return 0;
+    }
+
+    public static CitySpinnerAdapter setSpinnerAdapter(Activity context, String type, int stateCode, AppCompatSpinner spinner) {
         if (type.equalsIgnoreCase(AppConstants.STATE)) {
             return new CitySpinnerAdapter<>(context,spinner, getStateList());
         } else if (type.equalsIgnoreCase(AppConstants.CITY)) {

@@ -2,14 +2,20 @@ package com.example.cabway.ui.activities;
 
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.lifecycle.ViewModelProviders;
+
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.cabway.Utils.CarTypeSpinnerUtils;
 import com.example.cabway.Utils.SpinnerUtils;
+import com.example.cabway.ui.adapter.CarTypeSpinnerAdapter;
 import com.example.cabway.ui.adapter.CitySpinnerAdapter;
 import com.example.core.CommonModels.StateModel;
+import com.example.core.CommonModels.VehicleTypeModel;
 import com.google.android.material.textfield.TextInputLayout;
+
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -40,14 +46,12 @@ import butterknife.OnClick;
 import static com.example.cabway.Utils.TextValidationUtils.showMandatoryError;
 import static com.example.cabway.Utils.TextValidationUtils.showMandatoryErrorUsingString;
 
-public class UploadDocumentActivity extends BaseActivity implements DatePickerCallBackInterface, CitySpinnerAdapter.ItemSelectedCallback {
+public class UploadDocumentActivity extends BaseActivity implements DatePickerCallBackInterface, CitySpinnerAdapter.ItemSelectedCallback, CarTypeSpinnerAdapter.TypeSelectedCallback {
 
     @BindView(R.id.il_doc_registration_number)
     TextInputLayout tilCardNumber;
     @BindView(R.id.il_name_of_doc)
     TextInputLayout tilNameOnDoc;
-    @BindView(R.id.il_vehicle_type)
-    TextInputLayout tilVehicleType;
     @BindView(R.id.il_gst_number)
     TextInputLayout tilGstNumber;
     @BindView(R.id.ll_issued_date_layout)
@@ -59,8 +63,10 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
     EditText etDocNumber;
     @BindView(R.id.et_name_on_doc)
     EditText etNameOnDoc;
-    @BindView(R.id.et_vehicle_type)
-    EditText etVehicleType;
+    @BindView(R.id.tv_vehicle_type_hint)
+    TextView tvVehicleTypeHint;
+    @BindView(R.id.sp_vehicle_type)
+    AppCompatSpinner spVehicleType;
     @BindView(R.id.tv_state_hint)
     TextView tvStateHint;
     @BindView(R.id.sp_state)
@@ -107,9 +113,8 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
         toggleAllFields(false);
         etDocNumber.setText(document.getDocumentNumber());
         etNameOnDoc.setText(document.getNameOnDocument());
-        etVehicleType.setText(document.getVehicleType());
-        //TODO: code /state name
-        spState.setSelection(SpinnerUtils.getStatePosition(Integer.parseInt(document.getStateName())));
+        //TODO:spVehicleType.setText(document.getVehicleType());
+        spState.setSelection(SpinnerUtils.getStatePositionByName(document.getStateName()));
         etGstNumber.setText(document.getGstNumber());
         tvIssuedDate.setText(document.getIssueDate());
         tvExpireDate.setText(document.getExpiryDate());
@@ -149,19 +154,23 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
             tilGstNumber.setVisibility(View.VISIBLE);
             llIssuedDate.setVisibility(View.VISIBLE);
         } else if (docType.equals(getString(R.string.driver_license))) {
-            tilVehicleType.setVisibility(View.VISIBLE);
+            tvVehicleTypeHint.setVisibility(View.VISIBLE);
+            spVehicleType.setVisibility(View.VISIBLE);
             llIssuedDate.setVisibility(View.VISIBLE);
         } else if (docType.equals(getString(R.string.vehicle_permit))) {
             tvStateHint.setVisibility(View.VISIBLE);
             spState.setVisibility(View.VISIBLE);
         } else if (docType.equals(getString(R.string.vehicle_registration))) {
             tilNameOnDoc.setVisibility(View.GONE);
-            tilVehicleType.setVisibility(View.VISIBLE);
+            tvVehicleTypeHint.setVisibility(View.VISIBLE);
+            spVehicleType.setVisibility(View.VISIBLE);
         } else if (docType.equals(getString(R.string.aadhar_card))) {
             llExpiryDate.setVisibility(View.GONE);
         }
         if (spState.getVisibility() == View.VISIBLE)
             spState.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.STATE, 0, spState));
+        if (spVehicleType.getVisibility() == View.VISIBLE)
+            spVehicleType.setAdapter(CarTypeSpinnerUtils.setSpinnerAdapter(this, spVehicleType));
 //        else if (docType.equals(getString(R.string.vehicle_insurance))) {
 //
 //        }
@@ -194,18 +203,17 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
         DocumentModel documentModel = new DocumentModel();
         documentModel.setDocumentNumber(etDocNumber.getText().toString());
         documentModel.setDocumentType(docType);
-        if (isFromLogin)
-            documentModel.setUuid(AppConstants.DEFAULT_ID);
+        documentModel.setUuid((isFromLogin) ? AppConstants.DEFAULT_ID : document.getUuid());
         documentModel.setUserId(appPreferences.getUserDetails().uuId);
         if (tilNameOnDoc.getVisibility() == View.VISIBLE) {
             documentModel.setNameOnDocument(etNameOnDoc.getText().toString());
         }
         if (spState.getVisibility() == View.VISIBLE)
-            documentModel.setStateName(SpinnerUtils.getStateDataByPosition(spState.getSelectedItemId()).getName());
+            documentModel.setStateName(((StateModel)spState.getSelectedItem()).getName());
         if (tilGstNumber.getVisibility() == View.VISIBLE)
             documentModel.setGstNumber(etGstNumber.getText().toString());
-        if (tilVehicleType.getVisibility() == View.VISIBLE)
-            documentModel.setVehicleType(etVehicleType.getText().toString());
+        if (spVehicleType.getVisibility() == View.VISIBLE)
+            //TODO:documentModel.setVehicleType(spVehicleType.getText().toString());
         if (llIssuedDate.getVisibility() == View.VISIBLE)
             documentModel.setIssueDate(tvIssuedDate.getText().toString());
         if (llExpiryDate.getVisibility() == View.VISIBLE)
@@ -235,7 +243,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
         } else if (tilGstNumber.getVisibility() == View.VISIBLE && TextUtils.isEmpty(etGstNumber.getText().toString())) {
             showMandatoryError(R.string.gst_number, this);
             return false;
-        } else if (tilVehicleType.getVisibility() == View.VISIBLE && TextUtils.isEmpty(etVehicleType.getText().toString())) {
+        } else if (spVehicleType.getVisibility() == View.VISIBLE && spVehicleType.getSelectedItemPosition()==0) {
             showMandatoryError(R.string.vehicle_type, this);
             return false;
         } else if (llIssuedDate.getVisibility() == View.VISIBLE && TextUtils.isEmpty(tvIssuedDate.getText().toString())) {
@@ -251,7 +259,6 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
         } else
             return true;
     }
-
 
     private boolean validateDocWise(DocumentModel document) {
         if (docType.equals(getResources().getString(R.string.aadhar_card))) {
@@ -325,7 +332,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
     private void toggleAllFields(boolean isEnabled) {
         etDocNumber.setEnabled(isEnabled);
         etNameOnDoc.setEnabled(isEnabled);
-        etVehicleType.setEnabled(isEnabled);
+        spVehicleType.setEnabled(isEnabled);
         spState.setEnabled(isEnabled);
         etGstNumber.setEnabled(isEnabled);
         tvIssuedDate.setEnabled(isEnabled);
@@ -337,8 +344,12 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
     }
 
     @Override
+    public void sendTypeOnSelection(VehicleTypeModel data) {
+        Log.e("Testing","Testing");
+    }
+
+    @Override
     public <T> void sendDataOnSelection(T data) {
-        if (data instanceof StateModel) {
-        }
+
     }
 }

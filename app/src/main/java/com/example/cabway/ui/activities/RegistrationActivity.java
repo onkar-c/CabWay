@@ -94,6 +94,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     private DialogOtp dialogOtp;
     private String mMobileNumber;
     private UserViewModel userViewModel;
+    private CityModel selectedCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,7 +187,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         userModel.mobileNo = etPhone.getText().toString();
         userModel.address = etAddress.getText().toString();
         userModel.email = etEmail.getText().toString();
-        userModel.cityCode = SpinnerUtils.getCityData(spCity.getSelectedItemPosition()).getName();
+        userModel.cityCode = String.valueOf(selectedCity.getCityId());
         userModel.pinCode = etPincode.getText().toString();
         userModel.role = (type.getCheckedRadioButtonId() == R.id.agency) ? AppConstants.AGENCY : AppConstants.DRIVER;
         return userModel;
@@ -283,6 +284,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         if (data instanceof StateModel) {
             spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, ((StateModel) data).getId(),spCity));
         } else if (data instanceof CityModel) {
+            selectedCity= (CityModel) data;
         }
     }
 
