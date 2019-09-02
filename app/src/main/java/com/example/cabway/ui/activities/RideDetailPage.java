@@ -12,6 +12,7 @@ import com.example.cabway.R;
 import com.example.cabway.Utils.DatePickerUtils;
 import com.example.cabway.Utils.ImageUtils;
 import com.example.cabway.Utils.IntentConstants;
+import com.example.cabway.Utils.TextValidationUtils;
 import com.example.core.responseModel.RideResponseModel;
 import com.example.database.Utills.AppConstants;
 
@@ -39,6 +40,8 @@ public class RideDetailPage extends BaseActivity {
     TextView tvStartLocation;
     @BindView(R.id.destination_location)
     TextView tvDestinationLocation;
+    @BindView(R.id.ride_cost)
+    TextView tvRideCost;
     @BindView(R.id.profile_image)
     ImageView ivProfileImage;
     @BindView(R.id.call_agency)
@@ -67,6 +70,7 @@ public class RideDetailPage extends BaseActivity {
         tvKm.setText(String.format("%s ", ride.getDistance().toString()));
         tvStartLocation.setText(ride.getFromCity().getName());
         tvDestinationLocation.setText(ride.getToCity().getName());
+        tvRideCost.setText(String.format("%s ", ride.getCost().toString()));
         ImageUtils.setImageFromUrl(this, ride.getAgency().getProfileImage(), ivProfileImage);
         btCall.setVisibility((isFromHistory) ? View.GONE : View.VISIBLE);
     }
@@ -78,8 +82,9 @@ public class RideDetailPage extends BaseActivity {
 
     @OnClick(R.id.call_agency)
     void callAgency() {
+        String mobileNumber = (TextValidationUtils.isEmpty(ride.getAgency().getMobileNo()) ? AppConstants.DUMMY_AGENCY_number : ride.getAgency().getMobileNo());
         Intent callIntent = new Intent(Intent.ACTION_DIAL);
-        callIntent.setData(Uri.parse("tel:" + AppConstants.DUMMY_AGENCY_number));
+        callIntent.setData(Uri.parse("tel:" + mobileNumber));
         startActivity(callIntent);
     }
 }

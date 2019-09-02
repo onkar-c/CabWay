@@ -203,7 +203,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
         DocumentModel documentModel = new DocumentModel();
         documentModel.setDocumentNumber(etDocNumber.getText().toString());
         documentModel.setDocumentType(docType);
-        documentModel.setUuid((isFromLogin) ? AppConstants.DEFAULT_ID : document.getUuid());
+        documentModel.setUuid((document == null) ? AppConstants.DEFAULT_ID : document.getUuid());
         documentModel.setUserId(appPreferences.getUserDetails().uuId);
         if (tilNameOnDoc.getVisibility() == View.VISIBLE) {
             documentModel.setNameOnDocument(etNameOnDoc.getText().toString());

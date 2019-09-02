@@ -130,11 +130,12 @@ public class DashBoardActivity extends BaseActivity
         UserModel user = appPreferences.getUserDetails();
         tvUserName.setText(String.format("%s %s", user.firstName, user.lastName));
         tvRole.setText(user.role);
+        String city = (appPreferences.getUserDetails().cityPreferences != null ) ? appPreferences.getUserDetails().cityPreferences.getName() : appPreferences.getUserDetails().cityCode.getName();
         String textToDisplay;
         if (user.role.equals(AppConstants.AGENCY))
             textToDisplay = getString(R.string.create_new_ride);
         else
-            textToDisplay = getString(R.string.preferred_city) + " : " + appPreferences.getUserDetails().cityPreferences.getName();
+            textToDisplay = getString(R.string.preferred_city) + " : " + city;
 
         top_description.setText(textToDisplay);
         ImageUtils.setImageFromUrl(this, user.profileImage, ivProfile);

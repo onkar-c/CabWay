@@ -2,6 +2,7 @@ package com.example.cabway.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatSpinner;
@@ -31,7 +32,12 @@ public class PreferredCityActivity extends BaseActivity implements CitySpinnerAd
 
     @BindView(R.id.sp_state)
     AppCompatSpinner spState;
+
+    @BindView(R.id.description)
+    TextView description;
     PreferredCityViewModel preferredCityViewModel;
+
+    private boolean isFromCreateRide = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,7 @@ public class PreferredCityActivity extends BaseActivity implements CitySpinnerAd
         setContentView(R.layout.activity_preferred_city);
         setUpActionBar();
         ButterKnife.bind(this);
+        isFromCreateRide = getIntent().getBooleanExtra(IntentConstants.IS_FROM_CREATE_RIDE, false);
         setUpUi();
         preferredCityViewModel = ViewModelProviders.of(this).get(PreferredCityViewModel.class);
         preferredCityViewModel.init();
@@ -62,7 +69,7 @@ public class PreferredCityActivity extends BaseActivity implements CitySpinnerAd
 
     @OnClick(R.id.submit)
     public void updatePreferredCity() {
-        if (getIntent().getBooleanExtra(IntentConstants.IS_FROM_CREATE_RIDE, false)) {
+        if (isFromCreateRide) {
             Intent returnIntent = new Intent();
             returnIntent.putExtra(IntentConstants.PREFERRED_CITY, (CityModel) spCity.getSelectedItem());
             setResult(RESULT_OK, returnIntent);
@@ -79,6 +86,7 @@ public class PreferredCityActivity extends BaseActivity implements CitySpinnerAd
     private void setUpUi() {
         spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, 0, spCity));
         spState.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.STATE, 0, spState));
+        description.setText(getString(isFromCreateRide ? R.string.please_select_city : R.string.preferred_city_description));
     }
 
     private boolean validate() {

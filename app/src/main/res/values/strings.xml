@@ -55,6 +55,7 @@
     <string name="create_ride">Create Ride</string>
     <string name="no_data_available">No Data Available</string>
     <string name="preferred_city">Preferred City</string>
+    <string name="please_select_city">Please Select State And City</string>
     <string name="expiry_date">Expiry Date :</string>
     <string name="issued_on">Issued Date :</string>
     <string name="date_format">DD-MM-YYYY</string>
