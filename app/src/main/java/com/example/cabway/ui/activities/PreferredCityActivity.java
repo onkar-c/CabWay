@@ -63,7 +63,7 @@ public class PreferredCityActivity extends BaseActivity implements CitySpinnerAd
         if (validate()) {
             if (checkNetworkAvailableWithoutError()) {
                 showProgressDialog(AppConstants.PLEASE_WAIT, false);
-                preferredCityViewModel.getPreferredCityRepository().updatePreferredCity(preferredCityViewModel.getPreferredCityResponseMld(), SpinnerUtils.getCityData(spCity.getSelectedItemPosition()));
+                preferredCityViewModel.getPreferredCityRepository().updatePreferredCity(preferredCityViewModel.getPreferredCityResponseMld(), ((CityModel)spCity.getSelectedItem()));
             }
         }
     }

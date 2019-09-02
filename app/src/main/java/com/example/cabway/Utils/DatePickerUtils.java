@@ -14,7 +14,8 @@ public class DatePickerUtils {
         new DatePickerDialog(context,
                 (datePicker, year, arg2, day) -> {
                     String month = "" + ((arg2 + 1) < 10 ? "0" + (arg2 + 1) : (arg2 + 1));
-                    String selectedDate = year + "-" + month + "-" + day;
+                    String dayFormat = "" + (day < 10 ? "0" + day : day);
+                    String selectedDate = year + "-" + month + "-" + dayFormat;
                     datePickerCallBackInterface.setDateFromDatePicker(selectedDate);
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
@@ -25,7 +26,7 @@ public class DatePickerUtils {
                 (datePicker, year, arg2, day) -> {
                     String month = "" + ((arg2 + 1) < 10 ? "0" + (arg2 + 1) : (arg2 + 1));
                     String dayFormat = "" + (day < 10 ? "0" + day : day);
-                    String selectedDate = year + "-" + month + "-" + day;
+                    String selectedDate = year + "-" + month + "-" + dayFormat;
                     datePickerCallBackInterface.setDateFromDatePicker(selectedDate);
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 

@@ -195,7 +195,7 @@ public class CreateRideActivity extends BaseActivity implements DatePickerCallBa
 //        rideRequestModel.setAgencyMobileNo(agencyMobNoET.getText().toString().trim());
 //        rideRequestModel.setCost(Integer.parseInt(costOfTripET.getText().toString().trim()));
 //        rideRequestModel.setDistance(Integer.parseInt(distanceET.getText().toString()));
-//        //TODO:
+//
 //        rideRequestModel.setFromCity(fromLocET.getText().toString());
 //        rideRequestModel.setToCity(toLocET.getText().toString());
 //        rideRequestModel.setRideType(oneWayRb.isChecked() ?"OneWay":"Return");

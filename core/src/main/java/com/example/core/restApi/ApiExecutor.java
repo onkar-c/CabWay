@@ -94,9 +94,9 @@ public class ApiExecutor {
 
     public static void createRide(final MutableLiveData<JsonResponse> mltCreateRideResponse, CreateRideRequestModel createRideRequestModel) {
         RequestExecutor.ExecuteApi(getApiInterface().createRide(createRideRequestModel), mltCreateRideResponse);
+    }
 
     public static void updatePreferredCity(final MutableLiveData<JsonResponse> mltPreferredCityResponse, CityModel cityModel) {
         RequestExecutor.ExecuteApi(getApiInterface().updatePreferredCity(cityModel), mltPreferredCityResponse);
-
     }
 }
