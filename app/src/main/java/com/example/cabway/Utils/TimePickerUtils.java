@@ -29,4 +29,12 @@ public class TimePickerUtils {
 
         return new SimpleDateFormat(AppConstants.TIME_FORMAT, Locale.ENGLISH).format(calendar.getTime());
     }
+
+    private static String getExactTimeWithDate(int hour,int minute){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY,hour);
+        calendar.set(Calendar.MINUTE,minute);
+
+        return new SimpleDateFormat(AppConstants.TIME_FORMAT, Locale.ENGLISH).format(calendar.getTime());
+    }
 }

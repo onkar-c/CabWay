@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,26 +15,28 @@ import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.core.content.ContextCompat;
 
 import com.example.cabway.R;
-import com.example.core.CommonModels.CityModel;
-import com.example.core.CommonModels.StateModel;
+import com.example.core.CommonModels.VehicleTypeModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CitySpinnerAdapter<T> extends ArrayAdapter<T> implements AdapterView.OnItemSelectedListener {
+public class CarTypeSpinnerAdapter extends ArrayAdapter implements AdapterView.OnItemSelectedListener {
 
     private Context mContext;
-    private List<T> dataList;
-    private ItemSelectedCallback itemSelectedCallback;
+    private List<VehicleTypeModel> dataList;
+    private TypeSelectedCallback itemSelectedCallback;
 
-    public CitySpinnerAdapter(Activity context, AppCompatSpinner spinner, List<T> dataList) {
+    public CarTypeSpinnerAdapter(Activity context, AppCompatSpinner spinner, List<VehicleTypeModel> dataList) {
         super(context, R.layout.city_item);
         this.mContext = context;
         this.dataList = new ArrayList<>();
         this.dataList = dataList;
-        this.itemSelectedCallback = (ItemSelectedCallback) context;
+        //TODO:Remove
+        dataList.addAll(getVehicleTypeList());
+        this.itemSelectedCallback = (TypeSelectedCallback) context;
         spinner.setOnItemSelectedListener(this);
     }
+
 
     @Override
     public int getCount() {
@@ -41,7 +44,7 @@ public class CitySpinnerAdapter<T> extends ArrayAdapter<T> implements AdapterVie
     }
 
     @Override
-    public T getItem(int position) {
+    public VehicleTypeModel getItem(int position) {
         return dataList.get(position);
     }
 
@@ -57,19 +60,19 @@ public class CitySpinnerAdapter<T> extends ArrayAdapter<T> implements AdapterVie
         try {
             if (convertView == null) {
                 LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
-                view = inflater.inflate(R.layout.city_item, parent, false);
+                view = inflater.inflate(R.layout.car_type_item, parent, false);
             }
-            TextView name = view.findViewById(R.id.tv_city_name);
-            StateModel stateModel;
-            CityModel cityModel;
+            TextView name = view.findViewById(R.id.tv_type);
+            ImageView image = view.findViewById(R.id.iv_car_type);
+
             Object obj = getItem(position);
-            if (obj instanceof StateModel) {
-                stateModel = (StateModel) obj;
-                name.setText(stateModel.getName());
-            } else if (obj instanceof CityModel) {
-                cityModel = (CityModel) obj;
-                name.setText(cityModel.getName());
+            if(obj!=null) {
+                VehicleTypeModel vehicleTypeModel = (VehicleTypeModel) obj;
+                name.setText(vehicleTypeModel.getType());
+                //ImageUtils.setImageFromUrl(mContext,vehicleTypeModel.getCarImageUrl(),image);
+                image.setImageDrawable(mContext.getDrawable(R.drawable.ic_add_image));
             }
+
             if (position == 0)
                 name.setTextColor(ContextCompat.getColor(mContext, R.color.hint));
             else
@@ -85,19 +88,19 @@ public class CitySpinnerAdapter<T> extends ArrayAdapter<T> implements AdapterVie
     public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
         if (convertView == null) {
-            view = View.inflate(mContext, R.layout.city_item, null);
+            view = View.inflate(mContext, R.layout.car_type_item, null);
         }
-        final TextView name = view.findViewById(R.id.tv_city_name);
-        StateModel stateModel;
-        CityModel cityModel;
+        TextView name = view.findViewById(R.id.tv_type);
+        ImageView image = view.findViewById(R.id.iv_car_type);
+
         Object obj = getItem(position);
-        if (obj instanceof StateModel) {
-            stateModel = (StateModel) obj;
-            name.setText(stateModel.getName());
-        } else if (obj instanceof CityModel) {
-            cityModel = (CityModel) obj;
-            name.setText(cityModel.getName());
+        if(obj!=null) {
+            VehicleTypeModel vehicleTypeModel = (VehicleTypeModel) obj;
+            name.setText(vehicleTypeModel.getType());
+            //ImageUtils.setImageFromUrl(mContext,vehicleTypeModel.getCarImageUrl(),image);
+            image.setImageDrawable(mContext.getDrawable(R.drawable.ic_add_image));
         }
+
         name.setPadding(20, 20, 0, 20);
         if (position == 0)
             name.setTextColor(ContextCompat.getColor(mContext, R.color.hint));
@@ -108,15 +111,28 @@ public class CitySpinnerAdapter<T> extends ArrayAdapter<T> implements AdapterVie
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        itemSelectedCallback.sendDataOnSelection(dataList.get(position));
+        itemSelectedCallback.sendTypeOnSelection(dataList.get(position));
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
     }
 
-    public interface ItemSelectedCallback {
-        <T> void sendDataOnSelection(T data);
+    public interface TypeSelectedCallback {
+        void sendTypeOnSelection(VehicleTypeModel data);
+    }
+
+    private static List<VehicleTypeModel> getVehicleTypeList(){
+        List<VehicleTypeModel> vehicleTypeModels =new ArrayList<>();
+        for(int i=0;i<4;i++){
+            VehicleTypeModel vehicleTypeModel = new VehicleTypeModel();
+            vehicleTypeModel.setType("Sedan");
+            vehicleTypeModel.setCarImageUrl("R.drawable.ic_add_image");
+            vehicleTypeModels.add(vehicleTypeModel);
+        }
+
+        return vehicleTypeModels;
     }
 
 }
+

@@ -86,27 +86,24 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/il_vehicle_type"
+        <TextView
+            android:id="@+id/tv_vehicle_type_hint"
+            style="@style/TextView.InputLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/vehicle_type"
+            android:visibility="gone"
+            android:layout_below="@+id/il_name_of_doc"/>
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/sp_vehicle_type"
+            style="@style/Base.Widget.AppCompat.Spinner.Underlined"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/il_name_of_doc"
-            android:layout_marginTop="10dp"
-            android:textColorHint="@android:color/darker_gray"
-            android:visibility="gone">
+            android:layout_below="@id/tv_vehicle_type_hint"
+            android:visibility="gone"/>
 
-            <EditText
-                android:id="@+id/et_vehicle_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/vehicle_type"
-                android:inputType="text"
-                android:maxLines="1"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/small_text"
-                tools:ignore="Autofill" />
-
-        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/tv_state_hint"
@@ -116,14 +113,15 @@
             android:layout_marginTop="10dp"
             android:text="@string/state"
             android:visibility="gone"
-            android:layout_below="@+id/il_vehicle_type"/>
+            android:layout_below="@+id/sp_vehicle_type"/>
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/sp_state"
             style="@style/Base.Widget.AppCompat.Spinner.Underlined"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_state_hint"/>
+            android:layout_below="@id/tv_state_hint"
+            android:visibility="gone"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/il_gst_number"
