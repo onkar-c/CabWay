@@ -66,7 +66,7 @@ public class DashBoardActivity extends BaseActivity
     @BindView(R.id.main_action)
     ImageButton mainAction;
 
-    @BindView(R.id.tod_description)
+    @BindView(R.id.top_description)
     TextView top_description;
 
     ProfileMenuAdapter profileMenuAdapter;

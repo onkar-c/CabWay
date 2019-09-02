@@ -25,4 +25,6 @@ public class AppConstants {
     public static final int PIN_CODE_LENGTH = 6;
     public static final String STATE = "state";
     public static final String CITY = "city";
+    public static final String ONE_WAY = "OneWay";
+    public static final String TWO_WAY = "TwoWay";
 }
