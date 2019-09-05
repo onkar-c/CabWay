@@ -3,7 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:scrollbars="none"
+    android:clipToPadding="false">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,7 +14,6 @@
         android:layout_margin="10dp"
         android:paddingBottom="10dp"
         android:orientation="vertical">
-
 
         <RelativeLayout
             android:id="@+id/rideTitle"
@@ -114,7 +116,6 @@
                 android:textColor="@android:color/black"
                 android:textStyle="bold" />
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -230,7 +231,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -323,7 +323,6 @@
             </LinearLayout>
         </LinearLayout>
 
-
         <Button
             android:id="@+id/call_agency"
             android:layout_width="match_parent"
@@ -344,7 +343,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
             android:background="@android:color/black"
             android:text="@string/edit"
@@ -358,7 +357,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
             android:background="@android:color/black"
             android:text="@string/delete"
@@ -372,7 +371,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
             android:background="@android:color/black"
             android:text="@string/request"

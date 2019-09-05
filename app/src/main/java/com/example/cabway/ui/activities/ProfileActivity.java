@@ -254,7 +254,7 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
         if (data instanceof StateModel) {
             if (((StateModel) data).getId() != -1) {
                 spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, ((StateModel) data).getId(), spCity));
-                if (user != null) {
+                if (user != null && SpinnerUtils.stateCityMatches(((StateModel) data).getId(),user.cityCode.getCityId())) {
                     spCity.setSelection(SpinnerUtils.getCityPosition(user.cityCode.getCityId(),(SpinnerUtils.getStateOfCity(user.cityCode.getCityId()).getId())));
                 }
             }
