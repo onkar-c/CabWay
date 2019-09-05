@@ -8,5 +8,7 @@ public class IntentConstants {
     public static final String DOCUMENT_EXTRA = "document";
     public static final String IS_FROM_CREATE_RIDE = "is_from_create_ride";
     public static final String PREFERRED_CITY = "preferred_city";
+    public static final String DRIVER_DETAILS = "driver_details";
     public static final String RIDE= "ride";
+    public static final String RIDE_STATUS= "status";
 }

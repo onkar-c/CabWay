@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class CreateRideRequestModel {
 
+    @SerializedName("id")
+    private Long rideId;
+
     @SerializedName("agencyMobileNo")
     private String agencyMobileNo;
 
@@ -74,5 +77,9 @@ public class CreateRideRequestModel {
 
     public void setToCity(CityModel toCity) {
         this.toCity = toCity;
+    }
+
+    public void setRideId(Long rideId) {
+        this.rideId = rideId;
     }
 }

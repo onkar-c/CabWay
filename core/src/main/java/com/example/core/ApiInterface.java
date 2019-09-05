@@ -13,6 +13,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -58,13 +59,25 @@ public interface ApiInterface {
     @GET("cabinfo/cityList")
     Call<JsonResponse> getStateAndCity();
 
-    @POST("ride/createRide")
+    @POST("ride")
     Call<JsonResponse> createRide(@Body CreateRideRequestModel createRideRequestModel);
+
+    @PUT("ride")
+    Call<JsonResponse> updateRide(@Body CreateRideRequestModel createRideRequestModel);
+
+    @DELETE("ride")
+    Call<JsonResponse> deleteRide(@Query("rideId") Long rideId);
 
     @PUT("users/cityPrefrence")
     Call<JsonResponse> updatePreferredCity(@Body CityModel cityModel);
 
-    @GET("ride/list")
+    @GET("ride/userRides")
     Call<JsonResponse> getRides();
+
+    @PUT("ride/requestRide")
+    Call<JsonResponse> requestRide(@Query("rideId") Long rideId);
+
+    @PUT("ride/acceptreject")
+    Call<JsonResponse> acceptRejectRide(@Query("rideId") Long rideId, @Query("driverId") int driverId, @Query("action") String action);
 
 }

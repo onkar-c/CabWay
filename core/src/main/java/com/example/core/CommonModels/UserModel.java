@@ -11,6 +11,7 @@ public class UserModel implements Serializable {
     public String authKey;
     public String address;
     public String email;
+    public String agencyName;
     public String role;
     public CityModel cityCode;
     public String pinCode;

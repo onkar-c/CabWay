@@ -37,6 +37,7 @@ import com.example.cabway.viewModels.DocumentViewModel;
 import com.example.core.CommonModels.DocumentModel;
 import com.example.database.Utills.AppConstants;
 
+import java.util.Date;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -287,7 +288,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ImageUtils.IMAGE_PICK) {
-            String fileName = "abc.png";
+            String fileName = new Date().getTime() + ".png";
             String filePath = ImageUtils.onImagePickResult(requestCode, resultCode, data, fileName, this);
             if (!TextValidationUtils.isEmpty(filePath)) {
                 mFilePath = filePath;

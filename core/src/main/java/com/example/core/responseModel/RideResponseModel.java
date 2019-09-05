@@ -1,14 +1,16 @@
 package com.example.core.responseModel;
 
 import com.example.core.CommonModels.CityModel;
+import com.example.core.CommonModels.UserModel;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class RideResponseModel implements Serializable {
 
     @SerializedName("id")
-    private int rideId;
+    private Long rideId;
 
     @SerializedName("fromCity")
     private CityModel fromCity;
@@ -40,7 +42,16 @@ public class RideResponseModel implements Serializable {
     @SerializedName("agency")
     private AgencyResponseModel agency;
 
-    public int getRideId() {
+    @SerializedName("driverList")
+    private List<UserModel> driverList;
+
+    @SerializedName("status")
+    private String status;
+
+    @SerializedName("driver")
+    private UserModel driver;
+
+    public Long getRideId() {
         return rideId;
     }
 
@@ -82,5 +93,17 @@ public class RideResponseModel implements Serializable {
 
     public AgencyResponseModel getAgency() {
         return agency;
+    }
+
+    public List<UserModel> getDriverList() {
+        return driverList;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public UserModel getDriver() {
+        return driver;
     }
 }

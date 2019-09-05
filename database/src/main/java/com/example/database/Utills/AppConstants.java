@@ -23,9 +23,15 @@ public class AppConstants {
     public static final int PASSWORD_LENGTH = 4;
     public static final int ADDRESS_LENGTH = 10;
     public static final int MOBILE_NUMBER_LENGTH = 10;
+    public static final int REFRESH = 222;
     public static final int PIN_CODE_LENGTH = 6;
     public static final String STATE = "state";
     public static final String CITY = "city";
     public static final String ONE_WAY = "OneWay";
     public static final String TWO_WAY = "TwoWay";
+    public static final String ACCEPTED = "Accepted";
+    public static final String ACCEPT = "Accept";
+    public static final String REJECT = "Reject";
+    public static final String NEW = "New";
+    public static final String REQUESTED = "Requested";
 }

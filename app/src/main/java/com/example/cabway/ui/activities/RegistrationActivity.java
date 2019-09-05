@@ -27,6 +27,7 @@ import com.example.core.CommonModels.CityModel;
 import com.example.core.CommonModels.StateModel;
 import com.example.core.CommonModels.UserModel;
 import com.example.database.Utills.AppConstants;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
@@ -44,6 +45,12 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
 
     @BindView(R.id.last_name)
     EditText etLastName;
+
+    @BindView(R.id.til_agency_name)
+    TextInputLayout tilAgencyName;
+
+    @BindView(R.id.agency_name)
+    EditText etAgencyName;
 
     @BindView(R.id.phone)
     EditText etPhone;
@@ -110,8 +117,8 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     }
 
     private void setUpUi() {
-        spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, 0,spCity));
-        spState.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.STATE, 0,spState));
+        spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, 0, spCity));
+        spState.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.STATE, 0, spState));
     }
 
     private void setObservers() {
@@ -183,6 +190,8 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         UserModel userModel = new UserModel();
         userModel.firstName = etFirstName.getText().toString();
         userModel.lastName = etLastName.getText().toString();
+        if (etAgencyName.getVisibility() == View.VISIBLE)
+            userModel.agencyName = etAgencyName.getText().toString();
         userModel.password = etPassword.getText().toString();
         userModel.mobileNo = etPhone.getText().toString();
         userModel.address = etAddress.getText().toString();
@@ -232,6 +241,16 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         uploadImageLayout.setVisibility(View.VISIBLE);
         etPhone.setKeyListener(null);
         bGenerateOtp.setVisibility(View.GONE);
+        if ((type.getCheckedRadioButtonId() == R.id.agency)) {
+            etAgencyName.setVisibility(View.VISIBLE);
+            tilAgencyName.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @OnClick({R.id.agency, R.id.driver})
+    void changeUi(View view) {
+        etAgencyName.setVisibility((view.getId() == R.id.agency) ? View.VISIBLE : View.GONE);
+        tilAgencyName.setVisibility((view.getId() == R.id.agency) ? View.VISIBLE : View.GONE);
     }
 
     private boolean validateAllFields() {
@@ -240,6 +259,9 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
             return false;
         } else if (TextValidationUtils.isEmpty(etLastName.getText().toString())) {
             showMandatoryError(R.string.last_name, this);
+            return false;
+        } else if (etAgencyName.getVisibility() == View.VISIBLE && TextValidationUtils.isEmpty(etAgencyName.getText().toString())) {
+            showMandatoryError(R.string.agency_name, this);
             return false;
         } else if (!TextValidationUtils.isValidEmail(etEmail.getText().toString())) {
             Toast.makeText(this, R.string.invalid_email, Toast.LENGTH_SHORT).show();
@@ -269,7 +291,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
             if (!TextValidationUtils.isEmpty(filePath)) {
                 mFilePath = filePath;
                 Toast.makeText(this, filePath, Toast.LENGTH_SHORT).show();
-                ImageUtils.setImageFromFilePath(this,mFilePath, ivProfileImage);
+                ImageUtils.setImageFromFilePath(this, mFilePath, ivProfileImage);
             }
         }
     }
@@ -282,9 +304,9 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     @Override
     public <T> void sendDataOnSelection(T data) {
         if (data instanceof StateModel) {
-            spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, ((StateModel) data).getId(),spCity));
+            spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, ((StateModel) data).getId(), spCity));
         } else if (data instanceof CityModel) {
-            selectedCity= (CityModel) data;
+            selectedCity = (CityModel) data;
         }
     }
 

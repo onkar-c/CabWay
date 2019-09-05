@@ -128,9 +128,12 @@ public class DashBoardActivity extends BaseActivity
 
     private void setData() {
         UserModel user = appPreferences.getUserDetails();
-        tvUserName.setText(String.format("%s %s", user.firstName, user.lastName));
+        if(user.role.equals(AppConstants.AGENCY))
+            tvUserName.setText(String.format("%s", user.agencyName));
+        else
+            tvUserName.setText(String.format("%s %s", user.firstName, user.lastName));
         tvRole.setText(user.role);
-        String city = (appPreferences.getUserDetails().cityPreferences != null ) ? appPreferences.getUserDetails().cityPreferences.getName() : appPreferences.getUserDetails().cityCode.getName();
+        String city = (appPreferences.getUserDetails().cityPreferences != null) ? appPreferences.getUserDetails().cityPreferences.getName() : appPreferences.getUserDetails().cityCode.getName();
         String textToDisplay;
         if (user.role.equals(AppConstants.AGENCY))
             textToDisplay = getString(R.string.create_new_ride);
@@ -218,7 +221,7 @@ public class DashBoardActivity extends BaseActivity
     }
 
 
-    @OnClick(R.id.top_view)
+    @OnClick({R.id.top_view, R.id.main_action})
     public void performAction() {
         Intent nextActivity;
         if (appPreferences.getUserDetails().role.equals(AppConstants.AGENCY)) {
@@ -231,13 +234,13 @@ public class DashBoardActivity extends BaseActivity
 
 
     private void refreshList() {
-        Fragment fragment =  getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         Fragment fragment1 = fragment.getChildFragmentManager().getFragments().get(0);
-        if(fragment1 instanceof NewRidesFragment)
-            ((NewRidesFragment)fragment1).ridesListAdapter.setData(newRides);
-        else if(fragment1 instanceof OnGoingRidesFragment)
-            ((OnGoingRidesFragment)fragment1).ridesListAdapter.setData(onGoingRides);
-        else if(fragment1 instanceof RequestedRidesFragment)
-            ((RequestedRidesFragment)fragment1).ridesListAdapter.setData(requestedRides);
+        if (fragment1 instanceof NewRidesFragment)
+            ((NewRidesFragment) fragment1).resetData(newRides);
+        else if (fragment1 instanceof OnGoingRidesFragment)
+            ((OnGoingRidesFragment) fragment1).resetData(onGoingRides);
+        else if (fragment1 instanceof RequestedRidesFragment)
+            ((RequestedRidesFragment) fragment1).resetData(requestedRides);
     }
 }

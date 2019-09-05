@@ -55,6 +55,7 @@
     <string name="create_ride">Create Ride</string>
     <string name="no_data_available">No Data Available</string>
     <string name="preferred_city">Preferred City</string>
+    <string name="driver_details">Driver Details</string>
     <string name="please_select_city">Please Select State And City</string>
     <string name="expiry_date">Expiry Date :</string>
     <string name="issued_on">Issued Date :</string>
@@ -64,7 +65,12 @@
     <string name="car_type">CAR TYPE :</string>
     <string name="trip_mode">TRIP MODE :</string>
     <string name="agency_number">AGENCY NUMBER :</string>
+    <string name="status">Status</string>
     <string name="call_agency">CALL AGENCY</string>
+    <string name="call_driver">CALL DRIVER</string>
+    <string name="request">REQUEST</string>
+    <string name="accept">ACCEPT</string>
+    <string name="reject">REJECT</string>
     <string name="car_type_hint">CAR TYPE</string>
     <string name="date_of_journey_hint">DATE OF JOURNEY</string>
     <string name="time_of_journey_hint">TIME OF JOURNEY</string>
@@ -84,12 +90,16 @@
     <string name="date_validation">Expiry date should be greater than issued date</string>
     <string name="date_validation_create_ride">Drop off date should be greater than Pickup date</string>
     <string name="full_name">Full Name</string>
+    <string name="agency_name">Agency Name</string>
+    <string name="name">Name :</string>
     <string name="role">Role</string>
     <string name="save">Save</string>
     <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
     <string name="add_profile_image">Add Profile Image</string>
     <string name="create_new_ride">Create A New Ride</string>
     <string name="city_updated_success">City Updated Successfully</string>
+    <string name="update">UPDATE</string>
     <string name="preferred_city_description">Please select your preferred city so we can display you related rides.</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_new">New</string>
@@ -159,6 +169,7 @@
 
     <string name="exit_message">Are you sure you want to exit?</string>
     <string name="logout_message">Are you sure you want to logout?</string>
+    <string name="accept_reject_message">Are you sure you want to %1$s this Driver?</string>
 
 
     <!--Document types-->

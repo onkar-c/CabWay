@@ -16,6 +16,7 @@ import com.example.cabway.ui.activities.DashBoardActivity;
 import com.example.cabway.ui.adapter.RidesListAdapter;
 import com.example.core.responseModel.RideResponseModel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class NewRidesFragment extends Fragment {
-    public RidesListAdapter ridesListAdapter;
+    private RidesListAdapter ridesListAdapter;
     @BindView(R.id.availableRidesList)
     RecyclerView availableRidesList;
     @BindView(R.id.no_data_available)
@@ -41,15 +42,28 @@ public class NewRidesFragment extends Fragment {
         return root;
     }
 
-    private void setRidesList() {
+    private void displayNoDataAvailable() {
         if (rides == null || rides.size() == 0) {
             noDataAvailable.setVisibility(View.VISIBLE);
         } else {
             noDataAvailable.setVisibility(View.GONE);
         }
+    }
+
+    private void setRidesList() {
+        displayNoDataAvailable();
         LinearLayoutManager layoutManager = new LinearLayoutManager(activityContext);
         availableRidesList.setLayoutManager(layoutManager);
+        if (rides == null)
+            rides = new ArrayList<>();
         ridesListAdapter = new RidesListAdapter(activityContext, rides);
         availableRidesList.setAdapter(ridesListAdapter);
+
+    }
+
+    public void resetData(List<RideResponseModel> rides) {
+        this.rides = rides;
+        ridesListAdapter.setData(this.rides);
+        displayNoDataAvailable();
     }
 }

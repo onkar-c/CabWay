@@ -1,18 +1,19 @@
 package com.example.core.restApi;
 
+import android.content.Context;
+
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import android.content.Context;
-import androidx.annotation.Nullable;
 
 import com.example.core.ApiClient;
 import com.example.core.ApiInterface;
 import com.example.core.CommonModels.CityModel;
+import com.example.core.CommonModels.DocumentModel;
 import com.example.core.RequestExecutor;
 import com.example.core.Utills.FileUtils;
 import com.example.core.Utills.HeroUtils;
-import com.example.core.CommonModels.DocumentModel;
 import com.example.core.requestModels.CreateRideRequestModel;
 import com.example.core.requestModels.LoginRequestModel;
 import com.example.core.requestModels.ResetPasswordModel;
@@ -28,8 +29,8 @@ import okhttp3.RequestBody;
 
 public class ApiExecutor {
 
-    private static ApiInterface getApiInterface(){
-         return ApiClient.getClient().create(ApiInterface.class);
+    private static ApiInterface getApiInterface() {
+        return ApiClient.getClient().create(ApiInterface.class);
     }
 
     public static void getUsersFromServer(final MutableLiveData<Boolean> response, final Context context) {
@@ -57,7 +58,7 @@ public class ApiExecutor {
         RequestExecutor.ExecuteApi(getApiInterface().verifyOTP(verifyOtpRequestModel), mltVerifyOtpResponse);
     }
 
-    public static void resetPassword(final MutableLiveData<JsonResponse> mltResetPassword, ResetPasswordModel resetPasswordModel){
+    public static void resetPassword(final MutableLiveData<JsonResponse> mltResetPassword, ResetPasswordModel resetPasswordModel) {
         RequestExecutor.ExecuteApi(getApiInterface().resetPassword(resetPasswordModel), mltResetPassword);
     }
 
@@ -92,8 +93,19 @@ public class ApiExecutor {
     }
 
 
-    public static void createRide(final MutableLiveData<JsonResponse> mltCreateRideResponse, CreateRideRequestModel createRideRequestModel) {
-        RequestExecutor.ExecuteApi(getApiInterface().createRide(createRideRequestModel), mltCreateRideResponse);
+    public static void createUpdateRide(final MutableLiveData<JsonResponse> mltCreateRideResponse, CreateRideRequestModel createRideRequestModel, boolean isUpdate) {
+        if (isUpdate)
+            RequestExecutor.ExecuteApi(getApiInterface().updateRide(createRideRequestModel), mltCreateRideResponse);
+        else
+            RequestExecutor.ExecuteApi(getApiInterface().createRide(createRideRequestModel), mltCreateRideResponse);
+    }
+
+    public static void deleteRide(final MutableLiveData<JsonResponse> mltDeleteRideResponse, Long rideId) {
+        RequestExecutor.ExecuteApi(getApiInterface().deleteRide(rideId), mltDeleteRideResponse);
+    }
+
+    public static void requestRide(final MutableLiveData<JsonResponse> mltRequestRideResponse, Long rideId) {
+        RequestExecutor.ExecuteApi(getApiInterface().requestRide(rideId), mltRequestRideResponse);
     }
 
     public static void updatePreferredCity(final MutableLiveData<JsonResponse> mltPreferredCityResponse, CityModel cityModel) {
@@ -102,5 +114,9 @@ public class ApiExecutor {
 
     public static void getRides(final MutableLiveData<JsonResponse> mltRidesResponse) {
         RequestExecutor.ExecuteApi(getApiInterface().getRides(), mltRidesResponse);
+    }
+
+    public static void acceptRejectRides(Long rideId, int driverId, String action, final MutableLiveData<JsonResponse> mltAcceptRejectRidesResponse) {
+        RequestExecutor.ExecuteApi(getApiInterface().acceptRejectRide(rideId, driverId, action), mltAcceptRejectRidesResponse);
     }
 }

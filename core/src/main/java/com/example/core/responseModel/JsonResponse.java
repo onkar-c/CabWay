@@ -14,29 +14,42 @@ public class JsonResponse implements Serializable {
 
     @SerializedName("status")
     private String status;
+
     @SerializedName("message")
     private String message;
+
     @SerializedName("heroes")
     private List<HeroesModel> heroesList;
+
     @SerializedName("user")
     private UserModel user;
+
     @SerializedName("listDocument")
     private List<DocumentModel> documentsList;
+
     @SerializedName("documentCompleted")
     private boolean documentCompleted;
+
     @SerializedName("stateList")
     private List<StateModel> stateList;
+
     @SerializedName("cityList")
     private List<CityModel> cityList;
+
     @SerializedName("carType")
     private List<VehicleTypeModel> vehicleList;
 
     @SerializedName("rideList")
     private List<RideResponseModel> rideList;
+
     @SerializedName("acceptedRideList")
     private List<RideResponseModel> acceptedRideList;
+
     @SerializedName("requestedRideList")
     private List<RideResponseModel> requestedRideList;
+
+    @SerializedName("ride")
+    private RideResponseModel ride;
 
 
     public List<HeroesModel> getHeroesList() {
@@ -97,5 +110,9 @@ public class JsonResponse implements Serializable {
 
     public List<RideResponseModel> getRequestedRideList() {
         return requestedRideList;
+    }
+
+    public RideResponseModel getRide() {
+        return ride;
     }
 }

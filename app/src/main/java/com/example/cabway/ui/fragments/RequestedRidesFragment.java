@@ -16,6 +16,7 @@ import com.example.cabway.ui.activities.DashBoardActivity;
 import com.example.cabway.ui.adapter.RidesListAdapter;
 import com.example.core.responseModel.RideResponseModel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,7 +25,7 @@ import butterknife.ButterKnife;
 
 public class RequestedRidesFragment extends Fragment {
 
-    public RidesListAdapter ridesListAdapter;
+    private RidesListAdapter ridesListAdapter;
     @BindView(R.id.availableRidesList)
     RecyclerView availableRidesList;
     @BindView(R.id.no_data_available)
@@ -47,15 +48,28 @@ public class RequestedRidesFragment extends Fragment {
         super.onResume();
     }
 
-    private void setRidesList() {
+    private void displayNoDataAvailable() {
         if (rides == null || rides.size() == 0) {
             noDataAvailable.setVisibility(View.VISIBLE);
         } else {
             noDataAvailable.setVisibility(View.GONE);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(activityContext);
-            availableRidesList.setLayoutManager(layoutManager);
-            ridesListAdapter = new RidesListAdapter(activityContext, rides);
-            availableRidesList.setAdapter(ridesListAdapter);
         }
+    }
+
+    private void setRidesList() {
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(activityContext);
+        availableRidesList.setLayoutManager(layoutManager);
+        if (rides == null)
+            rides = new ArrayList<>();
+        ridesListAdapter = new RidesListAdapter(activityContext, rides);
+        availableRidesList.setAdapter(ridesListAdapter);
+
+    }
+
+    public void resetData(List<RideResponseModel> rides) {
+        this.rides = rides;
+        ridesListAdapter.setData(this.rides);
+        displayNoDataAvailable();
     }
 }

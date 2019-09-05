@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatSpinner;
@@ -26,6 +27,7 @@ import com.example.core.CommonModels.StateModel;
 import com.example.core.CommonModels.UserModel;
 import com.example.database.Utills.AppConstants;
 
+import java.util.Date;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -63,6 +65,12 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
     @BindView(R.id.et_address)
     EditText etAddress;
 
+    @BindView(R.id.agency_name)
+    EditText agencyName;
+
+    @BindView(R.id.tv_agency_name)
+    TextView tv_agency_name;
+
     @BindView(R.id.sp_state)
     AppCompatSpinner spState;
 
@@ -99,6 +107,11 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
         if (user != null) {
             etFName.setText(user.firstName);
             etLName.setText(user.lastName);
+            if(user.role.equals(AppConstants.AGENCY)){
+                agencyName.setVisibility(View.VISIBLE);
+                agencyName.setText(user.agencyName);
+                tv_agency_name.setVisibility(View.VISIBLE);
+            }
             etPhoneNumber.setText(user.mobileNo);
             etEmail.setText(user.email);
             etAddress.setText(user.address);
@@ -144,6 +157,8 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
         userModel.lastName = etLName.getText().toString();
         userModel.address = etAddress.getText().toString();
         userModel.email = etEmail.getText().toString();
+        if(agencyName.getVisibility() == View.VISIBLE)
+        userModel.agencyName = agencyName.getText().toString();
         userModel.cityCode = selectedCity;
         userModel.pinCode = etPincode.getText().toString();
         return userModel;
@@ -162,7 +177,11 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
         } else if (TextValidationUtils.isEmpty(etLName.getText().toString())) {
             showMandatoryError(R.string.last_name, this);
             return false;
-        } else if (!TextValidationUtils.isValidAddress(etAddress.getText().toString(), this)) {
+        } else if (agencyName.getVisibility() == View.VISIBLE && TextValidationUtils.isEmpty(agencyName.getText().toString())) {
+            showMandatoryError(R.string.agency_name, this);
+            return false;
+        }
+        else if (!TextValidationUtils.isValidAddress(etAddress.getText().toString(), this)) {
             return false;
         } else if (spCity.getSelectedItemPosition() == 0) {
             showMandatoryError(R.string.city, this);
@@ -181,7 +200,7 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ImageUtils.IMAGE_PICK) {
-            String fileName = Math.random() + ".png";
+            String fileName = new Date().getTime() + ".png";
             String filePath = ImageUtils.onImagePickResult(requestCode, resultCode, data, fileName, this);
             if (!TextValidationUtils.isEmpty(filePath)) {
                 mFilePath = filePath;
