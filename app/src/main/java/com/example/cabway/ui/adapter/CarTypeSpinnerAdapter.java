@@ -3,6 +3,7 @@ package com.example.cabway.ui.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -15,13 +16,14 @@ import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.core.content.ContextCompat;
 
 import com.example.cabway.R;
+import com.example.cabway.Utils.SpinnerUtils;
 import com.example.core.CommonModels.VehicleTypeModel;
 import com.example.core.Utills.AppPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarTypeSpinnerAdapter extends ArrayAdapter implements AdapterView.OnItemSelectedListener {
+public class CarTypeSpinnerAdapter extends ArrayAdapter implements AdapterView.OnItemSelectedListener, View.OnTouchListener {
 
     private Context mContext;
     private List<VehicleTypeModel> dataList;
@@ -38,6 +40,7 @@ public class CarTypeSpinnerAdapter extends ArrayAdapter implements AdapterView.O
         dataList.addAll(AppPreferences.getInstance().getVehicleTypeList());
         this.itemSelectedCallback = (TypeSelectedCallback) context;
         spinner.setOnItemSelectedListener(this);
+        spinner.setOnTouchListener(this);
     }
 
 
@@ -68,10 +71,9 @@ public class CarTypeSpinnerAdapter extends ArrayAdapter implements AdapterView.O
             TextView name = view.findViewById(R.id.tv_type);
             ImageView image = view.findViewById(R.id.iv_car_type);
 
-            Object obj = getItem(position);
+            VehicleTypeModel obj = getItem(position);
             if(obj!=null) {
-                VehicleTypeModel vehicleTypeModel = (VehicleTypeModel) obj;
-                name.setText(vehicleTypeModel.getType());
+                name.setText(obj.getType());
                 //ImageUtils.setImageFromUrl(mContext,vehicleTypeModel.getCarImageUrl(),image);
                 image.setImageDrawable(mContext.getDrawable(R.drawable.ic_add_image));
             }
@@ -96,10 +98,9 @@ public class CarTypeSpinnerAdapter extends ArrayAdapter implements AdapterView.O
         TextView name = view.findViewById(R.id.tv_type);
         ImageView image = view.findViewById(R.id.iv_car_type);
 
-        Object obj = getItem(position);
+        VehicleTypeModel obj = getItem(position);
         if(obj!=null) {
-            VehicleTypeModel vehicleTypeModel = (VehicleTypeModel) obj;
-            name.setText(vehicleTypeModel.getType());
+            name.setText(obj.getType());
             //ImageUtils.setImageFromUrl(mContext,vehicleTypeModel.getCarImageUrl(),image);
             image.setImageDrawable(mContext.getDrawable(R.drawable.ic_add_image));
         }
@@ -119,6 +120,12 @@ public class CarTypeSpinnerAdapter extends ArrayAdapter implements AdapterView.O
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        SpinnerUtils.hideSoftKeyboard(v);
+        return false;
     }
 
     public interface TypeSelectedCallback {

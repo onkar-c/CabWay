@@ -1,6 +1,9 @@
 package com.example.cabway.Utils;
 
 import android.app.Activity;
+import android.content.Context;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.appcompat.widget.AppCompatSpinner;
 
@@ -147,5 +150,12 @@ public class SpinnerUtils {
             }
         }
         return false;
+    }
+
+    public static void hideSoftKeyboard(View v) {
+        InputMethodManager in = (InputMethodManager) v.getContext()
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        in.hideSoftInputFromWindow(v.getApplicationWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
     }
 }

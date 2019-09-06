@@ -22,13 +22,14 @@ public class DateTimePicker {
     @Nullable
     private ResultCallback<Date> dateResultCallback;
     private boolean isPickup;
+    private long minimumTime;
 
     public void showDialog(@NonNull Context context, long time,boolean isPickup) {
         calendar.setTimeInMillis(System.currentTimeMillis() - 1000);
         this.isPickup=isPickup;
+        this.minimumTime=time;
         closeDialogs();
         showDatePicker(context);
-        this.isPickup=isPickup;
     }
 
     @Nullable
@@ -83,7 +84,10 @@ public class DateTimePicker {
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH));
-        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+       /* TODO:if(minimumTime!=0){
+            datePickerDialog.getDatePicker().setMinDate(minimumTime);
+        }else*/
+            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         datePickerDialog.show();
     }
 

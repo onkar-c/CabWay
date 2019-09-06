@@ -105,7 +105,6 @@ public class CreateRideActivity extends BaseActivity implements CarTypeSpinnerAd
             twoWay.setChecked(true);
     }
 
-
     private void setCreateRideObserver() {
         ridesViewModel.getCreateRideMld().observe(this, (JsonResponse createRideResponse) -> {
             removeProgressDialog();
@@ -132,19 +131,18 @@ public class CreateRideActivity extends BaseActivity implements CarTypeSpinnerAd
         vehicleTypeSP.setAdapter(CarTypeSpinnerUtils.setSpinnerAdapter(this, vehicleTypeSP));
     }
 
-
     @OnClick(R.id.et_pickup_date_time)
     public void selectDate() {
         DateTimePicker dateTimePicker = new DateTimePicker();
         dateTimePicker.setDateResultCallback(CreateRideActivity.this);
-        dateTimePicker.showDialog(CreateRideActivity.this, 1000, true);
+        dateTimePicker.showDialog(CreateRideActivity.this, 0, true);
     }
 
     @OnClick(R.id.et_drop_off_date_time)
     public void selectTime() {
         DateTimePicker dateTimePicker = new DateTimePicker();
         dateTimePicker.setDateResultCallback(CreateRideActivity.this);
-        dateTimePicker.showDialog(CreateRideActivity.this, 1000, false);
+        dateTimePicker.showDialog(CreateRideActivity.this, DatePickerUtils.convertDateStrToLong(pickupDateTimeET.getText().toString().trim()), false);
     }
 
     @OnClick(R.id.et_start_loc)
@@ -159,7 +157,6 @@ public class CreateRideActivity extends BaseActivity implements CarTypeSpinnerAd
         Intent nextActivity = new Intent(this, PreferredCityActivity.class);
         nextActivity.putExtra(IntentConstants.IS_FROM_CREATE_RIDE, true);
         startActivityForResult(nextActivity, endLocation);
-
     }
 
     @OnClick(R.id.btn_book_ride)
@@ -168,7 +165,6 @@ public class CreateRideActivity extends BaseActivity implements CarTypeSpinnerAd
             showProgressDialog(AppConstants.PLEASE_WAIT, false);
             ridesViewModel.getRidesRepository().createRide(ridesViewModel.getCreateRideMld(), getRideDetails(), (ride != null));
         }
-
     }
 
     @Override
@@ -191,7 +187,7 @@ public class CreateRideActivity extends BaseActivity implements CarTypeSpinnerAd
         } else if (costOfTripET.getText().toString().trim().isEmpty()) {
             showMandatoryError(R.string.cost_of_trip_hint, this);
             return false;
-        } else if (dropOffDateTimeET.getText().toString().compareTo(pickupDateTimeET.getText().toString()) < 0) {
+        } else if (!DatePickerUtils.before(dropOffDateTimeET.getText().toString(),pickupDateTimeET.getText().toString())) {
             Toast.makeText(this, getString(R.string.date_validation_create_ride), Toast.LENGTH_SHORT).show();
             return false;
         }
