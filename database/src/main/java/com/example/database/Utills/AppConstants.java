@@ -8,6 +8,7 @@ public class AppConstants {
     public static final String AGENCY = "Agency";
     public static final String DUMMY_AGENCY_number = "9384959560";
     public static final String SUCCESS = "success";
+    public static final String AUTH_ERROR = "authError";
     public static final String ERROR = "error";
     public static final String PLEASE_WAIT = "Please Wait...";
     public static final String TIME_FORMAT="hh:mm a";
@@ -32,6 +33,8 @@ public class AppConstants {
     public static final String ACCEPTED = "Accepted";
     public static final String ACCEPT = "Accept";
     public static final String REJECT = "Reject";
+    public static final String DELETE = "Delete";
     public static final String NEW = "New";
     public static final String REQUESTED = "Requested";
+    public static final String REQUEST = "Request";
 }

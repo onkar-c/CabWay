@@ -109,7 +109,7 @@ public class CreateRideActivity extends BaseActivity implements CarTypeSpinnerAd
     private void setCreateRideObserver() {
         ridesViewModel.getCreateRideMld().observe(this, (JsonResponse createRideResponse) -> {
             removeProgressDialog();
-            if (Objects.requireNonNull(createRideResponse).getStatus().equals(AppConstants.SUCCESS)) {
+            if (isSuccessResponse(createRideResponse)) {
                 Toast.makeText(CreateRideActivity.this, createRideResponse.getMessage(), Toast.LENGTH_SHORT).show();
                 if(ride != null)
                     sendResultData(createRideResponse.getRide());

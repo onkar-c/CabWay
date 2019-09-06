@@ -1,19 +1,7 @@
 package com.example.cabway.ui.activities;
 
-import androidx.appcompat.widget.AppCompatSpinner;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.example.cabway.Utils.CarTypeSpinnerUtils;
-import com.example.cabway.Utils.SpinnerUtils;
-import com.example.cabway.ui.adapter.CarTypeSpinnerAdapter;
-import com.example.cabway.ui.adapter.CitySpinnerAdapter;
-import com.example.core.CommonModels.StateModel;
-import com.example.core.CommonModels.VehicleTypeModel;
-import com.google.android.material.textfield.TextInputLayout;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -27,15 +15,25 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.example.cabway.R;
+import com.example.cabway.Utils.CarTypeSpinnerUtils;
 import com.example.cabway.Utils.DatePickerUtils;
 import com.example.cabway.Utils.ImageUtils;
 import com.example.cabway.Utils.IntentConstants;
+import com.example.cabway.Utils.SpinnerUtils;
 import com.example.cabway.Utils.TextValidationUtils;
 import com.example.cabway.ui.Interfaces.DatePickerCallBackInterface;
+import com.example.cabway.ui.adapter.CarTypeSpinnerAdapter;
+import com.example.cabway.ui.adapter.CitySpinnerAdapter;
 import com.example.cabway.viewModels.DocumentViewModel;
 import com.example.core.CommonModels.DocumentModel;
+import com.example.core.CommonModels.StateModel;
+import com.example.core.CommonModels.VehicleTypeModel;
 import com.example.database.Utills.AppConstants;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Date;
 import java.util.Objects;
@@ -132,7 +130,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
     private void setDocumentUploadObserver() {
         documentViewModel.getDocumentUploadResponseMld().observe(this, documentUploadResponse -> {
             removeProgressDialog();
-            if (Objects.requireNonNull(documentUploadResponse).getStatus().equals(AppConstants.SUCCESS)) {
+            if (isSuccessResponse(documentUploadResponse)) {
                 Toast.makeText(UploadDocumentActivity.this, documentUploadResponse.getMessage(), Toast.LENGTH_SHORT).show();
                 onBackPressed();
             } else {
@@ -210,11 +208,11 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
             documentModel.setNameOnDocument(etNameOnDoc.getText().toString());
         }
         if (spState.getVisibility() == View.VISIBLE)
-            documentModel.setStateName(((StateModel)spState.getSelectedItem()).getName());
+            documentModel.setStateName(((StateModel) spState.getSelectedItem()).getName());
         if (tilGstNumber.getVisibility() == View.VISIBLE)
             documentModel.setGstNumber(etGstNumber.getText().toString());
         if (spVehicleType.getVisibility() == View.VISIBLE)
-            documentModel.setVehicleType(((VehicleTypeModel)spVehicleType.getSelectedItem()).getType());
+            documentModel.setVehicleType(((VehicleTypeModel) spVehicleType.getSelectedItem()).getType());
         if (llIssuedDate.getVisibility() == View.VISIBLE)
             documentModel.setIssueDate(tvIssuedDate.getText().toString());
         if (llExpiryDate.getVisibility() == View.VISIBLE)
@@ -244,7 +242,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
         } else if (tilGstNumber.getVisibility() == View.VISIBLE && TextUtils.isEmpty(etGstNumber.getText().toString())) {
             showMandatoryError(R.string.gst_number, this);
             return false;
-        } else if (spVehicleType.getVisibility() == View.VISIBLE && spVehicleType.getSelectedItemPosition()==0) {
+        } else if (spVehicleType.getVisibility() == View.VISIBLE && spVehicleType.getSelectedItemPosition() == 0) {
             showMandatoryError(R.string.vehicle_type, this);
             return false;
         } else if (llIssuedDate.getVisibility() == View.VISIBLE && TextUtils.isEmpty(tvIssuedDate.getText().toString())) {
@@ -288,8 +286,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ImageUtils.IMAGE_PICK) {
-            String fileName = new Date().getTime() + ".png";
-            String filePath = ImageUtils.onImagePickResult(requestCode, resultCode, data, fileName, this);
+            String filePath = ImageUtils.onImagePickResult(requestCode, resultCode, data, this);
             if (!TextValidationUtils.isEmpty(filePath)) {
                 mFilePath = filePath;
                 //Toast.makeText(this, filePath, Toast.LENGTH_SHORT).show();
@@ -346,7 +343,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
 
     @Override
     public void sendTypeOnSelection(VehicleTypeModel data) {
-        Log.e("Testing","Testing");
+        Log.e("Testing", "Testing");
     }
 
     @Override

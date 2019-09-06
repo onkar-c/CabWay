@@ -8,12 +8,12 @@ import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProviders;
 
+import com.crashlytics.android.Crashlytics;
 import com.example.cabway.Utils.IntentConstants;
 import com.example.cabway.viewModels.SplashViewModel;
 import com.example.core.responseModel.JsonResponse;
-import com.example.database.Utills.AppConstants;
 
-import java.util.Objects;
+import io.fabric.sdk.android.Fabric;
 
 public class SplashScreenActivity extends BaseActivity {
 
@@ -22,6 +22,7 @@ public class SplashScreenActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         splashViewModel = ViewModelProviders.of(this).get(SplashViewModel.class);
@@ -36,12 +37,12 @@ public class SplashScreenActivity extends BaseActivity {
     private void setStateCityObserver() {
         splashViewModel.getStateCityResponseMld().observe(this, (JsonResponse stateCityResponse) -> {
             removeProgressDialog();
-            if (Objects.requireNonNull(stateCityResponse).getStatus().equals(AppConstants.SUCCESS)) {
+            if (isSuccessResponse(stateCityResponse)) {
                 if (stateCityResponse.getCityList() != null)
                     appPreferences.setCityList(stateCityResponse.getCityList());
                 if (stateCityResponse.getStateList() != null)
                     appPreferences.setStateList(stateCityResponse.getStateList());
-                if(stateCityResponse.getVehicleList() !=null)
+                if (stateCityResponse.getVehicleList() != null)
                     appPreferences.setVehicleList(stateCityResponse.getVehicleList());
                 new Handler().postDelayed(SplashScreenActivity.this::startDashboardActivity, 500);
             } else {
@@ -64,12 +65,4 @@ public class SplashScreenActivity extends BaseActivity {
         startActivity(nextActivity);
         finish();
     }
-
-    /*private void generateFcmTopic() {
-        FirebaseMessaging.getInstance().subscribeToTopic("weather")
-                .addOnCompleteListener(task -> {
-                    Log.d("FCM", "onComplete");
-                    Toast.makeText(SplashScreenActivity.this, "onComplete", Toast.LENGTH_SHORT).show();
-                });
-    }*/
 }

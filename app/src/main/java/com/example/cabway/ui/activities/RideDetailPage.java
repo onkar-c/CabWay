@@ -3,6 +3,9 @@ package com.example.cabway.ui.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cabway.R;
 import com.example.cabway.Utils.DatePickerUtils;
+import com.example.cabway.Utils.DialogUtils;
 import com.example.cabway.Utils.ImageUtils;
 import com.example.cabway.Utils.IntentConstants;
 import com.example.cabway.Utils.TextValidationUtils;
@@ -63,8 +67,6 @@ public class RideDetailPage extends BaseActivity {
     ImageView ivProfileImage;
     @BindView(R.id.call_agency)
     Button btCall;
-    @BindView(R.id.edit)
-    Button btEdit;
     @BindView(R.id.delete)
     Button btDelete;
     @BindView(R.id.request_ride)
@@ -99,7 +101,7 @@ public class RideDetailPage extends BaseActivity {
     private void setDeleteRideObserver() {
         ridesViewModel.getDeleteRideResponseMld().observe(this, (JsonResponse deleteRideResponse) -> {
             removeProgressDialog();
-            if (Objects.requireNonNull(deleteRideResponse).getStatus().equals(AppConstants.SUCCESS)) {
+            if (isSuccessResponse(deleteRideResponse)) {
                 Toast.makeText(RideDetailPage.this, deleteRideResponse.getMessage(), Toast.LENGTH_SHORT).show();
                 onBackPressed();
             } else {
@@ -111,21 +113,45 @@ public class RideDetailPage extends BaseActivity {
     private void setRequestRideObserver() {
         ridesViewModel.getRequestRideResponseMld().observe(this, (JsonResponse requestRideResponse) -> {
             removeProgressDialog();
-            if (Objects.requireNonNull(requestRideResponse).getStatus().equals(AppConstants.SUCCESS)) {
+            if (isSuccessResponse(requestRideResponse)) {
                 Toast.makeText(RideDetailPage.this, requestRideResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                onBackPressed();
+                ride = requestRideResponse.getRide();
+                uiCommon();
             } else {
                 Toast.makeText(RideDetailPage.this, requestRideResponse.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_edit, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (menu.findItem(R.id.action_edit) != null)
+            menu.findItem(R.id.action_edit).setVisible((isAgency && !ride.getStatus().equals(AppConstants.ACCEPTED)));
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_edit) {
+            editRide();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void setButtons() {
         if (isAgency) {
-            if (!ride.getStatus().equals(AppConstants.ACCEPTED))
-                btEdit.setVisibility(View.VISIBLE);
-             else
-                btEdit.setVisibility(View.GONE);
+            if (!ride.getStatus().equals(AppConstants.ACCEPTED)) {
+                btDelete.setVisibility(View.VISIBLE);
+            } else
                 btDelete.setVisibility(View.GONE);
                 btCall.setVisibility(View.GONE);
                 status_layout.setVisibility(View.GONE);
@@ -136,14 +162,14 @@ public class RideDetailPage extends BaseActivity {
             status.setText(ride.getStatus());
         }
 
-
+        invalidateOptionsMenu();
     }
 
     private void prepareDriverList() {
         if (isAgency) {
-            if (ride.getStatus().equals(AppConstants.REQUESTED) && ride.getDriverList() != null)
+            if (ride.getStatus().equals(AppConstants.REQUESTED))
                 driverList = ride.getDriverList();
-            else if (ride.getStatus().equals(AppConstants.ACCEPTED) && ride.getDriver() != null) {
+            if (ride.getStatus().equals(AppConstants.ACCEPTED) && driverList == null && ride.getDriver() != null) {
                 driverList = new ArrayList<>();
                 driverList.add(ride.getDriver());
             }
@@ -173,7 +199,7 @@ public class RideDetailPage extends BaseActivity {
 
     private void setUi() {
 
-        tvAgencyName.setText(String.format("%s %s", ride.getAgency().getFirstName(), ride.getAgency().getLastName()));
+        tvAgencyName.setText(ride.getAgency().getAgencyName());
         tvRideDate.setText(DatePickerUtils.convertDate(ride.getPickupTime()));
         tvRideTime.setText(DatePickerUtils.convertDate(ride.getDropTime()));
         tvCarType.setText(ride.getCarType());
@@ -201,7 +227,7 @@ public class RideDetailPage extends BaseActivity {
         startActivity(callIntent);
     }
 
-    @OnClick(R.id.edit)
+
     void editRide() {
         Intent nextActivity = new Intent(this, CreateRideActivity.class);
         nextActivity.putExtra(IntentConstants.RIDE, ride);
@@ -211,8 +237,11 @@ public class RideDetailPage extends BaseActivity {
     @OnClick(R.id.delete)
     void deleteRide() {
         if (checkNetworkAvailableWithoutError()) {
-            showProgressDialog(AppConstants.PLEASE_WAIT, false);
-            ridesViewModel.getRidesRepository().deleteRide(ridesViewModel.getDeleteRideResponseMld(), ride.getRideId());
+            String message = String.format(getString(R.string.accept_reject_message), AppConstants.DELETE);
+            DialogUtils.showMessageDialog(this, message, (dialog, id) -> {
+                showProgressDialog(AppConstants.PLEASE_WAIT, false);
+                ridesViewModel.getRidesRepository().deleteRide(ridesViewModel.getDeleteRideResponseMld(), ride.getRideId());
+            });
         }
     }
 
@@ -220,8 +249,11 @@ public class RideDetailPage extends BaseActivity {
     @OnClick(R.id.request_ride)
     void requestRide() {
         if (checkNetworkAvailableWithoutError()) {
-            showProgressDialog(AppConstants.PLEASE_WAIT, false);
-            ridesViewModel.getRidesRepository().requestRide(ridesViewModel.getRequestRideResponseMld(), ride.getRideId());
+            String message = String.format(getString(R.string.accept_reject_message), AppConstants.REQUEST);
+            DialogUtils.showMessageDialog(this, message, (dialog, id) -> {
+                showProgressDialog(AppConstants.PLEASE_WAIT, false);
+                ridesViewModel.getRidesRepository().requestRide(ridesViewModel.getRequestRideResponseMld(), ride.getRideId());
+            });
         }
     }
 
@@ -238,7 +270,7 @@ public class RideDetailPage extends BaseActivity {
 
         if (resultCode == RESULT_OK) {
             RideResponseModel lRide = (RideResponseModel) Objects.requireNonNull(data).getSerializableExtra(IntentConstants.RIDE);
-            if (requestCode == AppConstants.REFRESH && lRide != null) {
+            if (requestCode == AppConstants.REFRESH) {
                 ride = lRide;
                 uiCommon();
             }

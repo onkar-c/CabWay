@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.HistoryListActivity"
     android:paddingBottom="5dp">
+    <include layout="@layout/no_data_available" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ridesHistoryList"

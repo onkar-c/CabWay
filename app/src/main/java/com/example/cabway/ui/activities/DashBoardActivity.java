@@ -34,6 +34,7 @@ import com.example.cabway.ui.fragments.NewRidesFragment;
 import com.example.cabway.ui.fragments.OnGoingRidesFragment;
 import com.example.cabway.ui.fragments.RequestedRidesFragment;
 import com.example.cabway.viewModels.RidesViewModel;
+import com.example.cabway.viewModels.UserViewModel;
 import com.example.core.CommonModels.UserModel;
 import com.example.core.responseModel.JsonResponse;
 import com.example.core.responseModel.RideResponseModel;
@@ -76,6 +77,7 @@ public class DashBoardActivity extends BaseActivity
     TextView top_description;
     ProfileMenuAdapter profileMenuAdapter;
 
+    UserViewModel userViewModel;
     RidesViewModel ridesViewModel;
     private List<String> menu_items;
     RecyclerViewItemClickListener recyclerViewItemClickListener = new RecyclerViewItemClickListener() {
@@ -92,6 +94,7 @@ public class DashBoardActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash_board);
         ButterKnife.bind(this);
+
         ridesViewModel = ViewModelProviders.of(this).get(RidesViewModel.class);
         ridesViewModel.init();
         setGetRidesObserver();
@@ -102,10 +105,12 @@ public class DashBoardActivity extends BaseActivity
 
     }
 
+
+
     private void setGetRidesObserver() {
         ridesViewModel.getRidesMld().observe(this, (JsonResponse getRidesResponse) -> {
             removeProgressDialog();
-            if (Objects.requireNonNull(getRidesResponse).getStatus().equals(AppConstants.SUCCESS)) {
+            if (isSuccessResponse(getRidesResponse)) {
                 newRides = getRidesResponse.getRideList();
                 requestedRides = getRidesResponse.getRequestedRideList();
                 onGoingRides = getRidesResponse.getAcceptedRideList();
@@ -219,6 +224,8 @@ public class DashBoardActivity extends BaseActivity
             startActivity(nextActivity);
         }
     }
+
+
 
 
     @OnClick({R.id.top_view, R.id.main_action})

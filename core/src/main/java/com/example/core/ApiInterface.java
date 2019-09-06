@@ -71,6 +71,9 @@ public interface ApiInterface {
     @PUT("users/cityPrefrence")
     Call<JsonResponse> updatePreferredCity(@Body CityModel cityModel);
 
+    @PUT("users/logout")
+    Call<JsonResponse> logout();
+
     @GET("ride/userRides")
     Call<JsonResponse> getRides();
 
@@ -79,5 +82,8 @@ public interface ApiInterface {
 
     @PUT("ride/acceptreject")
     Call<JsonResponse> acceptRejectRide(@Query("rideId") Long rideId, @Query("driverId") int driverId, @Query("action") String action);
+
+    @GET("ride/history")
+    Call<JsonResponse> getRidesHistory();
 
 }

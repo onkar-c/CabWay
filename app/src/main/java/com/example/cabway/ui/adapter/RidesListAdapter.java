@@ -43,7 +43,7 @@ public class RidesListAdapter extends RecyclerView.Adapter<RidesListAdapter.Ride
     @Override
     public void onBindViewHolder(@NonNull RidesListViewHolder holder, int position) {
         RideResponseModel ride = ridesList.get(position);
-        holder.agencyName.setText(String.format("%s %s", ride.getAgency().getFirstName(), ride.getAgency().getLastName()));
+        holder.agencyName.setText(ride.getAgency().getAgencyName());
         holder.rideCost.setText(String.format("%s ", ride.getCost().toString()));
         holder.rideDate.setText(DatePickerUtils.convertDate(ride.getPickupTime()));
         holder.rideTime.setText(DatePickerUtils.convertDate(ride.getDropTime()));

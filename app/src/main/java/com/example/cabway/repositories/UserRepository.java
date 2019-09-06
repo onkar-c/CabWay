@@ -38,4 +38,8 @@ public class UserRepository {
     public void updateUser(MutableLiveData<JsonResponse> updateUserResponse, UserModel userModel, String filePath) {
         ApiExecutor.updateUser(updateUserResponse, userModel, filePath);
     }
+
+    public void logout(MutableLiveData<JsonResponse> logoutResponse) {
+        ApiExecutor.logout(logoutResponse);
+    }
 }

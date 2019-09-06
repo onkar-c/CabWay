@@ -36,4 +36,8 @@ public class RidesRepository {
     public void requestRide(MutableLiveData<JsonResponse> requestRideResponse, Long rideId){
         ApiExecutor.requestRide(requestRideResponse,rideId);
     }
+
+    public void getRidesHistory(MutableLiveData<JsonResponse> rideHistoryResponse){
+        ApiExecutor.getRidesHistory(rideHistoryResponse);
+    }
 }

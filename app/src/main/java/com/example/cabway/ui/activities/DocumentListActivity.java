@@ -108,7 +108,7 @@ public class DocumentListActivity extends BaseActivity {
     private void setDocumentsObserver() {
         documentViewModel.getDocumentsResponseMld().observe(this, documentsResponse -> {
             removeProgressDialog();
-            if (Objects.requireNonNull(documentsResponse).getStatus().equals(AppConstants.SUCCESS)) {
+            if (isSuccessResponse(documentsResponse)) {
                 documentModelList = documentsResponse.getDocumentsList();
                 documentListAdapter.setDocumentModelList(documentModelList);
                 documentListAdapter.notifyDataSetChanged();

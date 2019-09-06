@@ -12,6 +12,7 @@ public class UserViewModel extends ViewModel {
     private MutableLiveData<JsonResponse> verifyOtpResponse;
     private MutableLiveData<JsonResponse> userRegistrationResponse;
     private MutableLiveData<JsonResponse> userUpdateResponse;
+    private MutableLiveData<JsonResponse> logoutResponse;
     private UserRepository userRepository;
 
     public void init() {
@@ -19,6 +20,7 @@ public class UserViewModel extends ViewModel {
         verifyOtpResponse = new MutableLiveData<>();
         userRegistrationResponse = new MutableLiveData<>();
         userUpdateResponse = new MutableLiveData<>();
+        logoutResponse = new MutableLiveData<>();
         userRepository = UserRepository.getInstance();
     }
 
@@ -38,7 +40,13 @@ public class UserViewModel extends ViewModel {
         return userUpdateResponse;
     }
 
+    public MutableLiveData<JsonResponse> getLogoutResponseMld() {
+        return logoutResponse;
+    }
+
     public UserRepository getUserRepository() {
         return userRepository;
     }
+
+
 }

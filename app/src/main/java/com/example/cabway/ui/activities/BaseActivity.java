@@ -8,39 +8,80 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Window;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.example.cabway.R;
 import com.example.cabway.Utils.ConnectivityUtils;
 import com.example.cabway.Utils.DialogUtils;
+import com.example.cabway.fcm.CabWayFCMInstanceService;
+import com.example.cabway.viewModels.UserViewModel;
 import com.example.core.Utills.AppPreferences;
+import com.example.core.responseModel.JsonResponse;
+import com.example.database.Utills.AppConstants;
 
 
 public class BaseActivity extends AppCompatActivity {
 
-    AppPreferences appPreferences;
-    private ProgressDialog mProgressDialog;
+    public static BaseActivity instance;
     private final String TAG = "Base activity";
+    AppPreferences appPreferences;
+    DialogInterface.OnClickListener onExit = (dialog, id) -> finish();
+    UserViewModel logoutUserViewModel;
+    private ProgressDialog mProgressDialog;
+    DialogInterface.OnClickListener onLogoutListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int id) {
+            if (checkNetworkAvailableWithoutError()) {
+                logoutUserViewModel.getUserRepository().logout(logoutUserViewModel.getLogoutResponseMld());
+                showProgressDialog(AppConstants.PLEASE_WAIT, false);
+            }
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        instance = this;
         appPreferences = AppPreferences.getInstance();
         if (appPreferences == null)
             appPreferences = new AppPreferences(this);
+        logoutUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        logoutUserViewModel.init();
+        setLogoutObserver();
         setProgressDialog(this);
+    }
+
+    private void setLogoutObserver() {
+        logoutUserViewModel.getLogoutResponseMld().observe(this, (JsonResponse logoutResponse) -> {
+            removeProgressDialog();
+            if (isSuccessResponse(logoutResponse)) {
+                performLogout();
+            } else {
+                Toast.makeText(this, logoutResponse.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    private void performLogout() {
+        CabWayFCMInstanceService.unregisterFcmTopic(appPreferences.getUserDetails().mobileNo);
+        appPreferences.clearPreferencesForLogout();
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
     @Override
@@ -52,7 +93,6 @@ public class BaseActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
     }
-
 
     public boolean checkNetworkAvailableWithoutError() {
         if (!isNetworkAvailable()) {
@@ -67,7 +107,6 @@ public class BaseActivity extends AppCompatActivity {
         return ConnectivityUtils.isNetworkAvailable(this);
     }
 
-
     @Override
     public void onBackPressed() {
 
@@ -76,8 +115,6 @@ public class BaseActivity extends AppCompatActivity {
         else
             super.onBackPressed();
     }
-
-    DialogInterface.OnClickListener onExit = (dialog, id) -> finish();
 
     @Override
     protected void onResume() {
@@ -181,11 +218,13 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    DialogInterface.OnClickListener onLogoutListener = (dialog, id) -> {
-        appPreferences.clearPreferencesForLogout();
-        startActivity(new Intent(this, LoginActivity.class));
-        finish();
-    };
+    public boolean isSuccessResponse(JsonResponse jsonResponse) {
+        if (jsonResponse.getStatus().equals(AppConstants.AUTH_ERROR)) {
+            Toast.makeText(this, jsonResponse.getMessage(), Toast.LENGTH_LONG).show();
+            performLogout();
+            return false;
+        } else return jsonResponse.getStatus().equals(AppConstants.SUCCESS);
+    }
 
     public void performActionAfterPermission() {
 

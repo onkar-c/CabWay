@@ -10,6 +10,7 @@ public class RidesViewModel extends ViewModel {
     private MutableLiveData<JsonResponse> createRideResponse;
     private MutableLiveData<JsonResponse> deleteRideResponse;
     private MutableLiveData<JsonResponse> ridesResponse;
+    private MutableLiveData<JsonResponse> ridesHistoryResponse;
     private MutableLiveData<JsonResponse> acceptRejectRidesResponse;
     private RidesRepository ridesRepository;
     private MutableLiveData<JsonResponse> requestRideResponse;
@@ -20,6 +21,7 @@ public class RidesViewModel extends ViewModel {
         acceptRejectRidesResponse = new MutableLiveData<>();
         deleteRideResponse = new MutableLiveData<>();
         requestRideResponse = new MutableLiveData<>();
+        ridesHistoryResponse = new MutableLiveData<>();
         ridesRepository = RidesRepository.getInstance();
     }
 
@@ -45,5 +47,9 @@ public class RidesViewModel extends ViewModel {
 
     public MutableLiveData<JsonResponse> getRequestRideResponseMld() {
         return requestRideResponse;
+    }
+
+    public MutableLiveData<JsonResponse> getRidesHistoryResponseMld() {
+        return ridesHistoryResponse;
     }
 }

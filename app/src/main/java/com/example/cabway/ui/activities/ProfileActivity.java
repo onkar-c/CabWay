@@ -107,7 +107,7 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
         if (user != null) {
             etFName.setText(user.firstName);
             etLName.setText(user.lastName);
-            if(user.role.equals(AppConstants.AGENCY)){
+            if (user.role.equals(AppConstants.AGENCY)) {
                 agencyName.setVisibility(View.VISIBLE);
                 agencyName.setText(user.agencyName);
                 tv_agency_name.setVisibility(View.VISIBLE);
@@ -118,9 +118,9 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
             etPincode.setText(user.pinCode);
             etRole.setText(user.role);
             spState.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.STATE, 0, spState));
-            spState.setSelection(SpinnerUtils.getStatePosition((SpinnerUtils.getStateOfCity(user.cityCode.getCityId()).getId())));
+            spState.setSelection(SpinnerUtils.getStatePosition((Objects.requireNonNull(SpinnerUtils.getStateOfCity(user.cityCode.getCityId())).getId())));
             spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, 0, spCity));
-            spCity.setSelection(SpinnerUtils.getCityPosition(user.cityCode.getCityId(),(SpinnerUtils.getStateOfCity(user.cityCode.getCityId()).getId())));
+            spCity.setSelection(SpinnerUtils.getCityPosition(user.cityCode.getCityId(), (Objects.requireNonNull(SpinnerUtils.getStateOfCity(user.cityCode.getCityId())).getId())));
             ImageUtils.setImageFromUrl(this, user.profileImage, ivProfile);
         }
         toggleUi(false);
@@ -129,7 +129,7 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
     private void setUpdateUserObserver() {
         userViewModel.getUserUpdateResponseMld().observe(this, userUpdateUserResponse -> {
             removeProgressDialog();
-            if (Objects.requireNonNull(userUpdateUserResponse).getStatus().equals(AppConstants.SUCCESS)) {
+            if (isSuccessResponse(userUpdateUserResponse)) {
                 toggleUi(false);
                 if (userUpdateUserResponse.getUser() != null)
                     appPreferences.setUserDetails(userUpdateUserResponse.getUser());
@@ -157,8 +157,8 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
         userModel.lastName = etLName.getText().toString();
         userModel.address = etAddress.getText().toString();
         userModel.email = etEmail.getText().toString();
-        if(agencyName.getVisibility() == View.VISIBLE)
-        userModel.agencyName = agencyName.getText().toString();
+        if (agencyName.getVisibility() == View.VISIBLE)
+            userModel.agencyName = agencyName.getText().toString();
         userModel.cityCode = selectedCity;
         userModel.pinCode = etPincode.getText().toString();
         return userModel;
@@ -180,8 +180,7 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
         } else if (agencyName.getVisibility() == View.VISIBLE && TextValidationUtils.isEmpty(agencyName.getText().toString())) {
             showMandatoryError(R.string.agency_name, this);
             return false;
-        }
-        else if (!TextValidationUtils.isValidAddress(etAddress.getText().toString(), this)) {
+        } else if (!TextValidationUtils.isValidAddress(etAddress.getText().toString(), this)) {
             return false;
         } else if (spCity.getSelectedItemPosition() == 0) {
             showMandatoryError(R.string.city, this);
@@ -200,11 +199,11 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ImageUtils.IMAGE_PICK) {
-            String fileName = new Date().getTime() + ".png";
-            String filePath = ImageUtils.onImagePickResult(requestCode, resultCode, data, fileName, this);
+            String filePath = ImageUtils.onImagePickResult(requestCode, resultCode, data, this); // upload image with storing and compressing
+//           String filePath = ImageUtils.getRealPathFromURI(this,data.getData()); // direct upload without storing the image.
             if (!TextValidationUtils.isEmpty(filePath)) {
                 mFilePath = filePath;
-                //Toast.makeText(this, filePath, Toast.LENGTH_SHORT).show();
+
                 ImageUtils.setImageFromFilePath(this, mFilePath, ivProfile);
             }
         }
@@ -254,12 +253,12 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
         if (data instanceof StateModel) {
             if (((StateModel) data).getId() != -1) {
                 spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, ((StateModel) data).getId(), spCity));
-                if (user != null && SpinnerUtils.stateCityMatches(((StateModel) data).getId(),user.cityCode.getCityId())) {
-                    spCity.setSelection(SpinnerUtils.getCityPosition(user.cityCode.getCityId(),(SpinnerUtils.getStateOfCity(user.cityCode.getCityId()).getId())));
+                if (user != null && SpinnerUtils.stateCityMatches(((StateModel) data).getId(), user.cityCode.getCityId())) {
+                    spCity.setSelection(SpinnerUtils.getCityPosition(user.cityCode.getCityId(), (Objects.requireNonNull(SpinnerUtils.getStateOfCity(user.cityCode.getCityId())).getId())));
                 }
             }
         } else if (data instanceof CityModel) {
-            selectedCity= (CityModel) data;
+            selectedCity = (CityModel) data;
         }
     }
 }

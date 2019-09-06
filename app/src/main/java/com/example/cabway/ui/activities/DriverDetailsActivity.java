@@ -21,8 +21,6 @@ import com.example.core.responseModel.JsonResponse;
 import com.example.core.responseModel.RideResponseModel;
 import com.example.database.Utills.AppConstants;
 
-import java.util.Objects;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -85,7 +83,7 @@ public class DriverDetailsActivity extends BaseActivity {
     private void setAcceptRejectRidesObserver() {
         ridesViewModel.getAcceptRejectRidesResponseMld().observe(this, (JsonResponse acceptRejectRidesResponse) -> {
             removeProgressDialog();
-            if (Objects.requireNonNull(acceptRejectRidesResponse).getStatus().equals(AppConstants.SUCCESS)) {
+            if (isSuccessResponse(acceptRejectRidesResponse)) {
                 Toast.makeText(DriverDetailsActivity.this, acceptRejectRidesResponse.getMessage(), Toast.LENGTH_SHORT).show();
                 sendResultData(acceptRejectRidesResponse.getRide());
             } else {

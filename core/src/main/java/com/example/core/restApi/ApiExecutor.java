@@ -112,11 +112,19 @@ public class ApiExecutor {
         RequestExecutor.ExecuteApi(getApiInterface().updatePreferredCity(cityModel), mltPreferredCityResponse);
     }
 
+    public static void logout(final MutableLiveData<JsonResponse> mltLogoutResponse) {
+        RequestExecutor.ExecuteApi(getApiInterface().logout(), mltLogoutResponse);
+    }
+
     public static void getRides(final MutableLiveData<JsonResponse> mltRidesResponse) {
         RequestExecutor.ExecuteApi(getApiInterface().getRides(), mltRidesResponse);
     }
 
     public static void acceptRejectRides(Long rideId, int driverId, String action, final MutableLiveData<JsonResponse> mltAcceptRejectRidesResponse) {
         RequestExecutor.ExecuteApi(getApiInterface().acceptRejectRide(rideId, driverId, action), mltAcceptRejectRidesResponse);
+    }
+
+    public static void getRidesHistory(final MutableLiveData<JsonResponse> mltRidesHistoryResponse) {
+        RequestExecutor.ExecuteApi(getApiInterface().getRidesHistory(), mltRidesHistoryResponse);
     }
 }

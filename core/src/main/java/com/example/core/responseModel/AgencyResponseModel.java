@@ -15,6 +15,7 @@ public class AgencyResponseModel implements Serializable {
     private String pinCode;
     private CityModel cityCode;
     private String profileImage;
+    public String agencyName;
 
     public int getUuId() {
         return uuId;
@@ -50,5 +51,9 @@ public class AgencyResponseModel implements Serializable {
 
     public String getProfileImage() {
         return profileImage;
+    }
+
+    public String getAgencyName() {
+        return agencyName;
     }
 }

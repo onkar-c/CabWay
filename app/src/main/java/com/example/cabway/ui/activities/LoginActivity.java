@@ -1,20 +1,20 @@
 package com.example.cabway.ui.activities;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import androidx.lifecycle.ViewModelProviders;
+
 import com.example.cabway.R;
 import com.example.cabway.Utils.IntentConstants;
 import com.example.cabway.Utils.TextValidationUtils;
+import com.example.cabway.fcm.CabWayFCMInstanceService;
 import com.example.cabway.viewModels.LoginViewModel;
 import com.example.core.CommonModels.UserModel;
 import com.example.database.Utills.AppConstants;
-
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,7 +52,7 @@ public class LoginActivity extends BaseActivity {
     private void setLoginResponseObserver() {
         loginViewModel.getLoginResponse().observe(this, loginResponse -> {
             LoginActivity.this.removeProgressDialog();
-            if (Objects.requireNonNull(loginResponse).getStatus().equals(AppConstants.SUCCESS)) {
+            if (isSuccessResponse(loginResponse)) {
                 Toast.makeText(LoginActivity.this, loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
                 setUserData(loginResponse.getUser());
                 startNextActivity(loginResponse.getUser());
@@ -69,11 +69,12 @@ public class LoginActivity extends BaseActivity {
         appPreferences.setUserDetails(user);
     }
 
-    private void startNextActivity(UserModel user){
+    private void startNextActivity(UserModel user) {
         Intent nextActivityIntent;
-        if(user.documentCompleted)
+        if (user.documentCompleted) {
             nextActivityIntent = new Intent(LoginActivity.this, DashBoardActivity.class);
-        else {
+            CabWayFCMInstanceService.registerFcmTopic(user.mobileNo);
+        } else {
             nextActivityIntent = new Intent(LoginActivity.this, DocumentListActivity.class);
             nextActivityIntent.putExtra(IntentConstants.IS_FROM_LOGIN, true);
         }

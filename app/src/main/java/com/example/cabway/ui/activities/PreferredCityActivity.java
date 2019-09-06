@@ -18,8 +18,6 @@ import com.example.core.CommonModels.StateModel;
 import com.example.core.CommonModels.UserModel;
 import com.example.database.Utills.AppConstants;
 
-import java.util.Objects;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -55,7 +53,7 @@ public class PreferredCityActivity extends BaseActivity implements CitySpinnerAd
     private void setPreferredCityObserver() {
         preferredCityViewModel.getPreferredCityResponseMld().observe(this, preferredCityResponse -> {
             removeProgressDialog();
-            if (Objects.requireNonNull(preferredCityResponse).getStatus().equals(AppConstants.SUCCESS)) {
+            if (isSuccessResponse(preferredCityResponse)) {
                 UserModel userModel = appPreferences.getUserDetails();
                 userModel.cityPreferences = preferredCityResponse.getUser().cityPreferences;
                 appPreferences.setUserDetails(userModel);

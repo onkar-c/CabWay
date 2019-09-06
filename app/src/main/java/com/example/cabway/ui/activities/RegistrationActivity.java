@@ -29,8 +29,6 @@ import com.example.core.CommonModels.UserModel;
 import com.example.database.Utills.AppConstants;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.util.Objects;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -130,7 +128,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     private void setOtpObserver() {
         userViewModel.getOtpResponseMld().observe(this, otpResponse -> {
             removeProgressDialog();
-            if (Objects.requireNonNull(otpResponse).getStatus().equals(AppConstants.SUCCESS)) {
+            if (isSuccessResponse(otpResponse)) {
                 Toast.makeText(RegistrationActivity.this, R.string.otp_sent, Toast.LENGTH_SHORT).show();
                 if (!dialogOtp.isShowing())
                     dialogOtp.showCustomDialogVerifyMobile(mMobileNumber);
@@ -143,7 +141,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     private void setVerifyOtpObserver() {
         userViewModel.getVerifyOtpResponseMld().observe(this, verifyOtpResponse -> {
             removeProgressDialog();
-            if (Objects.requireNonNull(verifyOtpResponse).getStatus().equals(AppConstants.SUCCESS)) {
+            if (isSuccessResponse(verifyOtpResponse)) {
                 dialogOtp.otpVerificationSuccess();
                 setUiForOtpSuccess();
             } else
@@ -154,7 +152,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     private void setRegisterUserObserver() {
         userViewModel.getUserRegistrationResponseMld().observe(this, userRegistrationResponse -> {
             removeProgressDialog();
-            if (Objects.requireNonNull(userRegistrationResponse).getStatus().equals(AppConstants.SUCCESS)) {
+            if (isSuccessResponse(userRegistrationResponse)) {
                 Toast.makeText(RegistrationActivity.this, userRegistrationResponse.getMessage(), Toast.LENGTH_SHORT).show();
                 onBackPressed();
             } else {
@@ -286,8 +284,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ImageUtils.IMAGE_PICK) {
 //            removeProgressDialog();
-            String fileName = Math.random() + ".png";
-            String filePath = ImageUtils.onImagePickResult(requestCode, resultCode, data, fileName, this);
+            String filePath = ImageUtils.onImagePickResult(requestCode, resultCode, data, this);
             if (!TextValidationUtils.isEmpty(filePath)) {
                 mFilePath = filePath;
                 Toast.makeText(this, filePath, Toast.LENGTH_SHORT).show();

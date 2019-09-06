@@ -1,13 +1,13 @@
 package com.example.cabway.ui.activities;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import com.google.android.material.textfield.TextInputLayout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.cabway.R;
 import com.example.cabway.Utils.TextValidationUtils;
@@ -15,8 +15,7 @@ import com.example.cabway.ui.Interfaces.RegistrationInterface;
 import com.example.cabway.ui.dialogs.DialogOtp;
 import com.example.cabway.viewModels.ForgotPasswordViewModel;
 import com.example.database.Utills.AppConstants;
-
-import java.util.Objects;
+import com.google.android.material.textfield.TextInputLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,7 +68,7 @@ public class ForgotPasswordActivity extends BaseActivity implements Registration
     private void setOtpObserver() {
         forgotPasswordViewModel.getOtpResponseMld().observe(this, otpResponse -> {
             removeProgressDialog();
-            if (Objects.requireNonNull(otpResponse).getStatus().equals(AppConstants.SUCCESS)) {
+            if (isSuccessResponse(otpResponse)) {
                 Toast.makeText(ForgotPasswordActivity.this, R.string.otp_sent, Toast.LENGTH_SHORT).show();
                 if (!dialogOtp.isShowing())
                     dialogOtp.showCustomDialogVerifyMobile(mMobileNumber);
@@ -82,7 +81,7 @@ public class ForgotPasswordActivity extends BaseActivity implements Registration
     private void setVerifyOtpObserver() {
         forgotPasswordViewModel.getVerifyOtpResponseMld().observe(this, verifyOtpResponse -> {
             removeProgressDialog();
-            if (Objects.requireNonNull(verifyOtpResponse).getStatus().equals(AppConstants.SUCCESS)) {
+            if (isSuccessResponse(verifyOtpResponse)) {
                 dialogOtp.otpVerificationSuccess();
                 setUiForOtpSuccess();
             } else
@@ -93,7 +92,7 @@ public class ForgotPasswordActivity extends BaseActivity implements Registration
     private void setResetPasswordObserver() {
         forgotPasswordViewModel.getResetPasswordResponseMld().observe(this, resetPasswordResponse -> {
             removeProgressDialog();
-            if (Objects.requireNonNull(resetPasswordResponse).getStatus().equals(AppConstants.SUCCESS)) {
+            if (isSuccessResponse(resetPasswordResponse)) {
                 Toast.makeText(ForgotPasswordActivity.this, resetPasswordResponse.getMessage(), Toast.LENGTH_SHORT).show();
                 onBackPressed();
             } else {
