@@ -45,7 +45,7 @@ public class SpinnerUtils {
     public static StateModel getStateOfCity(int pCityCode) {
         List<CityModel> tempList = AppPreferences.getInstance().getCityList();
         for (CityModel city : tempList) {
-            if (city.getCityId()== pCityCode ) {
+            if (city.getCityId() == pCityCode) {
                 return getStateData(city.getStateCode());
             }
         }
@@ -55,7 +55,7 @@ public class SpinnerUtils {
     public static StateModel getStateOfCityByCityName(String pCityName) {
         List<CityModel> tempList = AppPreferences.getInstance().getCityList();
         for (CityModel city : tempList) {
-            if (city.getName().equalsIgnoreCase(pCityName)){
+            if (city.getName().equalsIgnoreCase(pCityName)) {
                 return getStateData(city.getStateCode());
             }
         }
@@ -65,18 +65,18 @@ public class SpinnerUtils {
     public static CityModel getCity(int cityCode) {
         List<CityModel> tempList = AppPreferences.getInstance().getCityList();
         for (CityModel city : tempList) {
-            if (city.getCityId() == cityCode ) {
+            if (city.getCityId() == cityCode) {
                 return city;
             }
         }
         return null;
     }
 
-    public static int getCityPosition(int cityCode,int stateCode) {
+    public static int getCityPosition(int cityCode, int stateCode) {
         List<CityModel> tempList = getCityList(stateCode);
         for (int i = 0; i < tempList.size(); i++) {
             if (tempList.get(i).getCityId() == cityCode) {
-                return i ;//spinner list contains extra select element
+                return i;//spinner list contains extra select element
             }
         }
         return 0;
@@ -86,7 +86,7 @@ public class SpinnerUtils {
         List<CityModel> tempList = AppPreferences.getInstance().getCityList();
         for (int i = 0; i < tempList.size(); i++) {
             if (tempList.get(i).getName().equalsIgnoreCase(cityName)) {
-                return i ;//spinner list contains extra select element
+                return i;//spinner list contains extra select element
             }
         }
         return 0;
@@ -95,7 +95,7 @@ public class SpinnerUtils {
     private static StateModel getStateData(int stateCode) {
         List<StateModel> tempList = AppPreferences.getInstance().getStateList();
         for (StateModel state : tempList) {
-            if (state.getId()== stateCode)
+            if (state.getId() == stateCode)
                 return state;
         }
         return null;
@@ -106,7 +106,7 @@ public class SpinnerUtils {
         return tempList.get((int) position - 1);
     }
 
-    public static CityModel getCityData(long position,int stateCode) {
+    public static CityModel getCityData(long position, int stateCode) {
         List<CityModel> tempList = getCityList(stateCode);
         return tempList.get((int) position - 1);
     }
@@ -131,11 +131,21 @@ public class SpinnerUtils {
 
     public static CitySpinnerAdapter setSpinnerAdapter(Activity context, String type, int stateCode, AppCompatSpinner spinner) {
         if (type.equalsIgnoreCase(AppConstants.STATE)) {
-            return new CitySpinnerAdapter<>(context,spinner, getStateList());
+            return new CitySpinnerAdapter<>(context, spinner, getStateList());
         } else if (type.equalsIgnoreCase(AppConstants.CITY)) {
-            return new CitySpinnerAdapter<>(context,spinner, getCityList(stateCode));
+            return new CitySpinnerAdapter<>(context, spinner, getCityList(stateCode));
         }
         return null;
     }
 
+    public static boolean stateCityMatches(int stateId, int cityId) {
+        List<CityModel> tempList = AppPreferences.getInstance().getCityList();
+        for (int i = 0; i < tempList.size(); i++) {
+            if (tempList.get(i).getCityId() == cityId) {
+                if (tempList.get(i).getStateCode() == stateId)
+                    return true;
+            }
+        }
+        return false;
+    }
 }
