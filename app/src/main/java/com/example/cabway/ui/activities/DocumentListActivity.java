@@ -1,15 +1,16 @@
 package com.example.cabway.ui.activities;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cabway.R;
 import com.example.cabway.Utils.DialogUtils;
@@ -23,7 +24,6 @@ import com.example.database.Utills.AppConstants;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,7 +45,6 @@ public class DocumentListActivity extends BaseActivity {
     private DocumentViewModel documentViewModel;
     private List<String> documentList;
     private List<DocumentModel> documentModelList;
-    private boolean isFromLogin = false;
     RecyclerViewItemClickListener recyclerViewItemClickListener = new RecyclerViewItemClickListener() {
         @Override
         public void onItemClick(View v, int position) {
@@ -58,6 +57,7 @@ public class DocumentListActivity extends BaseActivity {
                 getDocumentsFromServer();
         }
     };
+    private boolean isFromLogin = false;
 
     public static DocumentModel getDocumentFromList(String docType, List<DocumentModel> documentModels) {
         if (!documentModels.isEmpty()) {
@@ -134,7 +134,7 @@ public class DocumentListActivity extends BaseActivity {
     }
 
     private void initData() {
-        documentList = Arrays.asList(getResources().getStringArray((appPreferences.getUserDetails().role.equals(AppConstants.DRIVER)) ? R.array.driver_document_list : R.array.agency_document_list));
+        documentList = Arrays.asList(getResources().getStringArray((appPreferences.getUserDetails() != null && appPreferences.getUserDetails().role.equals(AppConstants.DRIVER)) ? R.array.driver_document_list : R.array.agency_document_list));
     }
 
     @OnClick(R.id.btn_logout)

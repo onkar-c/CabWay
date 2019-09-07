@@ -1,5 +1,7 @@
 package com.example.core.CommonModels;
 
+import androidx.annotation.Nullable;
+
 import java.io.Serializable;
 
 public class CityModel implements Serializable {
@@ -8,6 +10,12 @@ public class CityModel implements Serializable {
     private String name;
     private StateModel state;
 
+    public CityModel(int cityId) {
+        this.cityId = cityId;
+    }
+    public CityModel(String name) {
+        this.name = name;
+    }
 
     public CityModel(int cityId, String name) {
         this.cityId = cityId;
@@ -33,5 +41,18 @@ public class CityModel implements Serializable {
 
     public StateModel getState() {
         return state;
+    }
+
+    @Override
+    public int hashCode() {
+        return cityId;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj == null || obj.getClass() != this.getClass())
+            return false;
+        CityModel cityModel = (CityModel) obj;
+        return (this.cityId == cityModel.cityId || (cityModel.name != null && this.name.equals(cityModel.name)));
     }
 }

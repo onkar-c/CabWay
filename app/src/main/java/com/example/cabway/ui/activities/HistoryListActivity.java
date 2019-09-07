@@ -53,7 +53,7 @@ public class HistoryListActivity extends BaseActivity {
             if (ridesListAdapter == null) {
                 LinearLayoutManager layoutManager = new LinearLayoutManager(this);
                 ridesHistoryList.setLayoutManager(layoutManager);
-                ridesListAdapter = new RidesListAdapter(this, new ArrayList<>());
+                ridesListAdapter = new RidesListAdapter(this, new ArrayList<>(), appPreferences.getUserDetails().role.equals(AppConstants.AGENCY));
                 ridesHistoryList.setAdapter(ridesListAdapter);
             } else
                 ridesListAdapter.setData(rides);

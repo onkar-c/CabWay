@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cabway.R;
 import com.example.cabway.Utils.DialogUtils;
 import com.example.cabway.Utils.ImageUtils;
+import com.example.cabway.Utils.RideUtils;
 import com.example.cabway.ui.Interfaces.RecyclerViewItemClickListener;
 import com.example.cabway.ui.adapter.ProfileMenuAdapter;
 import com.example.cabway.ui.fragments.NewRidesFragment;
@@ -44,6 +45,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -108,9 +110,9 @@ public class DashBoardActivity extends BaseActivity
         ridesViewModel.getRidesMld().observe(this, (JsonResponse getRidesResponse) -> {
             removeProgressDialog();
             if (isSuccessResponse(getRidesResponse)) {
-                newRides = getRidesResponse.getRideList();
-                requestedRides = getRidesResponse.getRequestedRideList();
-                onGoingRides = getRidesResponse.getAcceptedRideList();
+                newRides = RideUtils.sortRidesDescending(getRidesResponse.getRideList());
+                requestedRides = RideUtils.sortRidesDescending(getRidesResponse.getRequestedRideList());
+                onGoingRides = RideUtils.sortRidesOnTime(getRidesResponse.getAcceptedRideList());
                 refreshList();
             } else {
                 Toast.makeText(DashBoardActivity.this, getRidesResponse.getMessage(), Toast.LENGTH_SHORT).show();
@@ -143,8 +145,7 @@ public class DashBoardActivity extends BaseActivity
             textToDisplay = getString(R.string.preferred_city) + " : " + city;
 
         top_description.setText(textToDisplay);
-        if(user.profileImage!=null && !user.profileImage.isEmpty())
-            ImageUtils.setImageFromUrl(this, user.profileImage, ivProfile);
+        ImageUtils.setImageFromUrl(this, user.profileImage, ivProfile);
         if (checkNetworkAvailableWithoutError()) {
             showProgressDialog(AppConstants.PLEASE_WAIT, false);
             ridesViewModel.getRidesRepository().getRides(ridesViewModel.getRidesMld());
@@ -240,7 +241,7 @@ public class DashBoardActivity extends BaseActivity
 
     private void refreshList() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        Fragment fragment1 = fragment.getChildFragmentManager().getFragments().get(0);
+        Fragment fragment1 = Objects.requireNonNull(fragment).getChildFragmentManager().getFragments().get(0);
         if (fragment1 instanceof NewRidesFragment)
             ((NewRidesFragment) fragment1).resetData(newRides);
         else if (fragment1 instanceof OnGoingRidesFragment)

@@ -27,10 +27,12 @@ public class RidesListAdapter extends RecyclerView.Adapter<RidesListAdapter.Ride
 
     private Context context;
     private List<RideResponseModel> ridesList;
+    private boolean isAgency;
 
-    public RidesListAdapter(Context context, List<RideResponseModel> ridesList) {
+    public RidesListAdapter(Context context, List<RideResponseModel> ridesList, boolean isAgency) {
         this.context = context;
         this.ridesList = ridesList;
+        this.isAgency = isAgency;
     }
 
     @NonNull
@@ -43,7 +45,11 @@ public class RidesListAdapter extends RecyclerView.Adapter<RidesListAdapter.Ride
     @Override
     public void onBindViewHolder(@NonNull RidesListViewHolder holder, int position) {
         RideResponseModel ride = ridesList.get(position);
-        holder.agencyName.setText(ride.getAgency().getAgencyName());
+        if (!isAgency) {
+            holder.agencyName.setVisibility(View.VISIBLE);
+            holder.agencyName.setText(ride.getAgency().getAgencyName());
+        } else
+            holder.agencyName.setVisibility(View.GONE);
         holder.rideCost.setText(String.format("%s ", ride.getCost().toString()));
         holder.rideDate.setText(DatePickerUtils.convertDate(ride.getPickupTime()));
         holder.rideTime.setText(DatePickerUtils.convertDate(ride.getDropTime()));

@@ -27,4 +27,10 @@
         <item name="android:paddingLeft">@dimen/input_label_horizontal_spacing</item>
         <item name="android:paddingRight">@dimen/input_label_horizontal_spacing</item>
     </style>
+
+    <style name="BottomNavigation" parent="AppTheme">
+        <item name="icon">@android:color/black</item>
+    </style>
+
+
 </resources>

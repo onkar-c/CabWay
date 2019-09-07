@@ -15,6 +15,7 @@ import com.example.cabway.R;
 import com.example.cabway.ui.activities.DashBoardActivity;
 import com.example.cabway.ui.adapter.RidesListAdapter;
 import com.example.core.responseModel.RideResponseModel;
+import com.example.database.Utills.AppConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +63,7 @@ public class RequestedRidesFragment extends Fragment {
         availableRidesList.setLayoutManager(layoutManager);
         if (rides == null)
             rides = new ArrayList<>();
-        ridesListAdapter = new RidesListAdapter(activityContext, rides);
+        ridesListAdapter = new RidesListAdapter(activityContext, rides, activityContext.appPreferences.getUserDetails().role.equals(AppConstants.AGENCY));
         availableRidesList.setAdapter(ridesListAdapter);
 
     }

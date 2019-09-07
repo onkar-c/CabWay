@@ -2,10 +2,15 @@ package com.example.core.responseModel;
 
 import com.example.core.CommonModels.CityModel;
 import com.example.core.CommonModels.UserModel;
+import com.example.database.Utills.AppConstants;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class RideResponseModel implements Serializable {
 
@@ -105,5 +110,26 @@ public class RideResponseModel implements Serializable {
 
     public UserModel getDriver() {
         return driver;
+    }
+
+    public Long getConvertedPickUpDate(){
+       return convertDateStrToLong(getPickupTime());
+    }
+
+    public Long getConvertedDropDate(){
+        return convertDateStrToLong(getPickupTime());
+    }
+
+
+    private long convertDateStrToLong(String dateStr) {
+        if(dateStr!=null && !dateStr.isEmpty()) {
+            try {
+                Date date = new SimpleDateFormat(AppConstants.DATE_TIME_FORMAT_FOR_REQUEST, Locale.ENGLISH).parse(dateStr);
+                return date.getTime();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return 0;
     }
 }

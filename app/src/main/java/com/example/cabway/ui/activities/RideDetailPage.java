@@ -209,8 +209,13 @@ public class RideDetailPage extends BaseActivity {
         tvStartLocation.setText(ride.getFromCity().getName());
         tvDestinationLocation.setText(ride.getToCity().getName());
         tvRideCost.setText(String.format("%s ", ride.getCost().toString()));
-        ImageUtils.setImageFromUrl(this, ride.getAgency().getProfileImage(), ivProfileImage);
-
+        if(appPreferences.getUserDetails().role.equals(AppConstants.AGENCY)){
+            tvAgencyName.setVisibility(View.GONE);
+            ivProfileImage.setVisibility(View.GONE);
+        } else {
+            tvAgencyName.setVisibility(View.VISIBLE);
+            ImageUtils.setImageFromUrl(this, ride.getAgency().getProfileImage(), ivProfileImage);
+        }
     }
 
     private void getDataFromExtras() {

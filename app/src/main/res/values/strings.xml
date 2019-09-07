@@ -104,7 +104,7 @@
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_new">New</string>
     <string name="title_requested">Requested</string>
-    <string name="title_on_going">On Going</string>
+    <string name="title_accepted">Accepted</string>
     <string name="car_type_img">Car Type Image</string>
     <string name="one_way_ride">One Way</string>
     <string name="return_ride">Return</string>
@@ -116,7 +116,8 @@
     <string name="dummy_document_type_text">Step 1 : Document Type</string>
     <string name="dummy_agency_name_text">Neeta Travel Agency</string>
     <string name="dummy_amount_text">2500</string>
-    <string name="dummy_date_text">12–06–2019</string>
+    <string name="dummy_date_text">12–06–2019 02:12 am</string>
+    <string name="to">to</string>
     <string name="dummy_time_text">12:50 pm</string>
     <string name="dummy_city_text">Pune</string>
     <string name="dummy_city_2_text">Mumbai</string>

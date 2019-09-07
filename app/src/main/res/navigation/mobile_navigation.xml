@@ -20,6 +20,6 @@
     <fragment
         android:id="@+id/ongoing_rides"
         android:name="com.example.cabway.ui.fragments.OnGoingRidesFragment"
-        android:label="@string/title_on_going"
+        android:label="@string/title_accepted"
         tools:layout="@layout/fragment_available_rides" />
 </navigation>

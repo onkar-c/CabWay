@@ -151,24 +151,32 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="4.2">
 
                     <TextView
                         android:id="@+id/journey_date"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="1.2"
+                        android:layout_weight="2"
                         android:text="@string/dummy_date_text"
                         android:textAlignment="center" />
 
                     <TextView
-                        android:id="@+id/journey_time"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="1.2"
-                        android:text="@string/dummy_time_text"
+                        android:layout_weight="0.2"
+                        android:text="@string/to"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/journey_time"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="@string/dummy_date_text"
                         android:textAlignment="center" />
                 </LinearLayout>
             </LinearLayout>

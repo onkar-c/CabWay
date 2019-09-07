@@ -35,7 +35,6 @@ import com.example.core.CommonModels.VehicleTypeModel;
 import com.example.database.Utills.AppConstants;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.util.Date;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -117,8 +116,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
         etGstNumber.setText(document.getGstNumber());
         tvIssuedDate.setText(document.getIssueDate());
         tvExpireDate.setText(document.getExpiryDate());
-        if (document.getImageUrl() != null)
-            ImageUtils.setImageFromUrl(this, document.getImageUrl(), ivDocumentImage);
+        ImageUtils.setImageFromUrl(this, document.getImageUrl(), ivDocumentImage);
     }
 
     private void getExtras() {

@@ -4,9 +4,9 @@
     android:id="@+id/rideCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="20dp"
+    android:layout_marginStart="10dp"
     android:layout_marginTop="10dp"
-    android:layout_marginEnd="20dp"
+    android:layout_marginEnd="10dp"
     android:padding="20dp">
 
     <LinearLayout
@@ -22,53 +22,25 @@
             android:layout_marginStart="10dp"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/rideTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp">
+
 
                 <TextView
                     android:id="@+id/agencyName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/rideCost"
+                    android:layout_alignParentTop="true"
                     android:text="@string/dummy_agency_name_text"
                     android:textColor="@android:color/black"
+                    android:layout_marginBottom="10dp"
                     android:textSize="@dimen/extra_large_text"
                     android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/rideCost"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toStartOf="@+id/currency"
-                    android:layout_marginEnd="5dp"
-                    android:layout_centerVertical="true"
-                    android:text="@string/dummy_amount_text"
-                    android:textAlignment="textEnd"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/large_text"
-                    android:textStyle="bold" />
-                <TextView
-                    android:id="@+id/currency"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:text="@string/currency_text"
-                    android:textAlignment="textEnd"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/large_text"
-                    android:textStyle="bold" />
-            </RelativeLayout>
 
             <TextView
                 android:id="@+id/rideDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rideTitle"
+                android:layout_below="@+id/agencyName"
                 android:drawableStart="@drawable/ic_date"
                 android:drawablePadding="10dp"
                 android:text="@string/dummy_date_text"
@@ -80,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rideDate"
                 android:layout_marginTop="2dp"
-                android:drawableStart="@drawable/ic_time"
+                android:drawableStart="@drawable/ic_date"
                 android:drawablePadding="10dp"
                 android:text="@string/dummy_time_text"
                 android:textAlignment="center"
@@ -106,7 +78,7 @@
                 android:text="@string/dummy_city_text"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/large_text"
+                android:textSize="@dimen/small_text"
                 android:textStyle="bold"
                 tools:ignore="NestedWeights" />
 
@@ -151,9 +123,39 @@
                 android:text="@string/dummy_city_2_text"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/large_text"
+                android:textSize="@dimen/small_text"
                 android:textStyle="bold" />
         </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:id="@+id/rideCost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/currency"
+                android:layout_marginEnd="5dp"
+                android:layout_centerVertical="true"
+                android:text="@string/dummy_amount_text"
+                android:textAlignment="textEnd"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/large_text"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/currency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:text="@string/currency_text"
+                android:textAlignment="textEnd"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/large_text"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
     </LinearLayout>
 
