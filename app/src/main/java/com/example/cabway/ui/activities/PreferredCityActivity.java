@@ -67,15 +67,17 @@ public class PreferredCityActivity extends BaseActivity implements CitySpinnerAd
 
     @OnClick(R.id.submit)
     public void updatePreferredCity() {
-        if (isFromCreateRide) {
-            Intent returnIntent = new Intent();
-            returnIntent.putExtra(IntentConstants.PREFERRED_CITY, (CityModel) spCity.getSelectedItem());
-            setResult(RESULT_OK, returnIntent);
-            finish();
-        } else if (validate()) {
-            if (checkNetworkAvailableWithoutError()) {
-                showProgressDialog(AppConstants.PLEASE_WAIT, false);
-                preferredCityViewModel.getPreferredCityRepository().updatePreferredCity(preferredCityViewModel.getPreferredCityResponseMld(), (CityModel) spCity.getSelectedItem());
+        if(validate()) {
+            if (isFromCreateRide) {
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra(IntentConstants.PREFERRED_CITY, (CityModel) spCity.getSelectedItem());
+                setResult(RESULT_OK, returnIntent);
+                finish();
+            } else {
+                if (checkNetworkAvailableWithoutError()) {
+                    showProgressDialog(AppConstants.PLEASE_WAIT, false);
+                    preferredCityViewModel.getPreferredCityRepository().updatePreferredCity(preferredCityViewModel.getPreferredCityResponseMld(), (CityModel) spCity.getSelectedItem());
+                }
             }
         }
     }
@@ -89,11 +91,11 @@ public class PreferredCityActivity extends BaseActivity implements CitySpinnerAd
 
     private boolean validate() {
 
-        if (spCity.getSelectedItemPosition() == 0) {
-            showMandatoryError(R.string.city, this);
-            return false;
-        } else if (spState.getSelectedItemPosition() == 0) {
+        if (spState.getSelectedItemPosition() == 0) {
             showMandatoryError(R.string.state, this);
+            return false;
+        } else if (spCity.getSelectedItemPosition() == 0) {
+            showMandatoryError(R.string.city, this);
             return false;
         }
         return true;

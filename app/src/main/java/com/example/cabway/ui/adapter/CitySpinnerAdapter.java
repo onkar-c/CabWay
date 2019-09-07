@@ -3,6 +3,7 @@ package com.example.cabway.ui.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -14,13 +15,14 @@ import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.core.content.ContextCompat;
 
 import com.example.cabway.R;
+import com.example.cabway.Utils.SpinnerUtils;
 import com.example.core.CommonModels.CityModel;
 import com.example.core.CommonModels.StateModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CitySpinnerAdapter<T> extends ArrayAdapter<T> implements AdapterView.OnItemSelectedListener {
+public class CitySpinnerAdapter<T> extends ArrayAdapter<T> implements AdapterView.OnItemSelectedListener, View.OnTouchListener {
 
     private Context mContext;
     private List<T> dataList;
@@ -33,6 +35,7 @@ public class CitySpinnerAdapter<T> extends ArrayAdapter<T> implements AdapterVie
         this.dataList = dataList;
         this.itemSelectedCallback = (ItemSelectedCallback) context;
         spinner.setOnItemSelectedListener(this);
+        spinner.setOnTouchListener(this);
     }
 
     @Override
@@ -113,6 +116,12 @@ public class CitySpinnerAdapter<T> extends ArrayAdapter<T> implements AdapterVie
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        SpinnerUtils.hideSoftKeyboard(v);
+        return false;
     }
 
     public interface ItemSelectedCallback {

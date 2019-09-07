@@ -34,7 +34,6 @@ import com.example.cabway.ui.fragments.NewRidesFragment;
 import com.example.cabway.ui.fragments.OnGoingRidesFragment;
 import com.example.cabway.ui.fragments.RequestedRidesFragment;
 import com.example.cabway.viewModels.RidesViewModel;
-import com.example.cabway.viewModels.UserViewModel;
 import com.example.core.CommonModels.UserModel;
 import com.example.core.responseModel.JsonResponse;
 import com.example.core.responseModel.RideResponseModel;
@@ -45,7 +44,6 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -77,7 +75,6 @@ public class DashBoardActivity extends BaseActivity
     TextView top_description;
     ProfileMenuAdapter profileMenuAdapter;
 
-    UserViewModel userViewModel;
     RidesViewModel ridesViewModel;
     private List<String> menu_items;
     RecyclerViewItemClickListener recyclerViewItemClickListener = new RecyclerViewItemClickListener() {
@@ -146,7 +143,8 @@ public class DashBoardActivity extends BaseActivity
             textToDisplay = getString(R.string.preferred_city) + " : " + city;
 
         top_description.setText(textToDisplay);
-        ImageUtils.setImageFromUrl(this, user.profileImage, ivProfile);
+        if(user.profileImage!=null && !user.profileImage.isEmpty())
+            ImageUtils.setImageFromUrl(this, user.profileImage, ivProfile);
         if (checkNetworkAvailableWithoutError()) {
             showProgressDialog(AppConstants.PLEASE_WAIT, false);
             ridesViewModel.getRidesRepository().getRides(ridesViewModel.getRidesMld());

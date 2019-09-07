@@ -121,7 +121,8 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
             spState.setSelection(SpinnerUtils.getStatePosition((Objects.requireNonNull(SpinnerUtils.getStateOfCity(user.cityCode.getCityId())).getId())));
             spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, 0, spCity));
             spCity.setSelection(SpinnerUtils.getCityPosition(user.cityCode.getCityId(), (Objects.requireNonNull(SpinnerUtils.getStateOfCity(user.cityCode.getCityId())).getId())));
-            ImageUtils.setImageFromUrl(this, user.profileImage, ivProfile);
+            if(user.profileImage!=null && !user.profileImage.isEmpty())
+                ImageUtils.setImageFromUrl(this, user.profileImage, ivProfile);
         }
         toggleUi(false);
     }
@@ -234,7 +235,6 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
 
     private void toggleUi(boolean isEnabled) {
         isEdit = isEnabled;
-        etFName.setFocusable(isEnabled);
         etFName.setEnabled(isEnabled);
         etLName.setEnabled(isEnabled);
         etEmail.setEnabled(isEnabled);

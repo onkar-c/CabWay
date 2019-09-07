@@ -118,7 +118,7 @@ public class ImageUtils {
                 .into(imageView, new Callback() {
                     @Override
                     public void onSuccess() {
-                        Toast.makeText(context, "Sucess to Load Image", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Success to Load Image", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

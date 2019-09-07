@@ -41,10 +41,11 @@ public class DatePickerUtils {
     }
 
 
-    public static String getDateTimeToDisplay(Date date){
+    public static String getDateTimeToDisplay(Date date) {
         return new SimpleDateFormat(AppConstants.DATE_TIME_FORMAT_FOR_DISPLAY, Locale.ENGLISH).format(date);
-  }
-    public static String convertDate(String inputDate){
+    }
+
+    public static String convertDate(String inputDate) {
         SimpleDateFormat sdf = new SimpleDateFormat(AppConstants.DATE_TIME_FORMAT_FOR_REQUEST);
         SimpleDateFormat output = new SimpleDateFormat(AppConstants.DATE_TIME_FORMAT_FOR_DISPLAY);
         Date d = null;
@@ -56,16 +57,42 @@ public class DatePickerUtils {
         return output.format(d);
     }
 
-    public static String getDateTimeForApiReq(String dateStr){
+    public static String getDateTimeForApiReq(String dateStr) {
         String str = null;
 
         try {
-            Date date = new SimpleDateFormat(AppConstants.DATE_TIME_FORMAT_FOR_DISPLAY,Locale.ENGLISH).parse(dateStr);
-            str = new SimpleDateFormat(AppConstants.DATE_TIME_FORMAT_FOR_REQUEST,Locale.ENGLISH).format(date);
+            Date date = new SimpleDateFormat(AppConstants.DATE_TIME_FORMAT_FOR_DISPLAY, Locale.ENGLISH).parse(dateStr);
+            str = new SimpleDateFormat(AppConstants.DATE_TIME_FORMAT_FOR_REQUEST, Locale.ENGLISH).format(date);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return str;
         //return new SimpleDateFormat(AppConstants.DATE_TIME_FORMAT_FOR_REQUEST, Locale.ENGLISH).format(date);
+    }
+
+    public static long convertDateStrToLong(String dateStr) {
+        if(dateStr!=null && !dateStr.isEmpty()) {
+            try {
+                Date date = new SimpleDateFormat(AppConstants.DATE_TIME_FORMAT_FOR_DISPLAY, Locale.ENGLISH).parse(dateStr);
+                return date.getTime();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return 0;
+    }
+
+    public static boolean before(String dropOff, String pickup) {
+        SimpleDateFormat format = new SimpleDateFormat(AppConstants.DATE_TIME_FORMAT_FOR_DISPLAY, Locale.ENGLISH);
+        try {
+            Date dropOffDateTime = format.parse(dropOff);
+            Date pickupDateTime = format.parse(pickup);
+            if (dropOffDateTime.before(pickupDateTime)) {
+                return false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 }
