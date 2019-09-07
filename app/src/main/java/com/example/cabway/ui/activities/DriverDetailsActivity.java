@@ -67,7 +67,7 @@ public class DriverDetailsActivity extends BaseActivity {
     }
 
     private void setUpUi() {
-        ImageUtils.setImageFromUrl(this, driver.profileImage, ivProfile);
+        ImageUtils.setImageFromUrl(this, driver.profileImage, ivProfile,false);
         tvName.setText(String.format("%s %s", driver.firstName, driver.lastName));
         tvMobileNo.setText(driver.mobileNo);
         tvEmail.setText(driver.email);

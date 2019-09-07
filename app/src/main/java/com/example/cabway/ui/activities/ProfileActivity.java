@@ -122,7 +122,7 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
             spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, 0, spCity));
             spCity.setSelection(SpinnerUtils.getCityPosition(user.cityCode.getCityId(), (Objects.requireNonNull(SpinnerUtils.getStateOfCity(user.cityCode.getCityId())).getId())));
             if(user.profileImage!=null && !user.profileImage.isEmpty())
-                ImageUtils.setImageFromUrl(this, user.profileImage, ivProfile);
+                ImageUtils.setImageFromUrl(this, user.profileImage, ivProfile,false);
         }
         toggleUi(false);
     }
@@ -243,6 +243,7 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
         spState.setEnabled(isEnabled);
         spCity.setEnabled(isEnabled);
         flProfile.setEnabled(isEnabled);
+        agencyName.setEnabled(isEnabled);
         ivAddProfile.setVisibility(isEnabled ? View.VISIBLE : View.GONE);
         btnSave.setVisibility(isEnabled ? View.VISIBLE : View.GONE);
         invalidateOptionsMenu();

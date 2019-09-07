@@ -144,7 +144,7 @@ public class DashBoardActivity extends BaseActivity
 
         top_description.setText(textToDisplay);
         if(user.profileImage!=null && !user.profileImage.isEmpty())
-            ImageUtils.setImageFromUrl(this, user.profileImage, ivProfile);
+            ImageUtils.setImageFromUrl(this, user.profileImage, ivProfile,false);
         if (checkNetworkAvailableWithoutError()) {
             showProgressDialog(AppConstants.PLEASE_WAIT, false);
             ridesViewModel.getRidesRepository().getRides(ridesViewModel.getRidesMld());
@@ -236,7 +236,6 @@ public class DashBoardActivity extends BaseActivity
         }
         startActivity(nextActivity);
     }
-
 
     private void refreshList() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
