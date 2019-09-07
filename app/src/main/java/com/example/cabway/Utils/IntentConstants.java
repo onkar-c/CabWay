@@ -10,5 +10,5 @@ public class IntentConstants {
     public static final String PREFERRED_CITY = "preferred_city";
     public static final String DRIVER_DETAILS = "driver_details";
     public static final String RIDE= "ride";
-    public static final String RIDE_STATUS= "status";
+    public static final String IS_FORCE_UPGRADE= "is_force_upgrade";
 }

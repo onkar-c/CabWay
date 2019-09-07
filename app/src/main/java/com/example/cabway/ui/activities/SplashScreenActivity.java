@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.crashlytics.android.Crashlytics;
+import com.example.cabway.BuildConfig;
 import com.example.cabway.Utils.IntentConstants;
 import com.example.cabway.viewModels.SplashViewModel;
 import com.example.core.responseModel.JsonResponse;
@@ -44,11 +45,27 @@ public class SplashScreenActivity extends BaseActivity {
                     appPreferences.setStateList(stateCityResponse.getStateList());
                 if (stateCityResponse.getVehicleList() != null)
                     appPreferences.setVehicleList(stateCityResponse.getVehicleList());
-                new Handler().postDelayed(SplashScreenActivity.this::startNextActivity, 500);
+                if (checkUpgrade(stateCityResponse.getServerVersion()))
+                    new Handler().postDelayed(SplashScreenActivity.this::startNextActivity, 500);
             } else {
                 Toast.makeText(SplashScreenActivity.this, stateCityResponse.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private boolean checkUpgrade(String serverVersionString) {
+        if (serverVersionString != null) {
+            float serverVersion = Float.parseFloat(serverVersionString);
+            Intent nextActivity = new Intent(this, UpgradeActivity.class);
+            float deviceVersion = Float.parseFloat(BuildConfig.VERSION_NAME);
+            if (serverVersion > deviceVersion) {
+                nextActivity.putExtra(IntentConstants.IS_FORCE_UPGRADE, ((int) serverVersion > (int) deviceVersion));
+                startActivity(nextActivity);
+                finish();
+                return false;
+            }
+        }
+        return true;
     }
 
     private void startNextActivity() {

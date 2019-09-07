@@ -51,6 +51,11 @@ public class JsonResponse implements Serializable {
     @SerializedName("ride")
     private RideResponseModel ride;
 
+    private String serverVersion;
+
+    public String getServerVersion() {
+        return serverVersion;
+    }
 
     public List<HeroesModel> getHeroesList() {
         return heroesList;
