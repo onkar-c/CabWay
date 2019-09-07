@@ -107,7 +107,7 @@
     <string name="title_accepted">Accepted</string>
     <string name="car_type_img">Car Type Image</string>
     <string name="one_way_ride">One Way</string>
-    <string name="return_ride">Return</string>
+    <string name="two_way_ride">Two Way</string>
     <string name="ride_type">Ride Type</string>
     <string name="pickup_date_time">Pickup Date and Time</string>
     <string name="drop_off_date_time">Drop Off Date and Time</string>

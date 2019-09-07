@@ -81,6 +81,8 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
     Button btnContinue;
     @BindView(R.id.iv_add_doc)
     ImageView ivAddDocument;
+    @BindView(R.id.tv_upload_img)
+    TextView tvUploadImg;
 
     private String docType;
     private boolean isFromLogin = false;
@@ -335,6 +337,8 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
         tvExpireDate.setEnabled(isEnabled);
         ivDocumentImage.setClickable(isEnabled);
         ivAddDocument.setClickable(isEnabled);
+        ivAddDocument.setVisibility(isEnabled ? View.VISIBLE : View.GONE);
+        tvUploadImg.setVisibility(isEnabled ? View.VISIBLE : View.GONE);
         btnContinue.setVisibility(isEnabled ? View.VISIBLE : View.GONE);
         invalidateOptionsMenu();
     }

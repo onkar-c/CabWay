@@ -110,11 +110,11 @@ public class ImageUtils {
     }
 
 
-    public static void setImageFromUrl(Context context, String url, ImageView imageView) {
-        if (url != null) {
-            Picasso.get()
-                    .load(url)
-                    .placeholder(R.drawable.ic_profile_icon)
+
+    public static void setImageFromUrl(Context context, String url, ImageView imageView, boolean isDocument) {
+        Picasso.get()
+                .load(url)
+                .placeholder(isDocument ? R.drawable.id_image : R.drawable.ic_profile_icon)
 //                .error(R.drawable.ic_add_profile)
                     .into(imageView, new Callback() {
                         @Override

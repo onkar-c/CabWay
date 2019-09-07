@@ -238,7 +238,6 @@ public class DashBoardActivity extends BaseActivity
         startActivity(nextActivity);
     }
 
-
     private void refreshList() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         Fragment fragment1 = Objects.requireNonNull(fragment).getChildFragmentManager().getFragments().get(0);

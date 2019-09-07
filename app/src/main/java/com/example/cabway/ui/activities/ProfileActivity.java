@@ -241,6 +241,7 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
         spState.setEnabled(isEnabled);
         spCity.setEnabled(isEnabled);
         flProfile.setEnabled(isEnabled);
+        agencyName.setEnabled(isEnabled);
         ivAddProfile.setVisibility(isEnabled ? View.VISIBLE : View.GONE);
         btnSave.setVisibility(isEnabled ? View.VISIBLE : View.GONE);
         invalidateOptionsMenu();

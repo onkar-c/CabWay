@@ -34,6 +34,7 @@
                 android:contentDescription="@string/add_doc" />
 
             <TextView
+                android:id="@+id/tv_upload_img"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/upload_img"

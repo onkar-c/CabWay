@@ -154,7 +154,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:text="@string/return_ride"
+                android:text="@string/two_way_ride"
                 android:textSize="@dimen/small_text"
                 android:textStyle="normal" />
 

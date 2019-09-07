@@ -46,7 +46,7 @@ public class DriverListAdapter extends RecyclerView.Adapter<DriverListAdapter.Dr
     @Override
     public void onBindViewHolder(@NonNull DriverViewHolder holder, int position) {
         UserModel driver = driverList.get(position);
-        ImageUtils.setImageFromUrl(mContext, driver.profileImage, holder.ivProfile);
+        ImageUtils.setImageFromUrl(mContext, driver.profileImage, holder.ivProfile,false);
         holder.tvMobileNo.setText(driver.mobileNo);
         holder.tvName.setText(String.format("%s %s", driver.firstName, driver.lastName));
     }
