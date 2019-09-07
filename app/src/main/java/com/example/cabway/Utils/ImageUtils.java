@@ -97,7 +97,7 @@ public class ImageUtils {
             try {
                 fos = new FileOutputStream(mypath);
                 if (finalBitmap != null)
-                    finalBitmap.compress(Bitmap.CompressFormat.JPEG, 5, fos);
+                    finalBitmap.compress(Bitmap.CompressFormat.JPEG, 30, fos);
                 fos.close();
             } catch (Exception e) {
                 Log.e(IMAGE_UTILS, e.getMessage(), e);
@@ -110,25 +110,23 @@ public class ImageUtils {
     }
 
 
-
     public static void setImageFromUrl(Context context, String url, ImageView imageView, boolean isDocument) {
         Picasso.get()
                 .load(url)
                 .placeholder(isDocument ? R.drawable.id_image : R.drawable.ic_profile_icon)
 //                .error(R.drawable.ic_add_profile)
-                    .into(imageView, new Callback() {
-                        @Override
-                        public void onSuccess() {
-                            Toast.makeText(context, "Success to Load Image", Toast.LENGTH_SHORT).show();
-                        }
+                .into(imageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+//                        Toast.makeText(context, "Success to Load Image", Toast.LENGTH_SHORT).show();
+                    }
 
-                        @Override
-                        public void onError(Exception e) {
-                            Toast.makeText(context, "Failed to Load Image", Toast.LENGTH_SHORT).show();
-                            e.printStackTrace();
-                        }
-                    });
-        }
+                    @Override
+                    public void onError(Exception e) {
+//                        Toast.makeText(context, "Failed to Load Image", Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
+                });
     }
 
     public static void setImageFromFilePath(Context context, String filePath, ImageView imageView) {

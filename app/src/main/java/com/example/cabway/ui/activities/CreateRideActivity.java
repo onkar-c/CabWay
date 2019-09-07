@@ -142,7 +142,7 @@ public class CreateRideActivity extends BaseActivity implements CarTypeSpinnerAd
     public void selectTime() {
         DateTimePicker dateTimePicker = new DateTimePicker();
         dateTimePicker.setDateResultCallback(CreateRideActivity.this);
-        dateTimePicker.showDialog(CreateRideActivity.this, DatePickerUtils.convertDateStrToLong(AppConstants.DATE_TIME_FORMAT_FOR_DISPLAY, pickupDateTimeET.getText().toString().trim()), false);
+        dateTimePicker.showDialog(CreateRideActivity.this, DatePickerUtils.convertDateStrToLong(pickupDateTimeET.getText().toString().trim(), AppConstants.DATE_TIME_FORMAT_FOR_DISPLAY), false);
     }
 
     @OnClick(R.id.et_start_loc)

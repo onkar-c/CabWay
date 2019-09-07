@@ -114,11 +114,12 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
         etDocNumber.setText(document.getDocumentNumber());
         etNameOnDoc.setText(document.getNameOnDocument());
         spVehicleType.setSelection(CarTypeSpinnerUtils.getVehicleTypePosition(document.getVehicleType()));
+        if(!TextValidationUtils.isEmpty(document.getStateName()))
         spState.setSelection(SpinnerUtils.getStatePositionByName(document.getStateName()));
         etGstNumber.setText(document.getGstNumber());
         tvIssuedDate.setText(document.getIssueDate());
         tvExpireDate.setText(document.getExpiryDate());
-        ImageUtils.setImageFromUrl(this, document.getImageUrl(), ivDocumentImage);
+        ImageUtils.setImageFromUrl(this, document.getImageUrl(), ivDocumentImage, true);
     }
 
     private void getExtras() {

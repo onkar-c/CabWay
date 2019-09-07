@@ -1,6 +1,7 @@
 package com.example.cabway.ui.activities;
 
 import android.Manifest;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,6 +28,8 @@ import com.example.core.Utills.AppPreferences;
 import com.example.core.responseModel.JsonResponse;
 import com.example.database.Utills.AppConstants;
 
+import java.util.Objects;
+
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -46,6 +49,11 @@ public class BaseActivity extends AppCompatActivity {
 
         }
     };
+
+    public void clearAllNotification(){
+        NotificationManager notificationManager= (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        Objects.requireNonNull(notificationManager).cancelAll();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -53,6 +53,6 @@ public class StateModel implements Serializable {
         if (obj == null || obj.getClass() != this.getClass())
             return false;
         StateModel stateModel = (StateModel) obj;
-        return (this.id == stateModel.id || (stateModel.name != null && this.name.equals(stateModel.name)));
+        return (this.id == stateModel.id || (stateModel.name != null && this.name != null && this.name.equals(stateModel.name)));
     }
 }

@@ -170,6 +170,7 @@
 
     <string name="exit_message">Are you sure you want to exit?</string>
     <string name="logout_message">Are you sure you want to logout?</string>
+    <string name="registration_exit_message">Are you sure you want to exit registration?</string>
     <string name="accept_reject_message">Are you sure you want to %1$s this Driver?</string>
 
 

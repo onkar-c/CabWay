@@ -58,7 +58,7 @@ public class RequestedRidesFragment extends Fragment {
     }
 
     private void setRidesList() {
-
+        displayNoDataAvailable();
         LinearLayoutManager layoutManager = new LinearLayoutManager(activityContext);
         availableRidesList.setLayoutManager(layoutManager);
         if (rides == null)

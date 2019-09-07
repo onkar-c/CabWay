@@ -57,7 +57,7 @@ public class SpinnerUtils {
     public static int getCityPosition(int cityCode, int stateCode) {
         List<CityModel> tempList = getCityList(stateCode);
         int pos = tempList.indexOf(new CityModel(cityCode));
-        return (pos > 0) ? pos : 0;
+        return (pos >= 0) ? pos : 0;
     }
 
     private static StateModel getStateData(int stateCode) {
@@ -68,13 +68,13 @@ public class SpinnerUtils {
     public static int getStatePosition(int stateCode) {
         List<StateModel> tempList = AppPreferences.getInstance().getStateList();
         int pos = tempList.indexOf(new StateModel(stateCode));
-        return (pos > 0) ? pos : 0;
+        return (pos >= 0) ? pos + 1 : 0;
     }
 
     public static int getStatePositionByName(String stateName) {
         List<StateModel> tempList = AppPreferences.getInstance().getStateList();
         int pos = tempList.indexOf(new StateModel(stateName));
-        return (pos > 0) ? pos : 0;
+        return (pos >= 0) ? pos + 1: 0;
     }
 
     public static CitySpinnerAdapter setSpinnerAdapter(Activity context, String type, int stateCode, AppCompatSpinner spinner) {

@@ -101,10 +101,7 @@ public class DashBoardActivity extends BaseActivity
         setSupportActionBar(toolbar);
         setNavigationDrawerLayout();
         setUpFragments();
-
     }
-
-
 
     private void setGetRidesObserver() {
         ridesViewModel.getRidesMld().observe(this, (JsonResponse getRidesResponse) -> {
@@ -132,7 +129,7 @@ public class DashBoardActivity extends BaseActivity
 
     private void setData() {
         UserModel user = appPreferences.getUserDetails();
-        if(user.role.equals(AppConstants.AGENCY))
+        if (user.role.equals(AppConstants.AGENCY))
             tvUserName.setText(String.format("%s", user.agencyName));
         else
             tvUserName.setText(String.format("%s %s", user.firstName, user.lastName));
@@ -145,7 +142,7 @@ public class DashBoardActivity extends BaseActivity
             textToDisplay = getString(R.string.preferred_city) + " : " + city;
 
         top_description.setText(textToDisplay);
-        ImageUtils.setImageFromUrl(this, user.profileImage, ivProfile);
+        ImageUtils.setImageFromUrl(this, user.profileImage, ivProfile, false);
         if (checkNetworkAvailableWithoutError()) {
             showProgressDialog(AppConstants.PLEASE_WAIT, false);
             ridesViewModel.getRidesRepository().getRides(ridesViewModel.getRidesMld());
@@ -185,6 +182,7 @@ public class DashBoardActivity extends BaseActivity
     @Override
     protected void onResume() {
         super.onResume();
+        clearAllNotification();
         setData();
     }
 
@@ -223,8 +221,6 @@ public class DashBoardActivity extends BaseActivity
             startActivity(nextActivity);
         }
     }
-
-
 
 
     @OnClick({R.id.top_view, R.id.main_action})

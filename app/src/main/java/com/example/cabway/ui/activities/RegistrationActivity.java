@@ -1,5 +1,6 @@
 package com.example.cabway.ui.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
@@ -16,6 +17,7 @@ import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.cabway.R;
+import com.example.cabway.Utils.DialogUtils;
 import com.example.cabway.Utils.ImageUtils;
 import com.example.cabway.Utils.SpinnerUtils;
 import com.example.cabway.Utils.TextValidationUtils;
@@ -100,6 +102,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
     private String mMobileNumber;
     private UserViewModel userViewModel;
     private CityModel selectedCity;
+    private boolean isRegistrationComplete = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +111,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         setUpActionBar();
         ButterKnife.bind(this);
         setUpUi();
+        isRegistrationComplete = false;
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         userViewModel.init();
         dialogOtp = new DialogOtp(this);
@@ -154,6 +158,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
             removeProgressDialog();
             if (isSuccessResponse(userRegistrationResponse)) {
                 Toast.makeText(RegistrationActivity.this, userRegistrationResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                isRegistrationComplete = true;
                 onBackPressed();
             } else {
                 Toast.makeText(RegistrationActivity.this, userRegistrationResponse.getMessage(), Toast.LENGTH_SHORT).show();
@@ -161,6 +166,20 @@ public class RegistrationActivity extends BaseActivity implements RegistrationIn
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        if(isRegistrationComplete)
+            super.onBackPressed();
+        else
+            DialogUtils.showMessageDialog(this, getString(R.string.registration_exit_message), registrationCancelListener);
+    }
+
+    DialogInterface.OnClickListener registrationCancelListener = (dialog, id) -> {
+        if (checkNetworkAvailableWithoutError()) {
+           RegistrationActivity.super.onBackPressed();
+        }
+
+    };
     @OnClick(R.id.generate_otp)
     void generateOtp() {
         requestOtp();

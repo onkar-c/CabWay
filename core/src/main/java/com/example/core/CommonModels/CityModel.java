@@ -53,6 +53,6 @@ public class CityModel implements Serializable {
         if (obj == null || obj.getClass() != this.getClass())
             return false;
         CityModel cityModel = (CityModel) obj;
-        return (this.cityId == cityModel.cityId || (cityModel.name != null && this.name.equals(cityModel.name)));
+        return (this.cityId == cityModel.cityId || (cityModel.name != null && this.name != null && this.name.equals(cityModel.name)));
     }
 }

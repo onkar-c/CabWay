@@ -116,11 +116,11 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
             etAddress.setText(user.address);
             etPincode.setText(user.pinCode);
             etRole.setText(user.role);
-            spState.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.STATE, 0, spState));
-            spState.setSelection(SpinnerUtils.getStatePosition((Objects.requireNonNull(SpinnerUtils.getStateOfCity(user.cityCode.getCityId())).getId())));
-            spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, 0, spCity));
-            spCity.setSelection(SpinnerUtils.getCityPosition(user.cityCode.getCityId(), (Objects.requireNonNull(SpinnerUtils.getStateOfCity(user.cityCode.getCityId())).getId())));
-            ImageUtils.setImageFromUrl(this, user.profileImage, ivProfile);
+            spState.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.STATE, user.cityCode.getStateCode(), spState));
+            spState.setSelection(SpinnerUtils.getStatePosition(user.cityCode.getStateCode()));
+            spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, user.cityCode.getStateCode(), spCity));
+            spCity.setSelection(SpinnerUtils.getCityPosition(user.cityCode.getCityId(), user.cityCode.getStateCode()));
+            ImageUtils.setImageFromUrl(this, user.profileImage, ivProfile, false);
         }
         toggleUi(false);
     }
