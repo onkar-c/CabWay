@@ -70,10 +70,10 @@ public class DatePickerUtils {
         //return new SimpleDateFormat(AppConstants.DATE_TIME_FORMAT_FOR_REQUEST, Locale.ENGLISH).format(date);
     }
 
-    public static long convertDateStrToLong(String dateStr) {
+    public static long convertDateStrToLong(String dateStr, String timeFormat) {
         if(dateStr!=null && !dateStr.isEmpty()) {
             try {
-                Date date = new SimpleDateFormat(AppConstants.DATE_TIME_FORMAT_FOR_DISPLAY, Locale.ENGLISH).parse(dateStr);
+                Date date = new SimpleDateFormat(timeFormat, Locale.ENGLISH).parse(dateStr);
                 return date.getTime();
             } catch (ParseException e) {
                 e.printStackTrace();

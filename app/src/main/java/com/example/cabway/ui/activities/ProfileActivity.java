@@ -27,7 +27,6 @@ import com.example.core.CommonModels.StateModel;
 import com.example.core.CommonModels.UserModel;
 import com.example.database.Utills.AppConstants;
 
-import java.util.Date;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -121,8 +120,7 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
             spState.setSelection(SpinnerUtils.getStatePosition((Objects.requireNonNull(SpinnerUtils.getStateOfCity(user.cityCode.getCityId())).getId())));
             spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, 0, spCity));
             spCity.setSelection(SpinnerUtils.getCityPosition(user.cityCode.getCityId(), (Objects.requireNonNull(SpinnerUtils.getStateOfCity(user.cityCode.getCityId())).getId())));
-            if(user.profileImage!=null && !user.profileImage.isEmpty())
-                ImageUtils.setImageFromUrl(this, user.profileImage, ivProfile,false);
+            ImageUtils.setImageFromUrl(this, user.profileImage, ivProfile);
         }
         toggleUi(false);
     }

@@ -32,7 +32,7 @@ public class BaseActivity extends AppCompatActivity {
 
     public static BaseActivity instance;
     private final String TAG = "Base activity";
-    AppPreferences appPreferences;
+    public AppPreferences appPreferences;
     DialogInterface.OnClickListener onExit = (dialog, id) -> finish();
     UserViewModel logoutUserViewModel;
     private ProgressDialog mProgressDialog;

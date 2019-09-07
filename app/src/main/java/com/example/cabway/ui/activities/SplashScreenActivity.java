@@ -30,7 +30,7 @@ public class SplashScreenActivity extends BaseActivity {
         setStateCityObserver();
 //        generateFcmTopic();
         splashViewModel.getSplashRepository().getStateCity(splashViewModel.getStateCityResponseMld());
-//        new Handler().postDelayed(SplashScreenActivity.this::startDashboardActivity, 500);
+//        new Handler().postDelayed(SplashScreenActivity.this::startNextActivity, 500);
 
     }
 
@@ -44,14 +44,14 @@ public class SplashScreenActivity extends BaseActivity {
                     appPreferences.setStateList(stateCityResponse.getStateList());
                 if (stateCityResponse.getVehicleList() != null)
                     appPreferences.setVehicleList(stateCityResponse.getVehicleList());
-                new Handler().postDelayed(SplashScreenActivity.this::startDashboardActivity, 500);
+                new Handler().postDelayed(SplashScreenActivity.this::startNextActivity, 500);
             } else {
                 Toast.makeText(SplashScreenActivity.this, stateCityResponse.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void startDashboardActivity() {
+    private void startNextActivity() {
         Intent nextActivity;
         if (appPreferences.isLogin()) {
             if (appPreferences.getUserDetails().documentCompleted)

@@ -44,7 +44,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"
-        android:layout_margin="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_below="@+id/top_view"
         android:layout_above="@+id/bottom_view"
         app:navGraph="@navigation/mobile_navigation" />
@@ -57,6 +58,8 @@
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
         android:background="?android:attr/windowBackground"
+        app:itemIconTint="@drawable/selector"
+        app:itemTextColor="@drawable/selector"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_nav_menu" />
 

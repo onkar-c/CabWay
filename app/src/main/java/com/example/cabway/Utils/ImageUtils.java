@@ -28,7 +28,7 @@ import java.util.Date;
 
 public class ImageUtils {
     public static final int IMAGE_PICK = 2001;
-    private static final String IMAGE_UTILS = "image_utills";
+    private static final String IMAGE_UTILS = "image_utils";
 
     public static void pickImage(Activity context) {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -110,23 +110,25 @@ public class ImageUtils {
     }
 
 
+
     public static void setImageFromUrl(Context context, String url, ImageView imageView, boolean isDocument) {
         Picasso.get()
                 .load(url)
                 .placeholder(isDocument ? R.drawable.id_image : R.drawable.ic_profile_icon)
 //                .error(R.drawable.ic_add_profile)
-                .into(imageView, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        Toast.makeText(context, "Success to Load Image", Toast.LENGTH_SHORT).show();
-                    }
+                    .into(imageView, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            Toast.makeText(context, "Success to Load Image", Toast.LENGTH_SHORT).show();
+                        }
 
-                    @Override
-                    public void onError(Exception e) {
-                        Toast.makeText(context, "Failed to Load Image", Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
-                    }
-                });
+                        @Override
+                        public void onError(Exception e) {
+                            Toast.makeText(context, "Failed to Load Image", Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                        }
+                    });
+        }
     }
 
     public static void setImageFromFilePath(Context context, String filePath, ImageView imageView) {
