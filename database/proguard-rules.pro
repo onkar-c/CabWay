@@ -48,7 +48,9 @@
 # Application classes that will be serialized/deserialized over Gson
 -keep class com.kelltontech.volley.ext.** { *; }
 
--keep class com.bluestar.models.** {*;}
+-keep class com.example.core.** {*;}
+-keep class com.example.app.** {*;}
+
 
 -keepnames class * implements java.io.Serializable
 -keepclassmembers class * implements java.io.Serializable {

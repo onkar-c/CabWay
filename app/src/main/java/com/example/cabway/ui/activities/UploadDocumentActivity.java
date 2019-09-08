@@ -113,6 +113,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
         toggleAllFields(false);
         etDocNumber.setText(document.getDocumentNumber());
         etNameOnDoc.setText(document.getNameOnDocument());
+        if(document.getVehicleType() != null)
         spVehicleType.setSelection(CarTypeSpinnerUtils.getVehicleTypePosition(document.getVehicleType()));
         if(!TextValidationUtils.isEmpty(document.getStateName()))
         spState.setSelection(SpinnerUtils.getStatePositionByName(document.getStateName()));

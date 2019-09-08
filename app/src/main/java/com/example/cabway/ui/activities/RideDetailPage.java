@@ -81,7 +81,6 @@ public class RideDetailPage extends BaseActivity {
     DriverListAdapter driverListAdapter;
     RidesViewModel ridesViewModel;
 
-    private boolean isFromHistory = false;
     private boolean isAgency = false;
 
     @Override
@@ -133,7 +132,7 @@ public class RideDetailPage extends BaseActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         if (menu.findItem(R.id.action_edit) != null)
-            menu.findItem(R.id.action_edit).setVisible((isAgency && !ride.getStatus().equals(AppConstants.ACCEPTED)));
+            menu.findItem(R.id.action_edit).setVisible((isAgency && !ride.getStatus().equals(AppConstants.ACCEPTED) && !ride.getStatus().equals(AppConstants.COMPLETED)));
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -149,18 +148,19 @@ public class RideDetailPage extends BaseActivity {
 
     private void setButtons() {
         if (isAgency) {
-            if (!ride.getStatus().equals(AppConstants.ACCEPTED)) {
+            if (ride.getStatus().equals(AppConstants.NEW) || ride.getStatus().equals(AppConstants.REQUESTED)) {
                 btDelete.setVisibility(View.VISIBLE);
             } else
                 btDelete.setVisibility(View.GONE);
-                btCall.setVisibility(View.GONE);
-                status_layout.setVisibility(View.GONE);
+            btCall.setVisibility(View.GONE);
+            status_layout.setVisibility(ride.getStatus().equals(AppConstants.COMPLETED) ? View.VISIBLE : View.GONE);
         } else {
             btCall.setVisibility(View.VISIBLE);
             status_layout.setVisibility((!ride.getStatus().equals(AppConstants.NEW)) ? View.VISIBLE : View.GONE);
-            btRequest.setVisibility((isFromHistory || !ride.getStatus().equals(AppConstants.NEW)) ? View.GONE : View.VISIBLE);
-            status.setText(ride.getStatus());
+            btRequest.setVisibility((ride.getStatus().equals(AppConstants.NEW)) ? View.VISIBLE : View.GONE);
         }
+        if (status.getVisibility() == View.VISIBLE)
+            status.setText(ride.getStatus());
 
         invalidateOptionsMenu();
     }
@@ -209,7 +209,7 @@ public class RideDetailPage extends BaseActivity {
         tvStartLocation.setText(ride.getFromCity().getName());
         tvDestinationLocation.setText(ride.getToCity().getName());
         tvRideCost.setText(String.format("%s ", ride.getCost().toString()));
-        if(appPreferences.getUserDetails().role.equals(AppConstants.AGENCY)){
+        if (appPreferences.getUserDetails().role.equals(AppConstants.AGENCY)) {
             tvAgencyName.setVisibility(View.GONE);
             ivProfileImage.setVisibility(View.GONE);
         } else {
@@ -219,7 +219,6 @@ public class RideDetailPage extends BaseActivity {
     }
 
     private void getDataFromExtras() {
-        isFromHistory = getIntent().getBooleanExtra(IntentConstants.IS_FROM_HISTORY, false);
         ride = (RideResponseModel) getIntent().getSerializableExtra(IntentConstants.RIDE);
         isAgency = appPreferences.getUserDetails().role.equals(AppConstants.AGENCY);
     }

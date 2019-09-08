@@ -31,6 +31,8 @@ public class AppConstants {
     public static final String ONE_WAY = "OneWay";
     public static final String TWO_WAY = "TwoWay";
     public static final String ACCEPTED = "Accepted";
+    public static final String COMPLETED = "Completed";
+    public static final String REJECTED = "Rejected";
     public static final String ACCEPT = "Accept";
     public static final String REJECT = "Reject";
     public static final String DELETE = "Delete";

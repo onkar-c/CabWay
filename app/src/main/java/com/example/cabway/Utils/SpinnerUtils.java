@@ -89,7 +89,7 @@ public class SpinnerUtils {
     public static boolean stateCityMatches(int stateId, int cityId) {
         List<CityModel> tempList = AppPreferences.getInstance().getCityList();
         int cityPosition = tempList.indexOf(new CityModel(cityId));
-        if(cityPosition > 0)
+        if(cityPosition >= 0)
             return tempList.get(cityPosition).getState().getId() == stateId;
         return false;
     }
