@@ -23,7 +23,8 @@
                 android:id="@+id/iv_document_image"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:contentDescription="@string/take_a_photo" />
+                android:contentDescription="@string/take_a_photo"
+                android:scaleType="fitCenter"/>
 
             <ImageView
                 android:id="@+id/iv_add_doc"

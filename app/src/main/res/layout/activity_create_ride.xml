@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:paddingBottom="5dp"
     tools:context=".ui.activities.CreateRideActivity">
 
     <RelativeLayout
@@ -14,6 +13,7 @@
         android:background="@android:color/white"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
+        android:paddingBottom="10dp"
         tools:ignore="ContentDescription">
 
         <androidx.cardview.widget.CardView
@@ -274,7 +274,8 @@
             android:background="@android:color/black"
             android:text="@string/book_a_ride"
             android:textColor="@android:color/white"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:layout_marginBottom="5dp"/>
     </RelativeLayout>
 
 </ScrollView>

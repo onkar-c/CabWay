@@ -33,7 +33,6 @@ import java.util.Objects;
 
 public class BaseActivity extends AppCompatActivity {
 
-    public static BaseActivity instance;
     private final String TAG = "Base activity";
     public AppPreferences appPreferences;
     DialogInterface.OnClickListener onExit = (dialog, id) -> finish();
@@ -58,7 +57,6 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        instance = this;
         appPreferences = AppPreferences.getInstance();
         if (appPreferences == null)
             appPreferences = new AppPreferences(this);

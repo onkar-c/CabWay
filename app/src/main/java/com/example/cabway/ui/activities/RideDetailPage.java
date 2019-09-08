@@ -153,12 +153,11 @@ public class RideDetailPage extends BaseActivity {
             } else
                 btDelete.setVisibility(View.GONE);
             btCall.setVisibility(View.GONE);
-            status_layout.setVisibility(ride.getStatus().equals(AppConstants.COMPLETED) ? View.VISIBLE : View.GONE);
         } else {
             btCall.setVisibility(View.VISIBLE);
-            status_layout.setVisibility((!ride.getStatus().equals(AppConstants.NEW)) ? View.VISIBLE : View.GONE);
             btRequest.setVisibility((ride.getStatus().equals(AppConstants.NEW)) ? View.VISIBLE : View.GONE);
         }
+        status_layout.setVisibility((!ride.getStatus().equals(AppConstants.NEW)) ? View.VISIBLE : View.GONE);
         if (status.getVisibility() == View.VISIBLE)
             status.setText(ride.getStatus());
 
