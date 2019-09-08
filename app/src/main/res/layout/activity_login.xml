@@ -57,6 +57,7 @@
                 android:inputType="phone|number"
                 android:maxLength="10"
                 android:maxLines="1"
+                android:singleLine="true"
                 android:textSize="@dimen/small_text"
                 tools:ignore="Autofill" />
         </com.google.android.material.textfield.TextInputLayout>
