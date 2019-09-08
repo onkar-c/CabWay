@@ -5,8 +5,23 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.MainActivity">
 
+    <EditText
+        android:id="@+id/text_insert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        tools:ignore="LabelFor" />
+    <Button
+        android:id="@+id/insert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/update"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/text_insert"/>
+
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/display_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"

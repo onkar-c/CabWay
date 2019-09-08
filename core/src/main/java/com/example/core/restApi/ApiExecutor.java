@@ -1,11 +1,6 @@
 package com.example.core.restApi;
 
-import android.content.Context;
-
-import androidx.annotation.Nullable;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 
 import com.example.core.ApiClient;
 import com.example.core.ApiInterface;
@@ -13,16 +8,12 @@ import com.example.core.CommonModels.CityModel;
 import com.example.core.CommonModels.DocumentModel;
 import com.example.core.RequestExecutor;
 import com.example.core.Utills.FileUtils;
-import com.example.core.Utills.HeroUtils;
 import com.example.core.requestModels.CreateRideRequestModel;
 import com.example.core.requestModels.LoginRequestModel;
 import com.example.core.requestModels.ResetPasswordModel;
 import com.example.core.requestModels.VerifyOtpRequestModel;
 import com.example.core.responseModel.JsonResponse;
-import com.example.database.models.UserModel;
 import com.google.gson.Gson;
-
-import java.util.Objects;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -31,19 +22,6 @@ public class ApiExecutor {
 
     private static ApiInterface getApiInterface() {
         return ApiClient.getClient().create(ApiInterface.class);
-    }
-
-    public static void getUsersFromServer(final MutableLiveData<Boolean> response, final Context context) {
-        MutableLiveData<JsonResponse> jsonResponseMutableLiveData = new MutableLiveData<>();
-        jsonResponseMutableLiveData
-                .observe((LifecycleOwner) context, new Observer<JsonResponse>() {
-                    @Override
-                    public void onChanged(@Nullable JsonResponse s) {
-                        new UserModel(context).insertUsers(HeroUtils.convertHeroModelLitsToHeroList(Objects.requireNonNull(s).getHeroesList()), null);
-                        response.setValue(true);
-                    }
-                });
-        RequestExecutor.ExecuteApi(getApiInterface().getHeros(), jsonResponseMutableLiveData);
     }
 
     public static void getOtpForRegistration(final MutableLiveData<JsonResponse> mltOtpResponse, String mobileNo) {
