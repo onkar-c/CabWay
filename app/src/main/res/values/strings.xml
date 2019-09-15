@@ -55,6 +55,7 @@
     <string name="create_ride">Create Ride</string>
     <string name="no_data_available">No Data Available</string>
     <string name="preferred_city">Preferred City</string>
+    <string name="select_city">Select City</string>
     <string name="driver_details">Driver Details</string>
     <string name="please_select_city">Please Select State And City</string>
     <string name="expiry_date">Expiry Date :</string>
@@ -115,7 +116,7 @@
     //dummy text
     <string name="dummy_document_type_text">Step 1 : Document Type</string>
     <string name="dummy_agency_name_text">Neeta Travel Agency</string>
-    <string name="dummy_amount_text">2500</string>
+    <string name="dummy_amount_text">250000000</string>
     <string name="dummy_date_text">12–06–2019 02:12 am</string>
     <string name="to">to</string>
     <string name="dummy_time_text">12:50 pm</string>

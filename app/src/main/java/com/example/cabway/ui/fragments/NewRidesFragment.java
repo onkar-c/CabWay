@@ -57,7 +57,7 @@ public class NewRidesFragment extends Fragment {
         availableRidesList.setLayoutManager(layoutManager);
         if (rides == null)
             rides = new ArrayList<>();
-        ridesListAdapter = new RidesListAdapter(activityContext, rides, activityContext.appPreferences.getUserDetails().role.equals(AppConstants.AGENCY));
+        ridesListAdapter = new RidesListAdapter(activityContext, rides, activityContext.appPreferences.getUserDetails().role.equals(AppConstants.AGENCY), false);
         availableRidesList.setAdapter(ridesListAdapter);
 
     }

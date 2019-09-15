@@ -39,4 +39,5 @@ public class AppConstants {
     public static final String NEW = "New";
     public static final String REQUESTED = "Requested";
     public static final String REQUEST = "Request";
+    public static final String EXPIRED = "Expired";
 }

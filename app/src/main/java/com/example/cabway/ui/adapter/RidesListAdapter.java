@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import com.example.cabway.Utils.IntentConstants;
 import com.example.cabway.ui.activities.HistoryListActivity;
 import com.example.cabway.ui.activities.RideDetailPage;
 import com.example.core.responseModel.RideResponseModel;
+import com.example.database.Utills.AppConstants;
 
 import java.util.List;
 
@@ -27,12 +29,13 @@ public class RidesListAdapter extends RecyclerView.Adapter<RidesListAdapter.Ride
 
     private Context context;
     private List<RideResponseModel> ridesList;
-    private boolean isAgency;
+    private boolean isAgency, isFromHistory;
 
-    public RidesListAdapter(Context context, List<RideResponseModel> ridesList, boolean isAgency) {
+    public RidesListAdapter(Context context, List<RideResponseModel> ridesList, boolean isAgency, boolean isFromHistory) {
         this.context = context;
         this.ridesList = ridesList;
         this.isAgency = isAgency;
+        this.isFromHistory = isFromHistory;
     }
 
     @NonNull
@@ -56,6 +59,10 @@ public class RidesListAdapter extends RecyclerView.Adapter<RidesListAdapter.Ride
         holder.fromCity.setText(ride.getFromCity().getName());
         holder.toCity.setText(ride.getToCity().getName());
         holder.km.setText(String.format("%s ", ride.getDistance().toString()));
+        holder.status.setVisibility(isFromHistory && isAgency ? View.VISIBLE : View.GONE);
+        if (isFromHistory && isAgency)
+            holder.status.setImageResource(ride.getStatus().equals(AppConstants.EXPIRED) ? R.drawable.otp_cross : R.drawable.ic_check_circle_yellow);
+
     }
 
     @Override
@@ -84,6 +91,8 @@ public class RidesListAdapter extends RecyclerView.Adapter<RidesListAdapter.Ride
         TextView toCity;
         @BindView(R.id.km)
         TextView km;
+        @BindView(R.id.status)
+        ImageView status;
 
         RidesListViewHolder(View itemView) {
             super(itemView);

@@ -23,6 +23,7 @@ import com.example.cabway.Utils.DatePickerUtils;
 import com.example.cabway.Utils.DialogUtils;
 import com.example.cabway.Utils.ImageUtils;
 import com.example.cabway.Utils.IntentConstants;
+import com.example.cabway.Utils.RecyclerViewUtils;
 import com.example.cabway.Utils.TextValidationUtils;
 import com.example.cabway.ui.adapter.DriverListAdapter;
 import com.example.cabway.viewModels.RidesViewModel;
@@ -166,9 +167,8 @@ public class RideDetailPage extends BaseActivity {
 
     private void prepareDriverList() {
         if (isAgency) {
-            if (ride.getStatus().equals(AppConstants.REQUESTED))
-                driverList = ride.getDriverList();
-            if (ride.getStatus().equals(AppConstants.ACCEPTED) && driverList == null && ride.getDriver() != null) {
+            driverList = ride.getDriverList();
+             if ((driverList == null || driverList.size() == 0) && ride.getDriver() != null) {
                 driverList = new ArrayList<>();
                 driverList.add(ride.getDriver());
             }
@@ -188,6 +188,7 @@ public class RideDetailPage extends BaseActivity {
             driverRecyclerView.setLayoutManager(layoutManager);
             driverListAdapter = new DriverListAdapter(this, driverList);
             driverRecyclerView.setAdapter(driverListAdapter);
+            RecyclerViewUtils.setHeightItemWise(this, driverRecyclerView, R.layout.driver_item, driverList.size());
         }
     }
 
