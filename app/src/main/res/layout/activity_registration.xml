@@ -90,7 +90,8 @@
                 android:maxLines="1"
                 android:textSize="@dimen/small_text"
                 android:visibility="gone"
-                tools:ignore="Autofill" />
+                tools:ignore="Autofill"
+                android:maxLength="15"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -107,7 +108,8 @@
                 android:maxLines="1"
                 android:textSize="@dimen/small_text"
                 android:visibility="gone"
-                tools:ignore="Autofill" />
+                tools:ignore="Autofill"
+                android:maxLength="15"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -126,7 +128,8 @@
                 android:maxLines="1"
                 android:textSize="@dimen/small_text"
                 android:visibility="gone"
-                tools:ignore="Autofill" />
+                tools:ignore="Autofill"
+                android:maxLength="20"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -188,7 +191,8 @@
                 android:inputType="text"
                 android:textSize="@dimen/small_text"
                 android:visibility="gone"
-                tools:ignore="Autofill" />
+                tools:ignore="Autofill"
+                android:maxLength="20"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView

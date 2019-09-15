@@ -83,7 +83,7 @@ public class TextValidationUtils {
             return false;
         } else if (pAdharCardDoc.getDocumentNumber().trim().isEmpty() ||
                 pAdharCardDoc.getDocumentNumber().length() != 12 ) {
-            showMandatoryErrorUsingString("Valid " + pContext.getString(R.string.registration_number), pContext);
+            showMandatoryErrorUsingString("Valid 12-digit " + pContext.getString(R.string.registration_number), pContext);
             return false;
         }
         return true;
@@ -95,7 +95,7 @@ public class TextValidationUtils {
             return false;
         } else if (pDrivingLicenceDoc.getDocumentNumber().trim().isEmpty() ||
                 (pDrivingLicenceDoc.getDocumentNumber().length() < 13 || pDrivingLicenceDoc.getDocumentNumber().length() >15) ) {
-            showMandatoryErrorUsingString("Valid " + pContext.getString(R.string.registration_number), pContext);
+            showMandatoryErrorUsingString("Valid 13 to 15-digit " + pContext.getString(R.string.registration_number), pContext);
             return false;
         } else if (pDrivingLicenceDoc.getVehicleType().trim().isEmpty()) {
             showMandatoryErrorUsingString("Valid " + pContext.getString(R.string.vehicle_type), pContext);
