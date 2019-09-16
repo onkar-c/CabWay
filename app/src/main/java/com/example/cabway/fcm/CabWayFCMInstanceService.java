@@ -1,10 +1,13 @@
 package com.example.cabway.fcm;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -34,33 +37,32 @@ public class CabWayFCMInstanceService extends FirebaseMessagingService {
     }
 
     @Override
-    public void onMessageReceived(RemoteMessage remoteMessage) {
-        String title = Objects.requireNonNull(remoteMessage.getNotification()).getTitle();
-        String body = remoteMessage.getNotification().getBody();
-        // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
-        Log.d(TAG, "From: " + remoteMessage.getFrom());
-
-        // Check if message contains a data payload.
-        if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
-            /*  if (*//* Check if data needs to be processed by long running job *//* true) {
-                // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
-            } else {
-                // Handle message within 10 seconds
-            }*/
-
+    public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
+        super.onMessageReceived(remoteMessage);
+        Log.d("msg", "onMessageReceived: " + remoteMessage.getData().get("message"));
+        Intent intent = new Intent(this, SplashScreenActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                | Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        String channelId = "Default";
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
+                .setContentTitle(Objects.requireNonNull(remoteMessage.getNotification()).getTitle())
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(Objects.requireNonNull(remoteMessage.getNotification()).getBody()))
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder.setSmallIcon(R.drawable.ic_cabway_notification);
+            builder.setLights(Color.YELLOW, Color.RED, Color.GREEN);
+        } else {
+            builder.setSmallIcon(R.mipmap.ic_launcher_cabway);
         }
-
-        // Check if message contains a notification payload.
-        if (remoteMessage.getNotification() != null) {
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-            Log.d(TAG, "Message Notification Title: " + remoteMessage.getNotification().getTitle());
+        builder.setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL);
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(channelId, "Default channel", NotificationManager.IMPORTANCE_DEFAULT);
+            Objects.requireNonNull(manager).createNotificationChannel(channel);
         }
-
-        // Also if you intend on generating your own notifications as a result of a received FCM
-        // message, here is where that should be initiated. See sendNotification method below.
-
-        displayNotification(title, body);
+        Objects.requireNonNull(manager).notify(0, builder.build());
     }
 
     private void displayNotification(String title, String body) {
@@ -71,18 +73,35 @@ public class CabWayFCMInstanceService extends FirebaseMessagingService {
         PendingIntent intent = PendingIntent.getActivity(this, 0,
                 notificationIntent, 0);
 
-
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "abc");
         builder.setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL)
                 .setWhen(System.currentTimeMillis())
                 .setSmallIcon(R.mipmap.ic_launcher_cabway)
                 .setContentTitle(title)
-                .setContentText(body)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
                 .setContentIntent(intent)
                 .setContentInfo(NOTIFICATION_INFO);
 
-        Objects.requireNonNull(notificationManager).notify(NOTIFICATION_ID, builder.build());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "cabway notification";
+            String description = "abcd";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("1234", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            Objects.requireNonNull(notificationManager).createNotificationChannel(channel);
+        }
+        else
+            Objects.requireNonNull(notificationManager).notify(NOTIFICATION_ID, builder.build());
+    }
+
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+
     }
 
     @Override
