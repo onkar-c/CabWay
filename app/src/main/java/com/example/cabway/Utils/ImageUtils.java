@@ -8,23 +8,29 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.cabway.R;
 import com.example.database.Utills.AppConstants;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.Objects;
 
 public class ImageUtils {
     public static final int IMAGE_PICK = 2001;
@@ -55,12 +61,11 @@ public class ImageUtils {
         String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = context.getContentResolver().query(contentUri, proj,
                 null, null, null);
-        int column_index = cursor
+        int column_index = Objects.requireNonNull(cursor)
                 .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
-        String filePath = cursor.getString(column_index);
-//        Toast.makeText(context, filePath, Toast.LENGTH_SHORT).show();
-        return filePath;
+        //        Toast.makeText(context, filePath, Toast.LENGTH_SHORT).show();
+        return cursor.getString(column_index);
     }
 
     private static Bitmap getContactBitmapFromURI(Context context, Uri uri) {
@@ -110,43 +115,53 @@ public class ImageUtils {
     }
 
 
-    public static void setImageFromUrl(Context context, String url, ImageView imageView, boolean isDocument) {
-        Picasso.get()
-                .load(url)
-                .placeholder(isDocument ? R.drawable.id_image : R.drawable.ic_profile_icon)
-//                .error(R.drawable.ic_add_profile)
-                .into(imageView, new Callback() {
-                    @Override
-                    public void onSuccess() {
-//                        Toast.makeText(context, "Success to Load Image", Toast.LENGTH_SHORT).show();
-                    }
+    public static void setImageFromUrl(Context context, String url, ImageView imageView, int placeHolder) {
+            Glide.with(context)
+                    .load((url != null) ? url : "")
+                    .placeholder(placeHolder)
+//                    .centerCrop()
+                    .centerInside()
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+//                            Toast.makeText(context, "Failed to Load Image", Toast.LENGTH_SHORT).show();
+//                            Log.e("TAG", "Error loading image", e);
+                            return false; // important to return false so the error placeholder can be placed
+                        }
 
-                    @Override
-                    public void onError(Exception e) {
-//                        Toast.makeText(context, "Failed to Load Image", Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
-                    }
-                });
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            return false;
+                        }
+                    })
+                    .into(imageView);
+
     }
 
     public static void setImageFromFilePath(Context context, String filePath, ImageView imageView) {
-        Picasso.get()
-                .load(new File(filePath))
-                .memoryPolicy(MemoryPolicy.NO_CACHE)
-                .placeholder(R.drawable.ic_profile_icon)
-//                .error(R.drawable.ic_add_profile)
-                .into(imageView, new Callback() {
-                    @Override
-                    public void onSuccess() {
 
-                    }
+        if (filePath != null) {
+            Glide.with(context)
+                    .load(new File(filePath))
+                    .placeholder(R.drawable.ic_profile_icon)
+                    .centerInside()
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            Toast.makeText(context, "Failed to Load Image", Toast.LENGTH_SHORT).show();
+                            Log.e("TAG", "Error loading image", e);
+                            return false; // important to return false so the error placeholder can be placed
+                        }
 
-                    @Override
-                    public void onError(Exception e) {
-//                        Toast.makeText(context,"Failed to Load Image",Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
-                    }
-                });
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            return false;
+                        }
+                    })
+                    .into(imageView);
+
+        }
+
     }
 
 }

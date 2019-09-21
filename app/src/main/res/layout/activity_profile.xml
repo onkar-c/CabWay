@@ -76,7 +76,8 @@
             android:inputType="text"
             android:textColor="@android:color/black"
             android:textSize="@dimen/small_text"
-            tools:ignore="Autofill,LabelFor" />
+            tools:ignore="Autofill,LabelFor"
+            android:maxLength="15"/>
 
         <TextView
             android:id="@+id/tv_lname_title"
@@ -86,7 +87,7 @@
             android:layout_marginTop="5dp"
             android:text="@string/last_name"
             android:textColor="#797878"
-            android:textSize="14sp" />
+            android:textSize="14sp"/>
 
         <EditText
             android:id="@+id/et_lname"
@@ -99,7 +100,8 @@
             android:inputType="text"
             android:textColor="@android:color/black"
             android:textSize="@dimen/small_text"
-            tools:ignore="Autofill,LabelFor" />
+            tools:ignore="Autofill,LabelFor"
+            android:maxLength="15" />
 
 
         <TextView
@@ -125,7 +127,8 @@
             android:textColor="@android:color/black"
             android:textSize="@dimen/small_text"
             tools:ignore="Autofill,LabelFor"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:maxLength="15"/>
 
         <View
             android:layout_width="match_parent"
@@ -241,7 +244,8 @@
             android:inputType="text"
             android:textColor="@android:color/black"
             android:textSize="@dimen/small_text"
-            tools:ignore="Autofill,LabelFor" />
+            tools:ignore="Autofill,LabelFor"
+            android:maxLength="30"/>
 
         <View
             android:layout_width="match_parent"

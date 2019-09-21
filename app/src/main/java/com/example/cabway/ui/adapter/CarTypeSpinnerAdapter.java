@@ -16,6 +16,7 @@ import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.core.content.ContextCompat;
 
 import com.example.cabway.R;
+import com.example.cabway.Utils.ImageUtils;
 import com.example.cabway.Utils.SpinnerUtils;
 import com.example.core.CommonModels.VehicleTypeModel;
 import com.example.core.Utills.AppPreferences;
@@ -71,11 +72,11 @@ public class CarTypeSpinnerAdapter extends ArrayAdapter implements AdapterView.O
             TextView name = view.findViewById(R.id.tv_type);
             ImageView image = view.findViewById(R.id.iv_car_type);
 
-            VehicleTypeModel obj = getItem(position);
-            if(obj!=null) {
-                name.setText(obj.getType());
-                //ImageUtils.setImageFromUrl(mContext,vehicleTypeModel.getCarImageUrl(),image);
-                image.setImageDrawable(mContext.getDrawable(R.drawable.ic_add_image));
+            VehicleTypeModel vehicleTypeModel = getItem(position);
+            if(vehicleTypeModel!=null) {
+                name.setText(vehicleTypeModel.getType());
+                ImageUtils.setImageFromUrl(mContext,vehicleTypeModel.getCarImageUrl(),image, R.drawable.ic_add_image);
+//                image.setImageDrawable(mContext.getDrawable(R.drawable.ic_add_image));
             }
 
             if (position == 0)

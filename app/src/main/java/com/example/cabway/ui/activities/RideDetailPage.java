@@ -23,6 +23,7 @@ import com.example.cabway.Utils.DatePickerUtils;
 import com.example.cabway.Utils.DialogUtils;
 import com.example.cabway.Utils.ImageUtils;
 import com.example.cabway.Utils.IntentConstants;
+import com.example.cabway.Utils.RecyclerViewUtils;
 import com.example.cabway.Utils.TextValidationUtils;
 import com.example.cabway.ui.adapter.DriverListAdapter;
 import com.example.cabway.viewModels.RidesViewModel;
@@ -81,7 +82,6 @@ public class RideDetailPage extends BaseActivity {
     DriverListAdapter driverListAdapter;
     RidesViewModel ridesViewModel;
 
-    private boolean isFromHistory = false;
     private boolean isAgency = false;
 
     @Override
@@ -133,7 +133,7 @@ public class RideDetailPage extends BaseActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         if (menu.findItem(R.id.action_edit) != null)
-            menu.findItem(R.id.action_edit).setVisible((isAgency && !ride.getStatus().equals(AppConstants.ACCEPTED)));
+            menu.findItem(R.id.action_edit).setVisible((isAgency && !ride.getStatus().equals(AppConstants.ACCEPTED) && !ride.getStatus().equals(AppConstants.COMPLETED)));
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -149,27 +149,26 @@ public class RideDetailPage extends BaseActivity {
 
     private void setButtons() {
         if (isAgency) {
-            if (!ride.getStatus().equals(AppConstants.ACCEPTED)) {
+            if (ride.getStatus().equals(AppConstants.NEW) || ride.getStatus().equals(AppConstants.REQUESTED)) {
                 btDelete.setVisibility(View.VISIBLE);
             } else
                 btDelete.setVisibility(View.GONE);
-                btCall.setVisibility(View.GONE);
-                status_layout.setVisibility(View.GONE);
+            btCall.setVisibility(View.GONE);
         } else {
             btCall.setVisibility(View.VISIBLE);
-            status_layout.setVisibility((!ride.getStatus().equals(AppConstants.NEW)) ? View.VISIBLE : View.GONE);
-            btRequest.setVisibility((isFromHistory || !ride.getStatus().equals(AppConstants.NEW)) ? View.GONE : View.VISIBLE);
-            status.setText(ride.getStatus());
+            btRequest.setVisibility((ride.getStatus().equals(AppConstants.NEW)) ? View.VISIBLE : View.GONE);
         }
+        status_layout.setVisibility((!ride.getStatus().equals(AppConstants.NEW)) ? View.VISIBLE : View.GONE);
+        if (status.getVisibility() == View.VISIBLE)
+            status.setText(ride.getStatus());
 
         invalidateOptionsMenu();
     }
 
     private void prepareDriverList() {
         if (isAgency) {
-            if (ride.getStatus().equals(AppConstants.REQUESTED))
-                driverList = ride.getDriverList();
-            if (ride.getStatus().equals(AppConstants.ACCEPTED) && driverList == null && ride.getDriver() != null) {
+            driverList = ride.getDriverList();
+             if ((driverList == null || driverList.size() == 0) && ride.getDriver() != null) {
                 driverList = new ArrayList<>();
                 driverList.add(ride.getDriver());
             }
@@ -189,6 +188,7 @@ public class RideDetailPage extends BaseActivity {
             driverRecyclerView.setLayoutManager(layoutManager);
             driverListAdapter = new DriverListAdapter(this, driverList);
             driverRecyclerView.setAdapter(driverListAdapter);
+            RecyclerViewUtils.setHeightItemWise(this, driverRecyclerView, R.layout.driver_item, driverList.size());
         }
     }
 
@@ -209,17 +209,16 @@ public class RideDetailPage extends BaseActivity {
         tvStartLocation.setText(ride.getFromCity().getName());
         tvDestinationLocation.setText(ride.getToCity().getName());
         tvRideCost.setText(String.format("%s ", ride.getCost().toString()));
-        if(appPreferences.getUserDetails().role.equals(AppConstants.AGENCY)){
+        if (appPreferences.getUserDetails().role.equals(AppConstants.AGENCY)) {
             tvAgencyName.setVisibility(View.GONE);
             ivProfileImage.setVisibility(View.GONE);
         } else {
             tvAgencyName.setVisibility(View.VISIBLE);
-            ImageUtils.setImageFromUrl(this, ride.getAgency().getProfileImage(), ivProfileImage, false);
+            ImageUtils.setImageFromUrl(this, ride.getAgency().getProfileImage(), ivProfileImage, R.drawable.ic_profile_icon);
         }
     }
 
     private void getDataFromExtras() {
-        isFromHistory = getIntent().getBooleanExtra(IntentConstants.IS_FROM_HISTORY, false);
         ride = (RideResponseModel) getIntent().getSerializableExtra(IntentConstants.RIDE);
         isAgency = appPreferences.getUserDetails().role.equals(AppConstants.AGENCY);
     }

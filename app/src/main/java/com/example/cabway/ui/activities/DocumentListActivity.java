@@ -118,7 +118,7 @@ public class DocumentListActivity extends BaseActivity {
                     appPreferences.setUserDetails(userModel);
                     btn_continue.setVisibility(View.VISIBLE);
                 }
-                Toast.makeText(DocumentListActivity.this, documentsResponse.getMessage(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(DocumentListActivity.this, documentsResponse.getMessage(), Toast.LENGTH_SHORT).show();
             } else {
                 documentModelList = null;
                 Toast.makeText(DocumentListActivity.this, documentsResponse.getMessage(), Toast.LENGTH_SHORT).show();

@@ -39,17 +39,20 @@
             android:name=".ui.activities.LoginActivity"
             android:label="@string/login"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:launchMode="singleInstance"/>
         <activity
             android:name=".ui.activities.ForgotPasswordActivity"
             android:label="@string/forgot_password"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".ui.activities.RegistrationActivity"
             android:label="@string/registration"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".ui.activities.DashBoardActivity"
             android:label="@string/title_activity_dash_board"
@@ -67,7 +70,8 @@
             android:name=".ui.activities.UploadDocumentActivity"
             android:label="@string/document_upload"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".ui.activities.HelpActivity"
             android:label="@string/help_activity"
@@ -78,7 +82,8 @@
             android:name=".ui.activities.RideDetailPage"
             android:label="@string/ride_details"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".ui.activities.HistoryListActivity"
             android:label="@string/rides_history"
@@ -95,7 +100,8 @@
             android:name=".ui.activities.CreateRideActivity"
             android:label="@string/create_ride"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".ui.activities.ProfileActivity"
             android:label="@string/profile"
@@ -104,20 +110,23 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".ui.activities.PreferredCityActivity"
-            android:label="@string/preferred_city"
+            android:label="@string/select_city"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".ui.activities.UpgradeActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".ui.activities.DriverDetailsActivity"
             android:label="@string/driver_details"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:launchMode="singleTask"/>
+      
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="a1b87684d944bbd0049d38d2049015843877b90b" />

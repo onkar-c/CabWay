@@ -1,43 +1,26 @@
 package com.example.cabway.viewModels;
 
-import android.app.Activity;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-import android.content.Context;
+import android.app.Application;
 
-import com.example.database.entities.Hero;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+
 import com.example.cabway.repositories.HeroesRepository;
+import com.example.database.entities.Hero;
 
 import java.util.List;
 
-public class MainActivityViewModel extends ViewModel{
+public class MainActivityViewModel extends AndroidViewModel {
 
-    private MutableLiveData<List<Hero>> response ;
-    private MutableLiveData<Boolean> responseRecived ;
     private HeroesRepository myRepository;
 
-    public void init(){
-        if(response != null)
-            return;
-        myRepository = HeroesRepository.getInstance();
-        response  = new MutableLiveData<>();
-        responseRecived  = new MutableLiveData<>();
+    public MainActivityViewModel(@NonNull Application application) {
+        super(application);
+        myRepository = HeroesRepository.getInstance(application.getApplicationContext());
     }
 
-    public LiveData<List<Hero>> getResponse(){
-        return response;
-    }
-
-    public MutableLiveData<Boolean> getResponseRecived() {
-        return responseRecived;
-    }
-
-    public void makeCall(Activity context){
-       myRepository.getHeroesFromServer(responseRecived,context);
-    }
-
-    public void getHeroes(Context context){
-        myRepository.getHeroesFromDb(context, response);
+    public LiveData<List<Hero>> getHeroes() {
+        return myRepository.getHeroesFromDb();
     }
 }

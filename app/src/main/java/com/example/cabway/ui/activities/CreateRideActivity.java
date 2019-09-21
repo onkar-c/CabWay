@@ -81,6 +81,8 @@ public class CreateRideActivity extends BaseActivity implements CarTypeSpinnerAd
         ridesViewModel = ViewModelProviders.of(this).get(RidesViewModel.class);
         ridesViewModel.init();
         ride = (RideResponseModel) getIntent().getSerializableExtra(IntentConstants.RIDE);
+        if(ride != null)
+            setTitle(getString(R.string.update_ride));
         setCreateRideObserver();
         setUpUi();
         if (ride != null)

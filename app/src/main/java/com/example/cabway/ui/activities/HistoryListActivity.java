@@ -30,7 +30,7 @@ public class HistoryListActivity extends BaseActivity {
 
     RidesListAdapter ridesListAdapter;
     RidesViewModel ridesViewModel;
-    List<RideResponseModel> rides = null;
+    List<RideResponseModel> rides = new ArrayList<>();
 
 
 
@@ -53,7 +53,7 @@ public class HistoryListActivity extends BaseActivity {
             if (ridesListAdapter == null) {
                 LinearLayoutManager layoutManager = new LinearLayoutManager(this);
                 ridesHistoryList.setLayoutManager(layoutManager);
-                ridesListAdapter = new RidesListAdapter(this, new ArrayList<>(), appPreferences.getUserDetails().role.equals(AppConstants.AGENCY));
+                ridesListAdapter = new RidesListAdapter(this, rides, appPreferences.getUserDetails().role.equals(AppConstants.AGENCY), true);
                 ridesHistoryList.setAdapter(ridesListAdapter);
             } else
                 ridesListAdapter.setData(rides);

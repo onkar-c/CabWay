@@ -48,7 +48,8 @@
 # Application classes that will be serialized/deserialized over Gson
 -keep class com.kelltontech.volley.ext.** { *; }
 
--keep class com.bluestar.models.** {*;}
+-keep class com.example.core.** {*;}
+-keep class com.example.database.** {*;}
 
 -keepnames class * implements java.io.Serializable
 -keepclassmembers class * implements java.io.Serializable {
@@ -64,3 +65,15 @@
 -keep class * implements android.os.Parcelable {
   public static final android.os.Parcelable$Creator *;
 }
+
+
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public class * extends com.bumptech.glide.module.AppGlideModule
+-keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
+
+
+
+

@@ -1,31 +1,35 @@
 package com.example.cabway.repositories;
 
-import androidx.lifecycle.MutableLiveData;
 import android.content.Context;
 
-import com.example.core.restApi.ApiExecutor;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
+import com.example.database.AppDatabase;
 import com.example.database.entities.Hero;
-import com.example.database.models.UserModel;
 
 import java.util.List;
 
 public class HeroesRepository {
 
     private static HeroesRepository instance;
+    private static AppDatabase appDatabase;
 
-    public static HeroesRepository getInstance() {
+    public static HeroesRepository getInstance(Context context) {
         if (instance == null) {
             instance = new HeroesRepository();
-
         }
+        appDatabase = AppDatabase.getInstance(context);
         return instance;
     }
 
-    public void getHeroesFromServer(MutableLiveData<Boolean> response, Context context) {
-        ApiExecutor.getUsersFromServer(response, context);
+    public LiveData<List<Hero>> getHeroesFromDb() {
+        return appDatabase.userDao().getAll();
     }
 
-    public void getHeroesFromDb(Context context, MutableLiveData<List<Hero>> response) {
-        new UserModel(context).getUsers(response);
+    public LiveData<Long> insertSingleHero(Hero hero) {
+        MutableLiveData<Long> result = new MutableLiveData<>();
+        result.setValue(appDatabase.userDao().insertHero(hero));
+        return result;
     }
 }

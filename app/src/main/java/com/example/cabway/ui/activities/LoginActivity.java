@@ -53,7 +53,7 @@ public class LoginActivity extends BaseActivity {
         loginViewModel.getLoginResponse().observe(this, loginResponse -> {
             LoginActivity.this.removeProgressDialog();
             if (isSuccessResponse(loginResponse)) {
-                Toast.makeText(LoginActivity.this, loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(LoginActivity.this, loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
                 setUserData(loginResponse.getUser());
                 startNextActivity(loginResponse.getUser());
             } else {

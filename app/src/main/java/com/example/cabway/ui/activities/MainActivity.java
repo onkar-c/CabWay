@@ -1,50 +1,59 @@
 package com.example.cabway.ui.activities;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.lifecycle.ViewModelProviders;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 
 import com.example.cabway.R;
 import com.example.cabway.viewModels.MainActivityViewModel;
-import com.example.database.Utills.AppConstants;
+import com.example.cabway.workers.UserWorker;
 import com.example.database.entities.Hero;
 import com.facebook.stetho.Stetho;
 
-import java.util.Objects;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
 
     MainActivityViewModel mainActivityViewModel;
+    @BindView(R.id.text_insert)
+    EditText text;
+    @BindView(R.id.display_textView)
     TextView textView;
-    Button hit;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Stetho.initializeWithDefaults(this);
         setContentView(R.layout.activity_main);
-        textView = findViewById(R.id.textView);
-        hit = findViewById(R.id.hitButton);
-
-        hit.setOnClickListener(view -> {
-            showProgressDialog(AppConstants.PLEASE_WAIT, false);
-            mainActivityViewModel.makeCall(MainActivity.this);
-        });
+        ButterKnife.bind(this);
+        Stetho.initializeWithDefaults(this);
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
-        mainActivityViewModel.init();
+    }
 
-        mainActivityViewModel.getResponse().observe(this, s -> {
-            textView.setText("");
-            removeProgressDialog();
-            for (Hero hero : Objects.requireNonNull(s)) {
-                textView.append("\n" + hero.getData());
-            }
-        });
+    private void setData(List<Hero> heroes) {
+        for (Hero hero : heroes) {
+            textView.append("\n" + hero.getData());
+        }
+    }
 
-        mainActivityViewModel.getResponseRecived().observe(this, aBoolean -> {
-            if (aBoolean != null && aBoolean)
-                mainActivityViewModel.getHeroes(MainActivity.this);
-        });
+
+    @OnClick(R.id.hitButton)
+    public void selectData() {
+        mainActivityViewModel.getHeroes().observe(this, this::setData);
+    }
+
+    @OnClick(R.id.insert)
+    public void insertData() {
+        OneTimeWorkRequest insertWork = new OneTimeWorkRequest.Builder(UserWorker.class)
+                .build();
+        WorkManager.getInstance(this).enqueue(insertWork);
     }
 }

@@ -169,7 +169,9 @@
                         android:text="@string/to"
                         android:layout_marginStart="2dp"
                         android:layout_marginEnd="2dp"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:textStyle="bold"
+                        android:textSize="12sp"/>
 
                     <TextView
                         android:id="@+id/journey_time"
@@ -339,6 +341,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="50dp"
             android:layout_marginEnd="30dp"
+            android:layout_marginBottom="15dp"
             android:background="@android:color/black"
             android:text="@string/call_agency"
             android:textColor="@android:color/white"
@@ -367,6 +370,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
+            android:layout_marginBottom="15dp"
             android:background="@android:color/black"
             android:text="@string/request"
             android:textColor="@android:color/white"

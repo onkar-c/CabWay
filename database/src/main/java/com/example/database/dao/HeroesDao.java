@@ -1,5 +1,6 @@
 package com.example.database.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -9,15 +10,16 @@ import com.example.database.entities.Hero;
 
 import java.util.List;
 
-import io.reactivex.Single;
-
 @Dao
 public interface HeroesDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAllHeroes(List<Hero> order);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Long insertHero(Hero hero);
+
     @Query("SELECT * FROM Hero")
-    Single<List<Hero>> getAll();
+    LiveData<List<Hero>> getAll();
 }
 
