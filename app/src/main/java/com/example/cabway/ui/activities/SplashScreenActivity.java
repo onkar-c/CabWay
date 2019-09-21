@@ -29,10 +29,12 @@ public class SplashScreenActivity extends BaseActivity {
         splashViewModel = ViewModelProviders.of(this).get(SplashViewModel.class);
         splashViewModel.init();
         setStateCityObserver();
-//        generateFcmTopic();
-        splashViewModel.getSplashRepository().getStateCity(splashViewModel.getStateCityResponseMld());
-//        new Handler().postDelayed(SplashScreenActivity.this::startNextActivity, 500);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        splashViewModel.getSplashRepository().getStateCity(splashViewModel.getStateCityResponseMld());
     }
 
     private void setStateCityObserver() {

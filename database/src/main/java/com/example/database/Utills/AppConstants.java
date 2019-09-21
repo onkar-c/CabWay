@@ -17,6 +17,7 @@ public class AppConstants {
     public static final String FORGOT_PASSWORD_OTP_TYPE = "Reset";
     public static final String REGISTRATION_OTP_TYPE = "Request";
     public static final String FILE_TYPE = "multipart/form-data";
+    public static final String CHANNEL_ID = "Default";
     public static final String PART_FILE_TYPE = "file";
     public static final String IMAGE_MIME_TYPE = "image/*";
     public static final String IMAGE_PICKER_MESSAGE = "Select Image";

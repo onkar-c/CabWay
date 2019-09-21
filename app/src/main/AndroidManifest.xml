@@ -116,7 +116,6 @@
             android:launchMode="singleTask"/>
         <activity
             android:name=".ui.activities.UpgradeActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:launchMode="singleTask"/>
@@ -138,6 +137,14 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <receiver android:name=".fcm.CabWayFCMInstanceService$NotificationIntentSenderBroadcast"
+            android:exported="true"
+            android:permission="notification">
+            <intent-filter>
+                <action android:name="com.example.cabway.fcm" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

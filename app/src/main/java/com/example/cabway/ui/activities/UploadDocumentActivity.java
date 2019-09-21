@@ -20,12 +20,12 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.cabway.R;
 import com.example.cabway.Utils.CarTypeSpinnerUtils;
-import com.example.cabway.Utils.DatePickerUtils;
+import com.example.cabway.Utils.DateTimeUtils;
 import com.example.cabway.Utils.ImageUtils;
 import com.example.cabway.Utils.IntentConstants;
 import com.example.cabway.Utils.SpinnerUtils;
 import com.example.cabway.Utils.TextValidationUtils;
-import com.example.cabway.ui.Interfaces.DatePickerCallBackInterface;
+import com.example.cabway.ui.Interfaces.DateTimePickerCallBackInterface;
 import com.example.cabway.ui.adapter.CarTypeSpinnerAdapter;
 import com.example.cabway.ui.adapter.CitySpinnerAdapter;
 import com.example.cabway.viewModels.DocumentViewModel;
@@ -44,7 +44,7 @@ import butterknife.OnClick;
 import static com.example.cabway.Utils.TextValidationUtils.showMandatoryError;
 import static com.example.cabway.Utils.TextValidationUtils.showMandatoryErrorUsingString;
 
-public class UploadDocumentActivity extends BaseActivity implements DatePickerCallBackInterface, CitySpinnerAdapter.ItemSelectedCallback, CarTypeSpinnerAdapter.TypeSelectedCallback {
+public class UploadDocumentActivity extends BaseActivity implements DateTimePickerCallBackInterface, CitySpinnerAdapter.ItemSelectedCallback, CarTypeSpinnerAdapter.TypeSelectedCallback {
 
     @BindView(R.id.il_doc_registration_number)
     TextInputLayout tilCardNumber;
@@ -178,7 +178,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
     @OnClick({R.id.tv_issued_date, R.id.tv_expired_date})
     public void startDatePicker(View view) {
         isIssuedDatePicker = (view.getId() == R.id.tv_issued_date);
-        DatePickerUtils.startDatePicker(this, this);
+        DateTimeUtils.startDatePicker(this, this);
     }
 
 
@@ -222,11 +222,11 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
     }
 
     @Override
-    public void setDateFromDatePicker(String selectedDate) {
+    public void setDateTimeFromDatePicker(String selectedDateTime) {
         if (isIssuedDatePicker)
-            tvIssuedDate.setText(selectedDate);
+            tvIssuedDate.setText(selectedDateTime);
         else
-            tvExpireDate.setText(selectedDate);
+            tvExpireDate.setText(selectedDateTime);
     }
 
     private boolean validate() {
@@ -290,8 +290,7 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
             if (!TextValidationUtils.isEmpty(filePath)) {
                 mFilePath = filePath;
                 //Toast.makeText(this, filePath, Toast.LENGTH_SHORT).show();
-                if (mFilePath != null)
-                    ImageUtils.setImageFromFilePath(this, mFilePath, ivDocumentImage);
+                ImageUtils.setImageFromFilePath(this, mFilePath, ivDocumentImage);
             }
         }
     }

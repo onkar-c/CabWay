@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cabway.R;
-import com.example.cabway.Utils.DatePickerUtils;
+import com.example.cabway.Utils.DateTimeUtils;
 import com.example.cabway.Utils.IntentConstants;
 import com.example.cabway.ui.activities.HistoryListActivity;
 import com.example.cabway.ui.activities.RideDetailPage;
@@ -54,8 +54,8 @@ public class RidesListAdapter extends RecyclerView.Adapter<RidesListAdapter.Ride
         } else
             holder.agencyName.setVisibility(View.GONE);
         holder.rideCost.setText(String.format("%s ", ride.getCost().toString()));
-        holder.rideDate.setText(DatePickerUtils.convertDate(ride.getPickupTime()));
-        holder.rideTime.setText(DatePickerUtils.convertDate(ride.getDropTime()));
+        holder.rideDate.setText(DateTimeUtils.convertDate(ride.getPickupTime()));
+        holder.rideTime.setText(DateTimeUtils.convertDate(ride.getDropTime()));
         holder.fromCity.setText(ride.getFromCity().getName());
         holder.toCity.setText(ride.getToCity().getName());
         holder.km.setText(String.format("%s ", ride.getDistance().toString()));

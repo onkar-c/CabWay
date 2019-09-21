@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cabway.R;
-import com.example.cabway.Utils.DatePickerUtils;
+import com.example.cabway.Utils.DateTimeUtils;
 import com.example.cabway.Utils.DialogUtils;
 import com.example.cabway.Utils.ImageUtils;
 import com.example.cabway.Utils.IntentConstants;
@@ -200,8 +200,8 @@ public class RideDetailPage extends BaseActivity {
     private void setUi() {
 
         tvAgencyName.setText(ride.getAgency().getAgencyName());
-        tvRideDate.setText(DatePickerUtils.convertDate(ride.getPickupTime()));
-        tvRideTime.setText(DatePickerUtils.convertDate(ride.getDropTime()));
+        tvRideDate.setText(DateTimeUtils.convertDate(ride.getPickupTime()));
+        tvRideTime.setText(DateTimeUtils.convertDate(ride.getDropTime()));
         tvCarType.setText(ride.getCarType());
         tvTripMode.setText(ride.getRideType());
         tvAgencyNumber.setText(ride.getAgency().getMobileNo());

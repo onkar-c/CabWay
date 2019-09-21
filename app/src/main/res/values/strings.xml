@@ -111,8 +111,8 @@
     <string name="one_way_ride">One Way</string>
     <string name="two_way_ride">Two Way</string>
     <string name="ride_type">Ride Type</string>
-    <string name="pickup_date_time">Pickup Date and Time</string>
-    <string name="drop_off_date_time">Drop Off Date and Time</string>
+    <string name="pickup_date_time">PICKUP DATE AND TIME</string>
+    <string name="drop_off_date_time">DROP OFF DATE AND TIME</string>
 
     //dummy text
     <string name="dummy_document_type_text">Step 1 : Document Type</string>

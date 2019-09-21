@@ -2,7 +2,6 @@ package com.example.cabway.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -15,9 +14,10 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.cabway.R;
 import com.example.cabway.Utils.CarTypeSpinnerUtils;
-import com.example.cabway.Utils.DatePickerUtils;
 import com.example.cabway.Utils.DateTimePicker;
+import com.example.cabway.Utils.DateTimeUtils;
 import com.example.cabway.Utils.IntentConstants;
+import com.example.cabway.ui.Interfaces.DateTimePickerCallBackInterface;
 import com.example.cabway.ui.adapter.CarTypeSpinnerAdapter;
 import com.example.cabway.viewModels.RidesViewModel;
 import com.example.core.CommonModels.CityModel;
@@ -28,7 +28,6 @@ import com.example.core.responseModel.RideResponseModel;
 import com.example.database.Utills.AppConstants;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.util.Date;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -37,7 +36,7 @@ import butterknife.OnClick;
 
 import static com.example.cabway.Utils.TextValidationUtils.showMandatoryError;
 
-public class CreateRideActivity extends BaseActivity implements CarTypeSpinnerAdapter.TypeSelectedCallback, DateTimePicker.ResultCallback {
+public class CreateRideActivity extends BaseActivity implements CarTypeSpinnerAdapter.TypeSelectedCallback, DateTimePickerCallBackInterface {
 
     public final int startLocation = 1;
     public final int endLocation = 2;
@@ -70,7 +69,7 @@ public class CreateRideActivity extends BaseActivity implements CarTypeSpinnerAd
     RidesViewModel ridesViewModel;
     CityModel fromCity, toCity;
     RideResponseModel ride = null;
-
+    boolean isPickupTime = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +80,7 @@ public class CreateRideActivity extends BaseActivity implements CarTypeSpinnerAd
         ridesViewModel = ViewModelProviders.of(this).get(RidesViewModel.class);
         ridesViewModel.init();
         ride = (RideResponseModel) getIntent().getSerializableExtra(IntentConstants.RIDE);
-        if(ride != null)
+        if (ride != null)
             setTitle(getString(R.string.update_ride));
         setCreateRideObserver();
         setUpUi();
@@ -96,8 +95,8 @@ public class CreateRideActivity extends BaseActivity implements CarTypeSpinnerAd
         fromLocET.setText(ride.getFromCity().getName());
         toLocET.setText(ride.getToCity().getName());
         vehicleTypeSP.setSelection(CarTypeSpinnerUtils.getVehicleTypePosition(ride.getCarType()));
-        pickupDateTimeET.setText(DatePickerUtils.convertDate(ride.getPickupTime()));
-        dropOffDateTimeET.setText(DatePickerUtils.convertDate(ride.getDropTime()));
+        pickupDateTimeET.setText(DateTimeUtils.convertDate(ride.getPickupTime()));
+        dropOffDateTimeET.setText(DateTimeUtils.convertDate(ride.getDropTime()));
         costOfTripET.setText(String.format("%s", ride.getCost().toString()));
         distanceET.setText(String.format("%s", ride.getDistance().toString()));
         bookRideBtn.setText(getString(R.string.update));
@@ -112,7 +111,7 @@ public class CreateRideActivity extends BaseActivity implements CarTypeSpinnerAd
             removeProgressDialog();
             if (isSuccessResponse(createRideResponse)) {
                 Toast.makeText(CreateRideActivity.this, createRideResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                if(ride != null)
+                if (ride != null)
                     sendResultData(createRideResponse.getRide());
                 else
                     onBackPressed();
@@ -122,7 +121,7 @@ public class CreateRideActivity extends BaseActivity implements CarTypeSpinnerAd
         });
     }
 
-    private void sendResultData(RideResponseModel pRide){
+    private void sendResultData(RideResponseModel pRide) {
         Intent returnIntent = new Intent();
         returnIntent.putExtra(IntentConstants.RIDE, pRide);
         setResult(RESULT_OK, returnIntent);
@@ -135,16 +134,14 @@ public class CreateRideActivity extends BaseActivity implements CarTypeSpinnerAd
 
     @OnClick(R.id.et_pickup_date_time)
     public void selectDate() {
-        DateTimePicker dateTimePicker = new DateTimePicker();
-        dateTimePicker.setDateResultCallback(CreateRideActivity.this);
-        dateTimePicker.showDialog(CreateRideActivity.this, 0, true);
+        isPickupTime = true;
+        new DateTimePicker(this, this).showDateTimePicker();
     }
 
     @OnClick(R.id.et_drop_off_date_time)
     public void selectTime() {
-        DateTimePicker dateTimePicker = new DateTimePicker();
-        dateTimePicker.setDateResultCallback(CreateRideActivity.this);
-        dateTimePicker.showDialog(CreateRideActivity.this, DatePickerUtils.convertDateStrToLong(pickupDateTimeET.getText().toString().trim(), AppConstants.DATE_TIME_FORMAT_FOR_DISPLAY), false);
+        isPickupTime = false;
+        new DateTimePicker(this, this).showDateTimePicker();
     }
 
     @OnClick(R.id.et_start_loc)
@@ -189,7 +186,7 @@ public class CreateRideActivity extends BaseActivity implements CarTypeSpinnerAd
         } else if (costOfTripET.getText().toString().trim().isEmpty()) {
             showMandatoryError(R.string.cost_of_trip_hint, this);
             return false;
-        } else if (!DatePickerUtils.before(dropOffDateTimeET.getText().toString(),pickupDateTimeET.getText().toString())) {
+        } else if (!DateTimeUtils.before(dropOffDateTimeET.getText().toString(), pickupDateTimeET.getText().toString())) {
             Toast.makeText(this, getString(R.string.date_validation_create_ride), Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -208,8 +205,8 @@ public class CreateRideActivity extends BaseActivity implements CarTypeSpinnerAd
         rideRequestModel.setFromCity(fromCity);
         rideRequestModel.setToCity(toCity);
         rideRequestModel.setRideType((rideTypeRg.getCheckedRadioButtonId() == R.id.rb_one_way) ? AppConstants.ONE_WAY : AppConstants.TWO_WAY);
-        rideRequestModel.setPickupTime(DatePickerUtils.getDateTimeForApiReq(pickupDateTimeET.getText().toString()));
-        rideRequestModel.setDropTime(DatePickerUtils.getDateTimeForApiReq(dropOffDateTimeET.getText().toString()));
+        rideRequestModel.setPickupTime(DateTimeUtils.getDateTimeForApiReq(pickupDateTimeET.getText().toString()));
+        rideRequestModel.setDropTime(DateTimeUtils.getDateTimeForApiReq(dropOffDateTimeET.getText().toString()));
 
         return rideRequestModel;
     }
@@ -227,18 +224,14 @@ public class CreateRideActivity extends BaseActivity implements CarTypeSpinnerAd
                 toCity = cityModel;
             }
         }
-
-
     }
 
     @Override
-    public void onResult(@Nullable Object o, boolean isPickup) {
-        Log.e("result", o + "");
-        if (isPickup) {
-            pickupDateTimeET.setText(DatePickerUtils.getDateTimeToDisplay((Date) o));
+    public void setDateTimeFromDatePicker(String selectedDateTime) {
+        if (isPickupTime) {
+            pickupDateTimeET.setText(selectedDateTime);
         } else {
-            dropOffDateTimeET.setText(DatePickerUtils.getDateTimeToDisplay((Date) o));
+            dropOffDateTimeET.setText(selectedDateTime);
         }
     }
-
 }
