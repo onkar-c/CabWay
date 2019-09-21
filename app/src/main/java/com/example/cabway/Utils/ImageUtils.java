@@ -30,6 +30,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.Objects;
 
 public class ImageUtils {
     public static final int IMAGE_PICK = 2001;
@@ -60,12 +61,11 @@ public class ImageUtils {
         String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = context.getContentResolver().query(contentUri, proj,
                 null, null, null);
-        int column_index = cursor
+        int column_index = Objects.requireNonNull(cursor)
                 .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
-        String filePath = cursor.getString(column_index);
-//        Toast.makeText(context, filePath, Toast.LENGTH_SHORT).show();
-        return filePath;
+        //        Toast.makeText(context, filePath, Toast.LENGTH_SHORT).show();
+        return cursor.getString(column_index);
     }
 
     private static Bitmap getContactBitmapFromURI(Context context, Uri uri) {
@@ -115,10 +115,10 @@ public class ImageUtils {
     }
 
 
-    public static void setImageFromUrl(Context context, String url, ImageView imageView, boolean isDocument) {
+    public static void setImageFromUrl(Context context, String url, ImageView imageView, int placeHolder) {
             Glide.with(context)
                     .load((url != null) ? url : "")
-                    .placeholder(isDocument ? R.drawable.id_image : R.drawable.ic_profile_icon)
+                    .placeholder(placeHolder)
 //                    .centerCrop()
                     .centerInside()
                     .listener(new RequestListener<Drawable>() {

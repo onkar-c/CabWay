@@ -214,7 +214,7 @@ public class RideDetailPage extends BaseActivity {
             ivProfileImage.setVisibility(View.GONE);
         } else {
             tvAgencyName.setVisibility(View.VISIBLE);
-            ImageUtils.setImageFromUrl(this, ride.getAgency().getProfileImage(), ivProfileImage, false);
+            ImageUtils.setImageFromUrl(this, ride.getAgency().getProfileImage(), ivProfileImage, R.drawable.ic_profile_icon);
         }
     }
 

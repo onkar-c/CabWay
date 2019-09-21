@@ -120,7 +120,7 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
             spState.setSelection(SpinnerUtils.getStatePosition(user.cityCode.getStateCode()));
             spCity.setAdapter(SpinnerUtils.setSpinnerAdapter(this, AppConstants.CITY, user.cityCode.getStateCode(), spCity));
             spCity.setSelection(SpinnerUtils.getCityPosition(user.cityCode.getCityId(), user.cityCode.getStateCode()));
-            ImageUtils.setImageFromUrl(this, user.profileImage, ivProfile, false);
+            ImageUtils.setImageFromUrl(this, user.profileImage, ivProfile, R.drawable.ic_profile_icon);
         }
         toggleUi(false);
     }

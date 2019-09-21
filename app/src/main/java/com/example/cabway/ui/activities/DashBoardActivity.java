@@ -142,7 +142,7 @@ public class DashBoardActivity extends BaseActivity
             textToDisplay = getString(R.string.preferred_city) + " : " + city;
 
         top_description.setText(textToDisplay);
-        ImageUtils.setImageFromUrl(this, user.profileImage, ivProfile, false);
+        ImageUtils.setImageFromUrl(this, user.profileImage, ivProfile, R.drawable.ic_profile_icon);
         if (checkNetworkAvailableWithoutError()) {
             showProgressDialog(AppConstants.PLEASE_WAIT, false);
             ridesViewModel.getRidesRepository().getRides(ridesViewModel.getRidesMld());

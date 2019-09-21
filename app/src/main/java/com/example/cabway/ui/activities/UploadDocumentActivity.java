@@ -85,7 +85,6 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
     TextView tvUploadImg;
 
     private String docType;
-    private boolean isFromLogin = false;
     private DocumentViewModel documentViewModel;
     private String mFilePath;
     private boolean isIssuedDatePicker = true;
@@ -120,12 +119,11 @@ public class UploadDocumentActivity extends BaseActivity implements DatePickerCa
         etGstNumber.setText(document.getGstNumber());
         tvIssuedDate.setText(document.getIssueDate());
         tvExpireDate.setText(document.getExpiryDate());
-        ImageUtils.setImageFromUrl(this, document.getImageUrl(), ivDocumentImage, true);
+        ImageUtils.setImageFromUrl(this, document.getImageUrl(), ivDocumentImage, R.drawable.id_image);
     }
 
     private void getExtras() {
         docType = getIntent().getStringExtra(IntentConstants.DOC_TYPE_EXTRA);
-        isFromLogin = getIntent().getBooleanExtra(IntentConstants.IS_FROM_LOGIN, false);
         document = (DocumentModel) getIntent().getSerializableExtra(IntentConstants.DOCUMENT_EXTRA);
     }
 
