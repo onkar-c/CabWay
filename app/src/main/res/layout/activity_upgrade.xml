@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activities.UpgradeActivity">
+
+    <TextView
+        android:id="@+id/tv_upgrade_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/upgrade_message"
+        android:layout_centerInParent="true"
+        android:textAlignment="center"
+        android:textSize="@dimen/extra_large_text"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"/>
+
+    <Button
+        android:id="@+id/update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:background="@android:color/black"
+        android:text="@string/update"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/button_text"
+        android:layout_below="@+id/tv_upgrade_message"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"/>
+
+    <Button
+        android:id="@+id/skip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:background="@android:color/black"
+        android:text="@string/skip"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/button_text"
+        android:layout_below="@+id/update"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"/>
+
+
+</RelativeLayout>

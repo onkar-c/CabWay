@@ -101,6 +101,7 @@
     <string name="create_new_ride">Create A New Ride</string>
     <string name="city_updated_success">City Updated Successfully</string>
     <string name="update">UPDATE</string>
+    <string name="skip">SKIP</string>
     <string name="preferred_city_description">Please select your preferred city so we can display you related rides.</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_new">New</string>
@@ -174,6 +175,8 @@
     <string name="logout_message">Are you sure you want to logout?</string>
     <string name="registration_exit_message">Are you sure you want to exit registration?</string>
     <string name="accept_reject_message">Are you sure you want to %1$s this Driver?</string>
+
+    <string name="upgrade_message">New Update is available.. Please update the app.</string>
 
 
     <!--Document types-->
