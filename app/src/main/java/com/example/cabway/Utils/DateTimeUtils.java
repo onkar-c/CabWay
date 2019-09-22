@@ -18,13 +18,15 @@ public class DateTimeUtils {
 
     public static void startDatePicker(Context context, DateTimePickerCallBackInterface dateTimePickerCallBackInterface) {
         Calendar calendar = Calendar.getInstance();
-        new DatePickerDialog(context,
+        DatePickerDialog datePickerDialog = new DatePickerDialog(context,
                 (datePicker, year, arg2, day) -> {
                     String month = "" + ((arg2 + 1) < 10 ? "0" + (arg2 + 1) : (arg2 + 1));
                     String dayFormat = "" + (day < 10 ? "0" + day : day);
                     String selectedDate = dayFormat + "-" + month + "-" + year;
                     dateTimePickerCallBackInterface.setDateTimeFromDatePicker(selectedDate);
-                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        datePickerDialog.show();
     }
 
 

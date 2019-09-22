@@ -1,8 +1,11 @@
 package com.example.core.CommonModels;
 
+import com.google.gson.annotations.SerializedName;
+
 public class VehicleTypeModel {
 
     private int id;
+    @SerializedName("imageIcon")
     private String carImageUrl;
     private String type;
 
@@ -16,10 +19,6 @@ public class VehicleTypeModel {
 
     public String getCarImageUrl() {
         return carImageUrl;
-    }
-
-    public void setCarImageUrl(String carImageUrl) {
-        this.carImageUrl = carImageUrl;
     }
 
     public String getType() {

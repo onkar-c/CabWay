@@ -102,8 +102,7 @@ public class CarTypeSpinnerAdapter extends ArrayAdapter implements AdapterView.O
         VehicleTypeModel obj = getItem(position);
         if(obj!=null) {
             name.setText(obj.getType());
-            //ImageUtils.setImageFromUrl(mContext,vehicleTypeModel.getCarImageUrl(),image);
-            image.setImageDrawable(mContext.getDrawable(R.drawable.ic_add_image));
+            ImageUtils.setImageFromUrl(mContext,obj.getCarImageUrl(),image, R.drawable.ic_add_image);
         }
 
         name.setPadding(20, 20, 0, 20);
