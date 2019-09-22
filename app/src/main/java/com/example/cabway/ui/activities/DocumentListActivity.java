@@ -145,5 +145,6 @@ public class DocumentListActivity extends BaseActivity {
     @OnClick(R.id.btn_continue)
     public void onContinueClick() {
         startActivity(new Intent(this, DashBoardActivity.class));
+        finish();
     }
 }

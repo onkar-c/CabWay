@@ -57,7 +57,7 @@ public interface ApiInterface {
     Call<JsonResponse> getDocuments();
 
     @GET("cabinfo/cityList")
-    Call<JsonResponse> getStateAndCity();
+    Call<JsonResponse> getStateAndCity(@Query("dataVersion") String rideId);
 
     @POST("ride")
     Call<JsonResponse> createRide(@Body CreateRideRequestModel createRideRequestModel);

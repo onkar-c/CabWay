@@ -3,10 +3,12 @@ package com.example.cabway.ui.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import com.example.cabway.R;
+import com.example.cabway.Utils.TextValidationUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +28,10 @@ public class HelpActivity extends BaseActivity {
         setContentView(R.layout.activity_help);
         setUpActionBar();
         ButterKnife.bind(this);
+        if (!TextValidationUtils.isEmpty(appPreferences.getCabWayNumber()))
+            helpNumberText.setText(appPreferences.getCabWayNumber());
+        if (!TextValidationUtils.isEmpty(appPreferences.getCabWayEmail()))
+            writeUsEmailText.setText(appPreferences.getCabWayEmail());
     }
 
     @OnClick(R.id.bt_call_us)

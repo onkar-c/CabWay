@@ -19,17 +19,20 @@
         android:paddingTop="20dp"/>
     <TextView
         android:id="@+id/tv_user_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:padding="3dp"
         android:text="@string/nav_header_title"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/black"
+        android:textSize="16sp"/>
     <TextView
         android:id="@+id/tv_role"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="@string/nav_header_subtitle"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/black"
+        android:textSize="14sp"/>
 </LinearLayout>

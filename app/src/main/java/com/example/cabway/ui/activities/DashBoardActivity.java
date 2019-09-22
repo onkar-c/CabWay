@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cabway.R;
 import com.example.cabway.Utils.DialogUtils;
 import com.example.cabway.Utils.ImageUtils;
+import com.example.cabway.Utils.IntentConstants;
 import com.example.cabway.Utils.RideUtils;
 import com.example.cabway.ui.Interfaces.RecyclerViewItemClickListener;
 import com.example.cabway.ui.adapter.ProfileMenuAdapter;
@@ -206,9 +207,10 @@ public class DashBoardActivity extends BaseActivity
         Intent nextActivity = null;
         if (menuItem.equals(getString(R.string.help)))
             nextActivity = new Intent(this, HelpActivity.class);
-        else if (menuItem.equals(getString(R.string.documents)))
+        else if (menuItem.equals(getString(R.string.documents))) {
             nextActivity = new Intent(this, DocumentListActivity.class);
-        else if (menuItem.equals(getString(R.string.history)))
+            nextActivity.putExtra(IntentConstants.IS_FROM_LOGIN, false);
+        } else if (menuItem.equals(getString(R.string.history)))
             nextActivity = new Intent(this, HistoryListActivity.class);
         else if (menuItem.equals(getString(R.string.about)))
             nextActivity = new Intent(this, AboutUs.class);

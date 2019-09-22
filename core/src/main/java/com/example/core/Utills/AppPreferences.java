@@ -87,6 +87,31 @@ public class AppPreferences {
         savePref(Constants.USER_DETAILS, new Gson().toJson(userModel));
     }
 
+    public void setCabWayEmail(String email) {
+        savePref(Constants.CAB_WAY_EMAIL, email);
+    }
+
+    public String getCabWayEmail() {
+        return getPref(Constants.CAB_WAY_EMAIL, "");
+    }
+
+    public void setCabWayNumber(String number) {
+        savePref(Constants.CAB_WAY_NUMBER, number);
+    }
+
+
+    public String getDataVersion() {
+        return getPref(Constants.DATA_VERSION, "0");
+    }
+
+    public void setDataVersion(String version) {
+        savePref(Constants.DATA_VERSION, version);
+    }
+
+    public String getCabWayNumber() {
+        return getPref(Constants.CAB_WAY_NUMBER, "");
+    }
+
     public String getAuthKey() {
         return getPref(Constants.AUTH_KEY, "");
     }
@@ -149,5 +174,8 @@ public class AppPreferences {
         private static final String STATE_DATA = "state_data";
         private static final String CITY_DATA = "city_data";
         private static final String VEHICLE_TYPE_DATA = "vehicle_type_data";
+        private static final String CAB_WAY_EMAIL = "cab_way_email";
+        private static final String CAB_WAY_NUMBER = "cab_way_number";
+        private static final String DATA_VERSION = "data_version";
     }
 }

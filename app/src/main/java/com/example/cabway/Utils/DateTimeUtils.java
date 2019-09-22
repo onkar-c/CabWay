@@ -3,6 +3,7 @@ package com.example.cabway.Utils;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.util.Log;
 
 import com.example.cabway.ui.Interfaces.DateTimePickerCallBackInterface;
 import com.example.database.Utills.AppConstants;
@@ -35,9 +36,17 @@ public class DateTimeUtils {
         int mHour = calendar.get(Calendar.HOUR_OF_DAY);
         int mMinute = calendar.get(Calendar.MINUTE);
         new TimePickerDialog(context, (view, hourOfDay, minute) -> {
-            String timeStr = new SimpleDateFormat(AppConstants.TIME_FORMAT, Locale.ENGLISH).format(calendar.getTime());
-            timePickerCallBackInterface.setDateTimeFromDatePicker(timeStr);
+            Log.i("time", hourOfDay + " " + minute);
+            timePickerCallBackInterface.setDateTimeFromDatePicker(get12HoursTime(hourOfDay, minute));
         }, mHour, mMinute, false).show();
+    }
+
+    private static String get12HoursTime(int hour,int minute){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY,hour);
+        calendar.set(Calendar.MINUTE,minute);
+
+        return new SimpleDateFormat(AppConstants.TIME_FORMAT, Locale.ENGLISH).format(calendar.getTime());
     }
 
     public static String convertDate(String inputDate) {

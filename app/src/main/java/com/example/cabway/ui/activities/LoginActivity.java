@@ -55,6 +55,7 @@ public class LoginActivity extends BaseActivity {
             if (isSuccessResponse(loginResponse)) {
 //                Toast.makeText(LoginActivity.this, loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
                 setUserData(loginResponse.getUser());
+                setCabwayInfo(loginResponse.getCabWayEmail(), loginResponse.getCabWayNumber());
                 startNextActivity(loginResponse.getUser());
             } else {
                 Toast.makeText(LoginActivity.this, loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
@@ -67,6 +68,11 @@ public class LoginActivity extends BaseActivity {
         appPreferences.setIsLogin(true);
         appPreferences.setAuthKey(user.authKey);
         appPreferences.setUserDetails(user);
+    }
+
+    private void setCabwayInfo(String email, String number){
+        appPreferences.setCabWayEmail(email);
+        appPreferences.setCabWayNumber(number);
     }
 
     private void startNextActivity(UserModel user) {

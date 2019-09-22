@@ -24,7 +24,7 @@
             android:textSize="@dimen/large_text"
             android:padding="15dp"
             android:text="@string/about_us_text"
-            android:background="@color/colorPrimary"
+            android:background="@color/about_us"
             android:scrollbars="vertical" />
 
     </RelativeLayout>

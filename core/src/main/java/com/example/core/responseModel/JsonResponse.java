@@ -18,6 +18,12 @@ public class JsonResponse implements Serializable {
     @SerializedName("message")
     private String message;
 
+    @SerializedName("cabWayNumber")
+    private String cabWayNumber;
+
+    @SerializedName("cabWayEmail")
+    private String cabWayEmail;
+
     @SerializedName("heroes")
     private List<HeroesModel> heroesList;
 
@@ -52,6 +58,12 @@ public class JsonResponse implements Serializable {
     private RideResponseModel ride;
 
     private String serverVersion;
+
+    private String dataVersion;
+
+    public String getDataVersion() {
+        return dataVersion;
+    }
 
     public String getServerVersion() {
         return serverVersion;
@@ -119,5 +131,13 @@ public class JsonResponse implements Serializable {
 
     public RideResponseModel getRide() {
         return ride;
+    }
+
+    public String getCabWayNumber() {
+        return cabWayNumber;
+    }
+
+    public String getCabWayEmail() {
+        return cabWayEmail;
     }
 }

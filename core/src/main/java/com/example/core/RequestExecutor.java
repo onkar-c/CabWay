@@ -24,12 +24,12 @@ public class RequestExecutor {
                 if (response.isSuccessful()) {
                     mutableResponse.setValue(response.body());
                 } else
-                    setErrorResponse(mutableResponse, "Server not responding");
+                    setErrorResponse(mutableResponse, AppConstants.SERVER_ISSUE);
             }
 
             @Override
             public void onFailure(@NonNull Call<JsonResponse> call, @NonNull Throwable t) {
-                setErrorResponse(mutableResponse, t.getMessage());
+                setErrorResponse(mutableResponse, AppConstants.SERVER_ISSUE);
             }
         });
     }

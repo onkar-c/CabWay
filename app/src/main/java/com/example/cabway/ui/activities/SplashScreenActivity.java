@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.crashlytics.android.Crashlytics;
 import com.example.cabway.BuildConfig;
 import com.example.cabway.Utils.IntentConstants;
+import com.example.cabway.Utils.TextValidationUtils;
 import com.example.cabway.viewModels.SplashViewModel;
 import com.example.core.responseModel.JsonResponse;
 
@@ -34,18 +35,19 @@ public class SplashScreenActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        splashViewModel.getSplashRepository().getStateCity(splashViewModel.getStateCityResponseMld());
+        splashViewModel.getSplashRepository().getStateCity(splashViewModel.getStateCityResponseMld(), appPreferences.getDataVersion());
     }
 
     private void setStateCityObserver() {
         splashViewModel.getStateCityResponseMld().observe(this, (JsonResponse stateCityResponse) -> {
             removeProgressDialog();
             if (isSuccessResponse(stateCityResponse)) {
-                if (stateCityResponse.getCityList() != null)
+                appPreferences.setDataVersion(TextValidationUtils.isEmpty(stateCityResponse.getDataVersion()) ? "0" : stateCityResponse.getDataVersion());
+                if (stateCityResponse.getCityList() != null && !stateCityResponse.getCityList().isEmpty())
                     appPreferences.setCityList(stateCityResponse.getCityList());
-                if (stateCityResponse.getStateList() != null)
+                if (stateCityResponse.getStateList() != null && !stateCityResponse.getStateList().isEmpty())
                     appPreferences.setStateList(stateCityResponse.getStateList());
-                if (stateCityResponse.getVehicleList() != null)
+                if (stateCityResponse.getVehicleList() != null && !stateCityResponse.getVehicleList().isEmpty())
                     appPreferences.setVehicleList(stateCityResponse.getVehicleList());
                 if (checkUpgrade(stateCityResponse.getServerVersion()))
                     new Handler().postDelayed(SplashScreenActivity.this::startNextActivity, 500);

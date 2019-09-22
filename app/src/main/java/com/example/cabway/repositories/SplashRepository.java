@@ -18,7 +18,7 @@ public class SplashRepository {
     }
 
 
-    public void getStateCity(MutableLiveData<JsonResponse> stateCityResponse) {
-        ApiExecutor.getStateAndCity(stateCityResponse);
+    public void getStateCity(MutableLiveData<JsonResponse> stateCityResponse, String dataVersion) {
+        ApiExecutor.getStateAndCity(stateCityResponse, dataVersion);
     }
 }
