@@ -17,7 +17,7 @@ import java.util.Locale;
 
 public class DateTimeUtils {
 
-    public static void startDatePicker(Context context, DateTimePickerCallBackInterface dateTimePickerCallBackInterface) {
+    public static void startDatePicker(Context context, DateTimePickerCallBackInterface dateTimePickerCallBackInterface, boolean hasMaxDate) {
         Calendar calendar = Calendar.getInstance();
         DatePickerDialog datePickerDialog = new DatePickerDialog(context,
                 (datePicker, year, arg2, day) -> {
@@ -26,7 +26,10 @@ public class DateTimeUtils {
                     String selectedDate = dayFormat + "-" + month + "-" + year;
                     dateTimePickerCallBackInterface.setDateTimeFromDatePicker(selectedDate);
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        if (hasMaxDate)
+            datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
+        else
+            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         datePickerDialog.show();
     }
 
@@ -41,10 +44,10 @@ public class DateTimeUtils {
         }, mHour, mMinute, false).show();
     }
 
-    private static String get12HoursTime(int hour,int minute){
+    private static String get12HoursTime(int hour, int minute) {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY,hour);
-        calendar.set(Calendar.MINUTE,minute);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
 
         return new SimpleDateFormat(AppConstants.TIME_FORMAT, Locale.ENGLISH).format(calendar.getTime());
     }

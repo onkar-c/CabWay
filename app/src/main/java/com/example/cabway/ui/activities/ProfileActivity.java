@@ -34,6 +34,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.example.cabway.Utils.TextValidationUtils.showMandatoryError;
+import static com.example.cabway.Utils.TextValidationUtils.showMandatoryErrorUsingString;
 
 public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.ItemSelectedCallback {
 
@@ -180,6 +181,9 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
             showMandatoryError(R.string.agency_name, this);
             return false;
         } else if (!TextValidationUtils.isValidAddress(etAddress.getText().toString(), this)) {
+            return false;
+        } else if (TextValidationUtils.isEmpty(etEmail.getText().toString()) || !TextValidationUtils.isValidEmail(etEmail.getText().toString())) {
+            showMandatoryErrorUsingString("Valid " + getResources().getString(R.string.email), this);
             return false;
         } else if (spCity.getSelectedItemPosition() == 0) {
             showMandatoryError(R.string.city, this);

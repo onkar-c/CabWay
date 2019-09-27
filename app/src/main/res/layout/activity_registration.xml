@@ -142,11 +142,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/email"
-                android:inputType="textEmailAddress"
+                android:inputType="textEmailAddress|textNoSuggestions"
                 android:maxLines="1"
                 android:textSize="@dimen/small_text"
                 android:visibility="gone"
-                tools:ignore="Autofill" />
+                tools:ignore="Autofill"
+                android:maxLength="40"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout

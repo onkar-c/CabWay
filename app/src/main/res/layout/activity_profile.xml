@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center_vertical"
+    android:layout_height="wrap_content"
     android:fillViewport="true"
     android:scrollbars="none"
     tools:context=".ui.activities.ProfileActivity">
@@ -212,11 +211,12 @@
             android:layout_marginTop="3dp"
             android:layout_marginBottom="5dp"
             android:enabled="false"
-            android:inputType="textEmailAddress"
+            android:inputType="textEmailAddress|textNoSuggestions"
             android:maxLines="1"
             android:textColor="@android:color/black"
             android:textSize="@dimen/small_text"
-            tools:ignore="Autofill,LabelFor" />
+            tools:ignore="Autofill,LabelFor"
+            android:maxLength="20" />
 
         <View
             android:layout_width="match_parent"
@@ -241,11 +241,10 @@
             android:layout_marginTop="3dp"
             android:layout_marginBottom="5dp"
             android:enabled="false"
-            android:inputType="text"
             android:textColor="@android:color/black"
             android:textSize="@dimen/small_text"
-            tools:ignore="Autofill,LabelFor"
-            android:maxLength="30"/>
+            tools:ignore="Autofill,LabelFor,TextFields"
+            android:maxLength="40" />
 
         <View
             android:layout_width="match_parent"
@@ -310,7 +309,8 @@
             android:layout_marginTop="5dp"
             android:text="@string/pincode"
             android:textColor="#797878"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:maxLength="6"/>
 
         <EditText
             android:id="@+id/et_pincode"

@@ -147,6 +147,7 @@ public class CreateRideActivity extends BaseActivity implements CarTypeSpinnerAd
     @OnClick(R.id.et_start_loc)
     public void onClickOfFromLocEditText() {
         Intent nextActivity = new Intent(this, PreferredCityActivity.class);
+        nextActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         nextActivity.putExtra(IntentConstants.IS_FROM_CREATE_RIDE, true);
         startActivityForResult(nextActivity, startLocation);
     }
@@ -154,6 +155,7 @@ public class CreateRideActivity extends BaseActivity implements CarTypeSpinnerAd
     @OnClick(R.id.et_drop_loc)
     public void onClickOfToLocEditText() {
         Intent nextActivity = new Intent(this, PreferredCityActivity.class);
+        nextActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         nextActivity.putExtra(IntentConstants.IS_FROM_CREATE_RIDE, true);
         startActivityForResult(nextActivity, endLocation);
     }
