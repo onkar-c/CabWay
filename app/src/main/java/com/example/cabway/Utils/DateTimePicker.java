@@ -30,6 +30,6 @@ public class DateTimePicker {
     }
 
     public void showDateTimePicker() {
-        DateTimeUtils.startDatePicker(context, datePickerResult);
+        DateTimeUtils.startDatePicker(context, datePickerResult,false);
     }
 }

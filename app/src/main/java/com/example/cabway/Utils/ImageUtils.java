@@ -38,6 +38,7 @@ public class ImageUtils {
 
     public static void pickImage(Activity context) {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.setType(AppConstants.IMAGE_MIME_TYPE);
         context.startActivityForResult(
                 Intent.createChooser(intent, AppConstants.IMAGE_PICKER_MESSAGE),
@@ -116,25 +117,25 @@ public class ImageUtils {
 
 
     public static void setImageFromUrl(Context context, String url, ImageView imageView, int placeHolder) {
-            Glide.with(context)
-                    .load((url != null) ? url : "")
-                    .placeholder(placeHolder)
+        Glide.with(context)
+                .load((url != null) ? url : "")
+                .placeholder(placeHolder)
 //                    .centerCrop()
-                    .centerInside()
-                    .listener(new RequestListener<Drawable>() {
-                        @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                .centerInside()
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
 //                            Toast.makeText(context, "Failed to Load Image", Toast.LENGTH_SHORT).show();
 //                            Log.e("TAG", "Error loading image", e);
-                            return false; // important to return false so the error placeholder can be placed
-                        }
+                        return false; // important to return false so the error placeholder can be placed
+                    }
 
-                        @Override
-                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                            return false;
-                        }
-                    })
-                    .into(imageView);
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        return false;
+                    }
+                })
+                .into(imageView);
 
     }
 

@@ -112,10 +112,10 @@ public class UploadDocumentActivity extends BaseActivity implements DateTimePick
         toggleAllFields(false);
         etDocNumber.setText(document.getDocumentNumber());
         etNameOnDoc.setText(document.getNameOnDocument());
-        if(document.getVehicleType() != null)
-        spVehicleType.setSelection(CarTypeSpinnerUtils.getVehicleTypePosition(document.getVehicleType()));
-        if(!TextValidationUtils.isEmpty(document.getStateName()))
-        spState.setSelection(SpinnerUtils.getStatePositionByName(document.getStateName()));
+        if (document.getVehicleType() != null)
+            spVehicleType.setSelection(CarTypeSpinnerUtils.getVehicleTypePosition(document.getVehicleType()));
+        if (!TextValidationUtils.isEmpty(document.getStateName()))
+            spState.setSelection(SpinnerUtils.getStatePositionByName(document.getStateName()));
         etGstNumber.setText(document.getGstNumber());
         tvIssuedDate.setText(document.getIssueDate());
         tvExpireDate.setText(document.getExpiryDate());
@@ -178,7 +178,7 @@ public class UploadDocumentActivity extends BaseActivity implements DateTimePick
     @OnClick({R.id.tv_issued_date, R.id.tv_expired_date})
     public void startDatePicker(View view) {
         isIssuedDatePicker = (view.getId() == R.id.tv_issued_date);
-        DateTimeUtils.startDatePicker(this, this);
+        DateTimeUtils.startDatePicker(this, this, isIssuedDatePicker);
     }
 
 
