@@ -135,13 +135,13 @@ public class CreateRideActivity extends BaseActivity implements CarTypeSpinnerAd
     @OnClick(R.id.et_pickup_date_time)
     public void selectDate() {
         isPickupTime = true;
-        new DateTimePicker(this, this).showDateTimePicker();
+        new DateTimePicker(this, this).showDateTimePicker(pickupDateTimeET.getText().toString());
     }
 
     @OnClick(R.id.et_drop_off_date_time)
     public void selectTime() {
         isPickupTime = false;
-        new DateTimePicker(this, this).showDateTimePicker();
+        new DateTimePicker(this, this).showDateTimePicker(dropOffDateTimeET.getText().toString());
     }
 
     @OnClick(R.id.et_start_loc)

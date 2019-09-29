@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center_vertical"
     android:fillViewport="true"
     android:scrollbars="none"
@@ -79,37 +80,39 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            app:counterMaxLength="@integer/first_name_max_length">
 
             <EditText
                 android:id="@+id/first_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/first_name"
-                android:inputType="text"
+                android:inputType="textVisiblePassword"
                 android:maxLines="1"
                 android:textSize="@dimen/small_text"
                 android:visibility="gone"
                 tools:ignore="Autofill"
-                android:maxLength="15"/>
+                android:maxLength="@integer/first_name_max_length"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            app:counterMaxLength="@integer/last_name_max_length">
 
             <EditText
                 android:id="@+id/last_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/last_name"
-                android:inputType="text"
+                android:inputType="textVisiblePassword"
                 android:maxLines="1"
                 android:textSize="@dimen/small_text"
                 android:visibility="gone"
                 tools:ignore="Autofill"
-                android:maxLength="15"/>
+                android:maxLength="@integer/last_name_max_length"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -117,25 +120,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:visibility="gone">
+            android:visibility="gone"
+            app:counterMaxLength="@integer/agency_name_max_length">
 
             <EditText
                 android:id="@+id/agency_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/agency_name"
-                android:inputType="text"
+                android:inputType="textVisiblePassword"
                 android:maxLines="1"
                 android:textSize="@dimen/small_text"
                 android:visibility="gone"
                 tools:ignore="Autofill"
-                android:maxLength="20"/>
+                android:maxLength="@integer/agency_name_max_length"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            app:counterMaxLength="@integer/email_max_length">
 
             <EditText
                 android:id="@+id/et_email"
@@ -147,7 +152,7 @@
                 android:textSize="@dimen/small_text"
                 android:visibility="gone"
                 tools:ignore="Autofill"
-                android:maxLength="40"/>
+                android:maxLength="@integer/email_max_length"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -182,18 +187,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:textColorHint="@color/hint">
+            android:textColorHint="@color/hint"
+            app:counterMaxLength="@integer/address_max_length">
 
             <EditText
                 android:id="@+id/et_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/address"
-                android:inputType="text"
+                android:inputType="textVisiblePassword"
                 android:textSize="@dimen/small_text"
                 android:visibility="gone"
                 tools:ignore="Autofill"
-                android:maxLength="20"/>
+                android:maxLength="@integer/address_max_length"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -232,7 +238,8 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            app:counterMaxLength="@integer/pin_code_max_length">
 
             <EditText
                 android:id="@+id/et_pincode"
@@ -240,7 +247,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/pincode"
                 android:inputType="number"
-                android:maxLength="6"
+                android:maxLength="@integer/pin_code_max_length"
                 android:maxLines="1"
                 android:textSize="@dimen/small_text"
                 android:visibility="gone"
@@ -250,7 +257,8 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            app:counterMaxLength="@integer/password_max_length">
 
             <EditText
                 android:id="@+id/password"
@@ -261,13 +269,15 @@
                 android:maxLines="1"
                 android:textSize="@dimen/small_text"
                 android:visibility="gone"
-                tools:ignore="Autofill" />
+                tools:ignore="Autofill"
+                android:maxLength="@integer/password_max_length" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            app:counterMaxLength="@integer/password_max_length">
 
             <EditText
                 android:id="@+id/confirm_password"
@@ -278,7 +288,8 @@
                 android:maxLines="1"
                 android:textSize="@dimen/small_text"
                 android:visibility="gone"
-                tools:ignore="Autofill" />
+                tools:ignore="Autofill"
+                android:maxLength="@integer/password_max_length"/>
         </com.google.android.material.textfield.TextInputLayout>
 
 

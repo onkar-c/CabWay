@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true">
 
     <RelativeLayout
@@ -53,7 +54,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/ll_top"
             android:layout_marginTop="20dp"
-            android:textColorHint="@android:color/darker_gray">
+            android:textColorHint="@android:color/darker_gray"
+            app:counterMaxLength="@integer/doc_reg_no_max_length"
+            app:counterEnabled="true">
 
             <EditText
                 android:id="@+id/et_doc_number"
@@ -64,7 +67,8 @@
                 android:maxLines="1"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/small_text"
-                tools:ignore="Autofill,TextFields" />
+                tools:ignore="Autofill,TextFields"
+                android:maxLength="@integer/doc_reg_no_max_length"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -75,7 +79,8 @@
             android:layout_below="@id/il_doc_registration_number"
             android:layout_marginTop="10dp"
             android:textColorHint="@android:color/darker_gray"
-            android:visibility="visible">
+            android:visibility="visible"
+            app:counterMaxLength="@integer/name_on_doc_max_length">
 
             <EditText
                 android:id="@+id/et_name_on_doc"
@@ -86,7 +91,8 @@
                 android:maxLines="1"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/small_text"
-                tools:ignore="Autofill" />
+                tools:ignore="Autofill"
+                android:maxLength="@integer/name_on_doc_max_length"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 

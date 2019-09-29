@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatSpinner;
@@ -26,6 +25,7 @@ import com.example.core.CommonModels.CityModel;
 import com.example.core.CommonModels.StateModel;
 import com.example.core.CommonModels.UserModel;
 import com.example.database.Utills.AppConstants;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
@@ -68,8 +68,8 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
     @BindView(R.id.agency_name)
     EditText agencyName;
 
-    @BindView(R.id.tv_agency_name)
-    TextView tv_agency_name;
+    @BindView(R.id.il_agency_name)
+    TextInputLayout tv_agency_name;
 
     @BindView(R.id.sp_state)
     AppCompatSpinner spState;
@@ -182,7 +182,7 @@ public class ProfileActivity extends BaseActivity implements CitySpinnerAdapter.
             return false;
         } else if (!TextValidationUtils.isValidAddress(etAddress.getText().toString(), this)) {
             return false;
-        } else if (TextValidationUtils.isEmpty(etEmail.getText().toString()) || !TextValidationUtils.isValidEmail(etEmail.getText().toString())) {
+        } else if (!TextValidationUtils.isValidEmail(etEmail.getText().toString())) {
             showMandatoryErrorUsingString("Valid " + getResources().getString(R.string.email), this);
             return false;
         } else if (spCity.getSelectedItemPosition() == 0) {

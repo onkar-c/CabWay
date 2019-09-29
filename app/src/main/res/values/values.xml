@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="email_max_length">30</integer>
+    <integer name="address_max_length">100</integer>
+    <integer name="password_max_length">15</integer>
+    <integer name="first_name_max_length">20</integer>
+    <integer name="last_name_max_length">20</integer>
+    <integer name="doc_reg_no_max_length">50</integer>
+    <integer name="pin_code_max_length">6</integer>
+    <integer name="agency_name_max_length">40</integer>
+    <integer name="name_on_doc_max_length">40</integer>
+</resources>

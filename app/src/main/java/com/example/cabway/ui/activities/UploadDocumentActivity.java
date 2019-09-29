@@ -35,6 +35,7 @@ import com.example.core.CommonModels.VehicleTypeModel;
 import com.example.database.Utills.AppConstants;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.Calendar;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -178,7 +179,7 @@ public class UploadDocumentActivity extends BaseActivity implements DateTimePick
     @OnClick({R.id.tv_issued_date, R.id.tv_expired_date})
     public void startDatePicker(View view) {
         isIssuedDatePicker = (view.getId() == R.id.tv_issued_date);
-        DateTimeUtils.startDatePicker(this, this, isIssuedDatePicker);
+        DateTimeUtils.startDatePicker(this, this, Calendar.getInstance(), isIssuedDatePicker);
     }
 
 

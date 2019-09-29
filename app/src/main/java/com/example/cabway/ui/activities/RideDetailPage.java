@@ -133,7 +133,7 @@ public class RideDetailPage extends BaseActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         if (menu.findItem(R.id.action_edit) != null)
-            menu.findItem(R.id.action_edit).setVisible((isAgency && !ride.getStatus().equals(AppConstants.ACCEPTED) && !ride.getStatus().equals(AppConstants.COMPLETED)));
+            menu.findItem(R.id.action_edit).setVisible((isAgency && !ride.getStatus().equals(AppConstants.ACCEPTED) && !ride.getStatus().equals(AppConstants.COMPLETED) && !ride.getStatus().equals(AppConstants.EXPIRED)));
         return super.onPrepareOptionsMenu(menu);
     }
 

@@ -17,8 +17,7 @@ import java.util.Locale;
 
 public class DateTimeUtils {
 
-    public static void startDatePicker(Context context, DateTimePickerCallBackInterface dateTimePickerCallBackInterface, boolean hasMaxDate) {
-        Calendar calendar = Calendar.getInstance();
+    public static void startDatePicker(Context context, DateTimePickerCallBackInterface dateTimePickerCallBackInterface, Calendar calendar, boolean hasMaxDate) {
         DatePickerDialog datePickerDialog = new DatePickerDialog(context,
                 (datePicker, year, arg2, day) -> {
                     String month = "" + ((arg2 + 1) < 10 ? "0" + (arg2 + 1) : (arg2 + 1));
@@ -34,8 +33,7 @@ public class DateTimeUtils {
     }
 
 
-    static void startTimePicker(Context context, DateTimePickerCallBackInterface timePickerCallBackInterface) {
-        final Calendar calendar = Calendar.getInstance();
+    static void startTimePicker(Context context, DateTimePickerCallBackInterface timePickerCallBackInterface, Calendar calendar) {
         int mHour = calendar.get(Calendar.HOUR_OF_DAY);
         int mMinute = calendar.get(Calendar.MINUTE);
         new TimePickerDialog(context, (view, hourOfDay, minute) -> {
@@ -89,5 +87,18 @@ public class DateTimeUtils {
             e.printStackTrace();
         }
         return true;
+    }
+
+
+    static Calendar toCalendar(String strDate){
+        Date date = null;
+        try {
+            date = new SimpleDateFormat(AppConstants.DATE_TIME_FORMAT_FOR_DISPLAY, Locale.ENGLISH).parse(strDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal;
     }
 }
