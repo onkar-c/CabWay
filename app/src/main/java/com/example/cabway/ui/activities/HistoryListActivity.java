@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cabway.R;
+import com.example.cabway.Utils.RideUtils;
 import com.example.cabway.ui.adapter.RidesListAdapter;
 import com.example.cabway.viewModels.RidesViewModel;
 import com.example.core.responseModel.JsonResponse;
@@ -68,7 +69,7 @@ public class HistoryListActivity extends BaseActivity {
         ridesViewModel.getRidesHistoryResponseMld().observe(this, (JsonResponse getRidesHistoryResponse) -> {
             removeProgressDialog();
             if (isSuccessResponse(getRidesHistoryResponse)) {
-                rides = getRidesHistoryResponse.getRideList();
+                rides = RideUtils.sortRidesDescending(getRidesHistoryResponse.getRideList());
                 setRidesList();
             } else {
                 Toast.makeText(HistoryListActivity.this, getRidesHistoryResponse.getMessage(), Toast.LENGTH_SHORT).show();

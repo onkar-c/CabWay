@@ -12,6 +12,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.cabway.R;
 import com.example.cabway.Utils.AppUtils;
@@ -24,14 +25,13 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Objects;
 
-import static androidx.constraintlayout.widget.Constraints.TAG;
-
 public class CabWayFCMInstanceService extends FirebaseMessagingService {
+    public static final String TAG = "FCM";
     public final String NOTIFICATION_INFO = "Cab way notification";
 
     public static void registerFcmTopic(String topic) {
         FirebaseMessaging.getInstance().subscribeToTopic(topic)
-                .addOnCompleteListener(task -> Log.d("FCM", "onComplete"));
+                .addOnCompleteListener(task -> Log.d(TAG, "onComplete"));
     }
 
     public static void unregisterFcmTopic(String topic) {
@@ -55,25 +55,25 @@ public class CabWayFCMInstanceService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        Log.d("msg", "onMessageReceived: " + remoteMessage.getData().get("message"));
+        Log.d(TAG, "onMessageReceived: " + Objects.requireNonNull(remoteMessage.getNotification()).getBody());
+        Log.d(TAG, "onMessageReceived: " + remoteMessage.getData());
+        Log.d(TAG, "onMessageReceived: " + remoteMessage.getData().get("message"));
 
         NotificationCompat.Builder builder = createNotificationBuilder(remoteMessage);
-
+        builder.setColor(ContextCompat.getColor(this, R.color.colorPrimary));
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder.setSmallIcon(R.drawable.ic_cabway_notification);
-            builder.setLights(Color.YELLOW, Color.RED, Color.GREEN);
+            builder.setSmallIcon(R.drawable.ic_white_notification);
+            builder.setLights(Color.YELLOW, Color.YELLOW, Color.YELLOW);
         } else {
             builder.setSmallIcon(R.mipmap.ic_launcher_cabway);
         }
-
-        builder.setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL);
 
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(AppConstants.CHANNEL_ID, "Default channel", NotificationManager.IMPORTANCE_DEFAULT);
             Objects.requireNonNull(manager).createNotificationChannel(channel);
         }
-        Objects.requireNonNull(manager).notify(0, builder.build());
+        Objects.requireNonNull(manager).notify(9999, builder.build());
     }
 
 
@@ -92,9 +92,9 @@ public class CabWayFCMInstanceService extends FirebaseMessagingService {
         @Override
         public void onReceive(Context context, Intent intent) {
             Intent nextIntent;
-            if(AppUtils.isAppIsInBackground(context)){
+            if (AppUtils.isAppIsInBackground(context)) {
                 nextIntent = new Intent(context, SplashScreenActivity.class);
-            } else{
+            } else {
                 nextIntent = new Intent(context, DashBoardActivity.class);
             }
             nextIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP

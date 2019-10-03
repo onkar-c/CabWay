@@ -130,6 +130,17 @@
             android:name="io.fabric.ApiKey"
             android:value="a1b87684d944bbd0049d38d2049015843877b90b" />
 
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_white_notification" />
+        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming notification message. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorPrimary"/>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="9999" />
         <receiver
             android:name=".fcm.CabWayFCMInstanceService$NotificationIntentSenderBroadcast"
             android:exported="true"
