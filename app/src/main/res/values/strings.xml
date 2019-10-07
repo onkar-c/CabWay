@@ -59,7 +59,9 @@
     <string name="driver_details">Driver Details</string>
     <string name="please_select_city">Please Select State And City</string>
     <string name="expiry_date">Expiry Date :</string>
+    <string name="error_expiry_date">Expiry Date</string>
     <string name="issued_on">Issued Date :</string>
+    <string name="error_issued_on">Issued Date :</string>
     <string name="date_format">DD-MM-YYYY</string>
     <string name="date_of_journey">DATE OF JOURNEY :</string>
     <string name="time_of_journey">TIME OF JOURNEY :</string>

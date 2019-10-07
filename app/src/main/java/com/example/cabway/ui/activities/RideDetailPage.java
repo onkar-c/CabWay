@@ -188,6 +188,7 @@ public class RideDetailPage extends BaseActivity {
             driverRecyclerView.setLayoutManager(layoutManager);
             driverListAdapter = new DriverListAdapter(this, driverList);
             driverRecyclerView.setAdapter(driverListAdapter);
+            if(driverList.size() <= 5)
             RecyclerViewUtils.setHeightItemWise(this, driverRecyclerView, R.layout.driver_item, driverList.size());
         }
     }

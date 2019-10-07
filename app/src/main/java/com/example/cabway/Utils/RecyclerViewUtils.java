@@ -17,7 +17,7 @@ public class RecyclerViewUtils {
         LayoutInflater factory = LayoutInflater.from(context);
         View myView = factory.inflate(layoutId, null);
         ViewGroup.LayoutParams params = recyclerView.getLayoutParams();
-        params.height = (getViewHeight(myView) * size) + 100;
+        params.height = (getViewHeight(myView) * size) + 120;
         recyclerView.setLayoutParams(params);
         recyclerView.setNestedScrollingEnabled(false);
     }

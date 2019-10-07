@@ -247,10 +247,10 @@ public class UploadDocumentActivity extends BaseActivity implements DateTimePick
             showMandatoryError(R.string.vehicle_type, this);
             return false;
         } else if (llIssuedDate.getVisibility() == View.VISIBLE && TextUtils.isEmpty(tvIssuedDate.getText().toString())) {
-            showMandatoryError(R.string.issued_on, this);
+            showMandatoryError(R.string.error_issued_on, this);
             return false;
         } else if (llExpiryDate.getVisibility() == View.VISIBLE && TextUtils.isEmpty(tvExpireDate.getText().toString())) {
-            showMandatoryError(R.string.expiry_date, this);
+            showMandatoryError(R.string.error_expiry_date, this);
             return false;
         } else if (llIssuedDate.getVisibility() == View.VISIBLE && llExpiryDate.getVisibility() == View.VISIBLE
                 && (tvExpireDate.getText().toString().compareTo(tvIssuedDate.getText().toString()) < 0)) {
