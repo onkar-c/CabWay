@@ -3,7 +3,7 @@
 
 ## Overview
 
-PennyQuick is an Interstate Cab Booking App designed to facilitate seamless transportation for local drivers and agents providing interstate commute services. This app connects drivers with passengers, streamlining the booking process and ensuring a reliable and efficient travel experience.
+Cabway is an Interstate Cab Booking App designed to facilitate seamless transportation for local drivers and agents providing interstate commute services. This app connects drivers with passengers, streamlining the booking process and ensuring a reliable and efficient travel experience.
 
 ## Features
 
